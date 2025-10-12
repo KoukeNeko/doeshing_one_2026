@@ -1,4 +1,3 @@
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ArrowRight, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { BlogGrid } from "@/components/blog/BlogGrid";
@@ -43,9 +42,7 @@ export default async function HomePage() {
   const featuredProjects = projects.slice(0, 3);
 
   return (
-    <>
-    <SpeedInsights/>
-    
+
     <div className="space-y-20">
       <section className="grid gap-6 border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900 md:grid-cols-[2fr,1fr] md:gap-12 md:px-10 md:py-12">
         <div className="flex flex-col gap-6">
@@ -178,6 +175,5 @@ export default async function HomePage() {
         </div>
       </section>
     </div>
-    </>
   );
 }
