@@ -59,14 +59,15 @@ export async function POST(request: Request) {
     const body = await request.json();
     const validated = createPostSchema.parse(body);
 
-    // 取得作者
+    // 目前僅支援單一作者，未來可擴展為多作者系統
+    // TODO: 當需要多作者時，可根據 session.user.email 查找對應作者
     const author = await prisma.author.findFirst({
-      where: { email: session.user?.email || "" },
+      orderBy: { createdAt: "asc" }, // 使用第一個建立的作者
     });
 
     if (!author) {
       return NextResponse.json(
-        { message: "Author not found" },
+        { message: "No author found. Please run: bun prisma db seed" },
         { status: 404 }
       );
     }
