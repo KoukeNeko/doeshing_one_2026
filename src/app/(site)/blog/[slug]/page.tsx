@@ -160,9 +160,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </nav>
       </div>
 
-      <div className="flex flex-col gap-6">
-        <TableOfContents items={toc ?? []} />
-        <div className="sticky top-24 space-y-6" style={{ position: 'sticky', top: '6rem' }}>
+      <aside className="hidden md:block">
+        <div className="space-y-6">
+          <TableOfContents items={toc ?? []} />
           <div className="border border-black/10 bg-white px-6 py-6 dark:border-white/10 dark:bg-zinc-900">
             <span className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
               Author
@@ -177,7 +177,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             ) : null}
           </div>
         </div>
-      </div>
+      </aside>
     </article>
   );
 }
