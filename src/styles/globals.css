@@ -94,6 +94,41 @@
   .sr-only-focusable:focus {
     @apply not-sr-only absolute left-4 top-4 inline-flex items-center rounded bg-newspaper-ink px-3 py-2 text-sm font-semibold tracking-wide text-newspaper-paper shadow-lg focus:outline-none focus:ring-2 focus:ring-newspaper-accent dark:bg-zinc-100 dark:text-zinc-900 dark:focus:ring-red-400;
   }
+
+  /* Archive loading animation */
+  .archive-loader {
+    width: fit-content;
+    font-size: 40px;
+    font-family: var(--font-serif);
+    font-weight: bold;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-ink);
+    background: conic-gradient(var(--color-ink) 0 0) text;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: archive-loading 2s linear infinite;
+  }
+
+  .archive-loader::before {
+    content: "Loading";
+  }
+
+  .dark .archive-loader {
+    -webkit-text-stroke: 1px theme('colors.zinc.100');
+    background: conic-gradient(theme('colors.zinc.100') 0 0) text;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  @keyframes archive-loading {
+    0%, 2%, 8%, 11%, 15%, 21%, 30%, 32%, 35%, 40%, 46%, 47%, 53%, 61%, 70%, 72%, 77%, 80%, 86% {
+      background-size: 0 0;
+    }
+    1%, 9%, 10%, 16%, 20%, 31%, 34%, 41%, 45%, 48%, 52%, 55%, 60%, 73%, 76%, 81%, 85%, 96%, 100% {
+      background-size: 100% 100%;
+    }
+  }
 }
 
 @layer utilities {

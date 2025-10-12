@@ -38,6 +38,9 @@ const config: Config = {
       gridTemplateColumns: {
         editorial: "repeat(auto-fit, minmax(18rem, 1fr))",
       },
+      animation: {
+        "spin-slow": "spin 1.8s linear infinite",
+      },
       typography: ({ theme }: any) => ({
         DEFAULT: {
           css: {
