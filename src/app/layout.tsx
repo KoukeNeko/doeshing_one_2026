@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { Providers } from "@/components/providers/SessionProvider";
 import { fontVariables } from "./fonts";
 import "@/styles/globals.css";
 
@@ -62,24 +63,26 @@ export default function RootLayout({
   return (
     <html lang="zh" className={fontVariables} suppressHydrationWarning>
       <body className="min-h-screen bg-newspaper-paper text-newspaper-ink antialiased dark:bg-zinc-900 dark:text-zinc-100">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <a href="#main-content" className="sr-only sr-only-focusable">
-            Skip to content
-          </a>
-          <Header />
-          <main
-            id="main-content"
-            className="mx-auto min-h-[calc(100vh-16rem)] max-w-6xl px-4 pb-24 pt-12 md:px-6"
+        <Providers>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
           >
-            {children}
-          </main>
-          <Footer />
-        </ThemeProvider>
+            <a href="#main-content" className="sr-only sr-only-focusable">
+              Skip to content
+            </a>
+            <Header />
+            <main
+              id="main-content"
+              className="mx-auto min-h-[calc(100vh-16rem)] max-w-6xl px-4 pb-24 pt-12 md:px-6"
+            >
+              {children}
+            </main>
+            <Footer />
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );
