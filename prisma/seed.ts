@@ -18,23 +18,31 @@ async function main() {
   await prisma.author.deleteMany();
   await prisma.user.deleteMany();
 
+  // 使用環境變數中的管理員 Email，如果沒有則使用預設值
+  const adminEmail = process.env.ADMIN_EMAIL || "hello@doeshing.com";
+  const authorName = process.env.AUTHOR_NAME || "Doeshing";
+
+  console.log(`📝 Creating author with email: ${adminEmail}`);
+
   const user = await prisma.user.create({
     data: {
-      name: "Doeshing",
-      email: "hello@doeshing.com",
+      name: authorName,
+      email: adminEmail,
       image: "/images/avatar.svg",
     },
   });
 
   const author = await prisma.author.create({
     data: {
-      name: "Doeshing",
-      email: "hello@doeshing.com",
+      name: authorName,
+      email: adminEmail,
       avatar: "/images/avatar.svg",
       bio: "Creative technologist crafting editorials in the browser. Exploring the sweet spot between storytelling, design, and modern web tooling.",
       userId: user.id,
     },
   });
+
+  console.log(`✅ Author created: ${author.name} (${author.email})`);
 
   const tagNames = [
     { name: "Next.js", slug: "nextjs" },

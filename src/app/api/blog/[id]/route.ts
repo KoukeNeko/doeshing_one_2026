@@ -7,7 +7,11 @@ const updatePostSchema = z.object({
   title: z.string().min(3).max(120).optional(),
   excerpt: z.string().nullable().optional(),
   content: z.string().min(1).optional(),
-  coverImage: z.string().url().nullable().optional(),
+  coverImage: z
+    .string()
+    .nullable()
+    .optional()
+    .transform((val) => (val === "" ? null : val)),
   published: z.boolean().optional(),
   tags: z.array(z.string()).optional(),
 });

@@ -59,15 +59,38 @@ export async function POST(request: Request) {
     const body = await request.json();
     const validated = createPostSchema.parse(body);
 
-    // 目前僅支援單一作者，未來可擴展為多作者系統
-    // TODO: 當需要多作者時，可根據 session.user.email 查找對應作者
-    const author = await prisma.author.findFirst({
-      orderBy: { createdAt: "asc" }, // 使用第一個建立的作者
+    // 獲取作者 - 單作者系統
+    // 優先查找與登入用戶 email 匹配的作者，如果沒有則使用第一個作者
+    let author = await prisma.author.findFirst({
+      where: { email: session.user?.email || undefined },
     });
+
+    // 如果沒有對應的作者，嘗試獲取第一個作者
+    if (!author) {
+      author = await prisma.author.findFirst({
+        orderBy: { createdAt: "asc" },
+      });
+    }
+
+    // 如果還是沒有作者，自動創建一個
+    if (!author && session.user?.email) {
+      console.log(`📝 Auto-creating author for: ${session.user.email}`);
+      author = await prisma.author.create({
+        data: {
+          name: session.user.name || "Admin",
+          email: session.user.email,
+          avatar: session.user.image || null,
+          bio: null,
+        },
+      });
+    }
 
     if (!author) {
       return NextResponse.json(
-        { message: "No author found. Please run: bun prisma db seed" },
+        { 
+          message: "No author found. Please set ADMIN_EMAIL and run: bun prisma db seed",
+          hint: "Make sure your .env file has ADMIN_EMAIL set to your Google account email"
+        },
         { status: 404 }
       );
     }
