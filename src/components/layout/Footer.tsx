@@ -64,7 +64,7 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-black/10 bg-newspaper-paper py-6 dark:border-white/10 dark:bg-zinc-950">
+  <div className="border-t border-black/10 bg-newspaper-paper pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] dark:border-white/10 dark:bg-zinc-950">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 text-xs text-newspaper-gray dark:text-zinc-400 md:flex-row md:px-6">
           <span>
             &copy; {new Date().getFullYear()} Doeshing. All rights reserved.
