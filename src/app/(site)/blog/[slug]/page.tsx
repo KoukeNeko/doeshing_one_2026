@@ -76,7 +76,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const shareUrl = `${baseUrl}/blog/${post.slug}`;
 
   return (
-    <article className="grid gap-10 lg:grid-cols-[minmax(0,1fr),280px]">
+    <article className="grid gap-10 md:grid-cols-[minmax(0,1fr),280px]" style={{ overflow: 'visible' }}>
       <div className="min-w-0 space-y-10 overflow-x-hidden">
         <header className="space-y-6 border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900">
           <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
@@ -162,7 +162,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       <div className="flex flex-col gap-6">
         <TableOfContents items={toc ?? []} />
-        <div className="sticky top-32 space-y-6">
+        <div className="sticky top-24 space-y-6" style={{ position: 'sticky', top: '6rem' }}>
           <div className="border border-black/10 bg-white px-6 py-6 dark:border-white/10 dark:bg-zinc-900">
             <span className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
               Author

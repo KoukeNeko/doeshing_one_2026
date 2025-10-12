@@ -22,13 +22,11 @@
   html {
     font-size: 16px;
     scroll-behavior: smooth;
-    overflow-x: hidden;
   }
 
   body {
     @apply bg-newspaper-paper text-newspaper-ink font-sans antialiased;
     min-height: -webkit-fill-available;
-    overflow-x: hidden;
   }
 
   .dark body {
