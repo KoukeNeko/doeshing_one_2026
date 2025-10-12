@@ -24,7 +24,7 @@ export function Pagination({
       {pages.map((page) => (
         <Link
           key={page}
-          href={buildHref(page)}
+          href={buildHref(page) as any}
           className={cn(
             "inline-flex h-10 w-10 items-center justify-center border border-black/10 text-xs font-semibold uppercase tracking-[0.25em] transition dark:border-white/10",
             page === currentPage

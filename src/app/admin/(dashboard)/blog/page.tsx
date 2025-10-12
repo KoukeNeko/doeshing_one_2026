@@ -11,11 +11,12 @@ interface SearchParams {
 export default async function BlogListPage({
   searchParams,
 }: {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 }) {
-  const search = searchParams.search || "";
-  const status = searchParams.status || "all";
-  const page = Number.parseInt(searchParams.page || "1", 10);
+  const params = await searchParams;
+  const search = params.search || "";
+  const status = params.status || "all";
+  const page = Number.parseInt(params.page || "1", 10);
   const perPage = 20;
 
   const where = {

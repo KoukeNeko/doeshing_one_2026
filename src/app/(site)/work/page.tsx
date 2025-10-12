@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { loadAllProjects } from "@/lib/mdx";
 
 interface ProjectsPageProps {
-  searchParams: Record<string, string | string[] | undefined>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
 const STATUSES = [
@@ -18,8 +18,9 @@ const STATUSES = [
 export default async function ProjectsPage({
   searchParams,
 }: ProjectsPageProps) {
-  const tag = toStringParam(searchParams.tag);
-  const statusParam = toStringParam(searchParams.status) ?? "all";
+  const params = await searchParams;
+  const tag = toStringParam(params.tag);
+  const statusParam = toStringParam(params.status) ?? "all";
 
   const projects = await loadAllProjects();
 
@@ -38,11 +39,11 @@ export default async function ProjectsPage({
     return matchesTag && matchesStatus;
   });
 
-  const buildHref = (nextTag?: string, nextStatus?: string) => {
+  const buildHref = (nextTag?: string, nextStatus?: string): string => {
     const params = new URLSearchParams();
     if (nextTag) params.set("tag", nextTag);
     if (nextStatus && nextStatus !== "all") params.set("status", nextStatus);
-    return params.toString() ? `?${params.toString()}` : "";
+    return params.toString() ? `?${params.toString()}` : "/work";
   };
 
   return (
@@ -56,11 +57,11 @@ export default async function ProjectsPage({
       <div className="flex flex-col gap-4 border border-black/10 bg-white px-6 py-5 dark:border-white/10 dark:bg-zinc-900">
         <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-gray dark:text-zinc-400">
           <span>Tags</span>
-          <Link href={buildHref(undefined, statusParam)}>
+          <Link href={buildHref(undefined, statusParam) as any}>
             <Badge variant={!tag ? "accent" : "outline"}>All</Badge>
           </Link>
           {tags.map((item) => (
-            <Link key={item} href={buildHref(item, statusParam)}>
+            <Link key={item} href={buildHref(item, statusParam) as any}>
               <Badge
                 variant={
                   tag?.toLowerCase() === item.toLowerCase()
@@ -78,7 +79,7 @@ export default async function ProjectsPage({
           {STATUSES.map((status) => (
             <Link
               key={status.value}
-              href={buildHref(tag ?? undefined, status.value)}
+              href={buildHref(tag ?? undefined, status.value) as any}
             >
               <Badge
                 variant={statusParam === status.value ? "accent" : "outline"}

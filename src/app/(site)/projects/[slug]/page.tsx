@@ -70,22 +70,22 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </div>
         <div className="flex flex-wrap gap-4 text-xs uppercase tracking-[0.3em] text-newspaper-accent dark:text-red-400">
           {frontmatter.github ? (
-            <Link
+            <a
               href={frontmatter.github}
               target="_blank"
               rel="noopener noreferrer"
             >
               GitHub Repository
-            </Link>
+            </a>
           ) : null}
           {frontmatter.demo ? (
-            <Link
+            <a
               href={frontmatter.demo}
               target="_blank"
               rel="noopener noreferrer"
             >
               Live Demo
-            </Link>
+            </a>
           ) : null}
         </div>
       </header>

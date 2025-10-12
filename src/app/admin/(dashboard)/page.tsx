@@ -72,7 +72,7 @@ export default async function AdminDashboard() {
         {stats.map((stat) => (
           <Link
             key={stat.name}
-            href={stat.href}
+            href={stat.href as any}
             className="group relative overflow-hidden rounded-lg border border-black/10 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-zinc-900"
           >
             <div className="flex items-center gap-4">

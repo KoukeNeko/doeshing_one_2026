@@ -8,14 +8,15 @@ import { getPublishedPosts, getTagsWithCount } from "@/lib/blog";
 import { FEATURED_POST_LIMIT, POSTS_PER_PAGE } from "@/lib/constants";
 
 interface BlogPageProps {
-  searchParams: Record<string, string | string[] | undefined>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
-  const search = toStringParam(searchParams.search);
-  const tag = toStringParam(searchParams.tag);
-  const sortParam = toStringParam(searchParams.sort);
-  const pageParam = toStringParam(searchParams.page);
+  const params = await searchParams;
+  const search = toStringParam(params.search);
+  const tag = toStringParam(params.tag);
+  const sortParam = toStringParam(params.sort);
+  const pageParam = toStringParam(params.page);
 
   const page = Math.max(Number(pageParam ?? "1"), 1);
   const sort = sortParam === "views" ? "views" : "latest";

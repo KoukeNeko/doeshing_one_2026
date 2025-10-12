@@ -46,27 +46,27 @@ export default function AboutPage() {
             <div className="flex flex-wrap gap-2 text-xs uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
               <span>{cvData.personal.location}</span>
               <span>&middot;</span>
-              <Link
+              <a
                 href={cvData.personal.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-newspaper-accent dark:text-red-400"
               >
                 LinkedIn
-              </Link>
+              </a>
               <span>&middot;</span>
               <span>{cvData.personal.connections} connections</span>
             </div>
           </div>
         </div>
-        <Link
+        <a
           href="/cv.pdf"
           target="_blank"
           className="inline-flex items-center gap-2 border border-newspaper-ink px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-ink transition hover:bg-newspaper-ink hover:text-newspaper-paper dark:border-zinc-100 dark:text-zinc-100 dark:hover:bg-zinc-100 dark:hover:text-zinc-900"
         >
           <Download size={16} strokeWidth={1.5} />
           Download PDF
-        </Link>
+        </a>
       </header>
 
       {/* Open to Work */}

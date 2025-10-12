@@ -24,6 +24,7 @@ const basePostSelect = {
   createdAt: true,
   updatedAt: true,
   views: true,
+  authorId: true,
   tags: true,
   author: true,
 } satisfies Prisma.PostSelect;

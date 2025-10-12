@@ -53,22 +53,22 @@ export function ProjectCard({ project, highlight = false }: ProjectCardProps) {
           <span>{formatDate(frontmatter.date, "MMM yyyy")}</span>
           <div className="flex gap-4">
             {frontmatter.github ? (
-              <Link
+              <a
                 href={frontmatter.github}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 GitHub
-              </Link>
+              </a>
             ) : null}
             {frontmatter.demo ? (
-              <Link
+              <a
                 href={frontmatter.demo}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Demo
-              </Link>
+              </a>
             ) : null}
           </div>
         </div>

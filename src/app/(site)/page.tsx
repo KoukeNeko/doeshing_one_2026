@@ -8,7 +8,11 @@ import { getFeaturedPosts } from "@/lib/blog";
 import { loadAllProjects } from "@/lib/mdx";
 import { getNewspaperDateline } from "@/lib/utils";
 
-const quickLinks = [
+const quickLinks: Array<{
+  title: string;
+  description: string;
+  href: string;
+}> = [
   {
     title: "The Archive",
     description:
@@ -112,7 +116,7 @@ export default async function HomePage() {
           {quickLinks.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
+              href={link.href as any}
               className="flex flex-col gap-4 border border-black/10 bg-white px-6 py-8 text-left transition-all duration-300 ease-out hover:-translate-y-1 hover:border-newspaper-ink hover:shadow-editorial dark:border-white/10 dark:bg-zinc-900 dark:hover:border-zinc-400"
             >
               <span className="text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-accent dark:text-red-400">

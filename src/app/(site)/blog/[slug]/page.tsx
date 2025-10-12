@@ -98,7 +98,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <p className="text-base text-newspaper-gray dark:text-zinc-400">{post.excerpt}</p>
           ) : null}
           <div className="flex flex-wrap items-center gap-3">
-            {post.tags.map((tag: BlogPostTag) => (
+            {post.tags.map((tag) => (
               <Badge key={tag.id} variant="outline">
                 {tag.name}
               </Badge>

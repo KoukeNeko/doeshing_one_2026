@@ -38,13 +38,13 @@ export function TagFilter({ tags }: TagFilterProps) {
       <span className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
         Filter by tag
       </span>
-      <Link href={createLink()} aria-label="Show all posts">
+      <Link href={createLink() as any} aria-label="Show all posts">
         <Badge variant={!activeTag ? "accent" : "outline"}>All</Badge>
       </Link>
       {tags.map((tag) => (
         <Link
           key={tag.slug}
-          href={createLink(tag.slug)}
+          href={createLink(tag.slug) as any}
           aria-label={`Filter by ${tag.name}`}
         >
           <Badge
