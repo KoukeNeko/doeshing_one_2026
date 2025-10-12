@@ -9,12 +9,11 @@ interface TableOfContentsProps {
 }
 
 export function TableOfContents({ items }: TableOfContentsProps) {
-  if (!items.length) return null;
+  if (!items || items.length === 0) return null;
 
   return (
-    <aside 
-      className="sticky top-24 hidden max-h-[calc(100vh-8rem)] min-w-[220px] overflow-y-auto border border-black/10 bg-white px-6 py-6 dark:border-white/10 dark:bg-zinc-900 md:block"
-      style={{ position: 'sticky', top: '6rem' }}
+    <div 
+      className="min-w-[220px] border border-black/10 bg-white px-6 py-6 dark:border-white/10 dark:bg-zinc-900"
     >
       <p className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
         Contents
@@ -33,6 +32,6 @@ export function TableOfContents({ items }: TableOfContentsProps) {
           </a>
         ))}
       </nav>
-    </aside>
+    </div>
   );
 }
