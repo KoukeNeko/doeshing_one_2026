@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 
 interface Certification {
   name: string;
@@ -9,6 +9,7 @@ interface Certification {
   issued: string;
   expires?: string;
   credentialId?: string;
+  credentialUrl?: string;
   skills?: string[];
   description?: string;
 }
@@ -29,12 +30,33 @@ export function CertificationsList({ certifications }: CertificationsListProps) 
             key={cert.name}
             className="border border-black/10 bg-white px-6 py-4 dark:border-white/10 dark:bg-zinc-900"
           >
-            <p className="font-serif text-base text-newspaper-ink dark:text-zinc-50">
-              {cert.name}
-            </p>
-            <p className="text-xs uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
-              {cert.issuer} · {cert.issued}
-            </p>
+            {cert.credentialUrl ? (
+              <a
+                href={cert.credentialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-start justify-between gap-2"
+              >
+                <div className="flex-1">
+                  <p className="font-serif text-base text-newspaper-ink transition-colors group-hover:text-newspaper-accent dark:text-zinc-50 dark:group-hover:text-red-400">
+                    {cert.name}
+                  </p>
+                  <p className="text-xs uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
+                    {cert.issuer} · {cert.issued}
+                  </p>
+                </div>
+                <ExternalLink className="h-4 w-4 flex-shrink-0 text-newspaper-gray opacity-0 transition-all group-hover:opacity-100 dark:text-zinc-400" />
+              </a>
+            ) : (
+              <div>
+                <p className="font-serif text-base text-newspaper-ink dark:text-zinc-50">
+                  {cert.name}
+                </p>
+                <p className="text-xs uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
+                  {cert.issuer} · {cert.issued}
+                </p>
+              </div>
+            )}
           </li>
         ))}
       </ul>
