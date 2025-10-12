@@ -7,7 +7,7 @@ import { Navigation } from "./Navigation";
 export function Header() {
   return (
     <>
-      <header className="bg-newspaper-paper dark:border-white/10 dark:bg-zinc-900">
+      <header className="border-b border-black/10 bg-newspaper-paper dark:border-white/10 dark:bg-zinc-900">
         <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 md:px-6 md:py-12">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="flex flex-col gap-3">
