@@ -34,7 +34,7 @@ export default function AboutPage() {
             alt="De-Sheng Chen portrait"
             width={120}
             height={120}
-            className="h-24 w-24 rounded-full border border-black/10 object-cover dark:border-white/10 dark:invert"
+            className="h-24 w-24 rounded-full border border-black/10 object-cover dark:border-white/10"
           />
           <div className="space-y-2">
             <h1 className="font-serif text-3xl tracking-tight text-newspaper-ink dark:text-zinc-50">
