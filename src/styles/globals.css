@@ -22,11 +22,13 @@
   html {
     font-size: 16px;
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-newspaper-paper text-newspaper-ink font-sans antialiased;
     min-height: -webkit-fill-available;
+    overflow-x: hidden;
   }
 
   .dark body {
@@ -61,14 +63,34 @@
 
   .prose img {
     @apply rounded-none border border-black/5 shadow-editorial dark:border-white/5;
+    max-width: 100%;
+    height: auto;
   }
 
   .prose figure {
     @apply my-8;
+    max-width: 100%;
+    overflow-x: auto;
   }
 
   .prose figcaption {
     @apply mt-3 text-sm font-serif uppercase tracking-[0.22em] text-newspaper-gray dark:text-zinc-400;
+  }
+
+  .prose pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .prose code {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .prose table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
   }
 
   .sr-only-focusable:focus {

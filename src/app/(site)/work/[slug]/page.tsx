@@ -91,10 +91,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </header>
 
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr),280px]">
-        <RenderedMarkdown
-          html={html ?? ""}
-          className="dropcap prose prose-lg prose-headings:font-serif prose-headings:tracking-tight prose-p:text-newspaper-gray dark:prose-invert"
-        />
+        <div className="min-w-0 overflow-x-hidden">
+          <RenderedMarkdown
+            html={html ?? ""}
+            className="dropcap prose prose-lg prose-headings:font-serif prose-headings:tracking-tight prose-p:text-newspaper-gray dark:prose-invert"
+          />
+        </div>
         <aside className="space-y-6">
           {toc?.length ? (
             <div className="sticky top-32 border border-black/10 bg-white px-6 py-6 dark:border-white/10 dark:bg-zinc-900">
