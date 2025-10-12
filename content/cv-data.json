@@ -90,6 +90,7 @@
       "issued": "Nov 2024",
       "expires": "Nov 2027",
       "credentialId": "335232ec32704b97a2c47b128b04744f",
+      "credentialUrl": "https://www.credly.com/badges/d3abccbf-08da-4eb9-a03e-00eb3d5b130b",
       "skills": [
         "Amazon Web Services (AWS)",
         "Generative AI",
@@ -103,6 +104,7 @@
       "name": "AWS Certified AI Practitioner Early Adopter",
       "issuer": "Amazon Web Services (AWS)",
       "issued": "Nov 2024",
+      "credentialUrl": "https://www.credly.com/badges/56ed1f76-603e-498b-9aab-580fc7c8ea71",
       "skills": [
         "Machine Learning (ML)",
         "Foundation Models",
@@ -115,12 +117,14 @@
       "name": "Inspect Rich Documents with Gemini Multimodality and Multimodal RAG Skill Badge",
       "issuer": "Google Cloud Skills Boost",
       "issued": "Nov 2024",
+      "credentialUrl": "https://www.credly.com/badges/df90c728-18be-4aad-bb51-11f067cfe82d/public_url",
       "skills": ["Google Gemini", "Retrieval-Augmented Generation (RAG)"]
     },
     {
       "name": "Develop GenAI Apps with Gemini and Streamlit Skill Badge",
       "issuer": "Google Cloud Skills Boost",
       "issued": "Oct 2024",
+      "credentialUrl": "https://www.credly.com/badges/d3bfc846-6191-4902-8941-f664597f58fe",
       "skills": [
         "Python (プログラミング言語)",
         "軟體開發",
@@ -133,18 +137,21 @@
       "issuer": "freeCodeCamp",
       "issued": "Oct 2024",
       "credentialId": "doeshing-fcswm",
+      "credentialUrl": "https://www.freecodecamp.org/certification/doeshing/foundational-c-sharp-with-microsoft",
       "skills": ["C#", "軟體設計", "プログラミング"]
     },
     {
       "name": "LinkedIn Premium 活用術",
       "issuer": "LinkedIn",
       "issued": "Oct 2024",
+      "credentialUrl": "https://www.linkedin.com/learning/certificates/84b810e1849d3907dc77e2d0f8d85bc27f766e7bd6026778e07bb9bf45b48731",
       "skills": ["LinkedIn"]
     },
     {
       "name": "Prompt Design in Vertex AI Skill Badge",
       "issuer": "Google Cloud Skills Boost",
       "issued": "Oct 2024",
+      "credentialUrl": "https://www.credly.com/badges/606f597d-17e3-4d35-a3c4-50230577d7d7/public_url",
       "skills": [
         "Google Gemini",
         "Prompt Engineering",
@@ -156,18 +163,21 @@
       "name": "学生のためのLinkedIn 入門",
       "issuer": "LinkedIn",
       "issued": "Oct 2024",
+      "credentialUrl": "https://www.linkedin.com/learning/certificates/3e2bab6d33111699b2b338c637ea3c88971784cb13c13848e0f8bdd81c3ba556",
       "skills": ["LinkedIn"]
     },
     {
       "name": "[計畫辦公室] AI CUP 2022: 農地作物現況調查影像辨識競賽-秋季賽",
       "issuer": "教育部人工智慧競賽與標註資料蒐集計畫 (AI CUP)",
       "issued": "Mar 2023",
+      "credentialUrl": "https://global.turingcerts.com/ja-JP/co/cert?hash=d0b3d85c8737de9b9a0bcf97362e5ae7c2f5575bbd441465132cf25a1ae5f446",
       "skills": ["TensorFlow", "Python (プログラミング言語)"]
     },
     {
       "name": "MTA: Networking Fundamentals",
       "issuer": "Microsoft",
       "issued": "Dec 2018",
+      "credentialUrl": "https://www.credly.com/badges/a8179a0b-31f6-48c5-9dc1-35ba62f111e6/public_url",
       "skills": [
         "網際網路協定套組 (TCP/IP)",
         "OSI Model",
