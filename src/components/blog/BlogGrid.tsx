@@ -9,7 +9,7 @@ interface BlogGridProps {
 export function BlogGrid({ posts, featuredCount = 1 }: BlogGridProps) {
   if (!posts.length) {
     return (
-      <div className="border border-dashed border-black/20 bg-white px-6 py-16 text-center text-sm uppercase tracking-[0.35em] text-newspaper-gray">
+      <div className="border border-dashed border-black/20 bg-white px-6 py-16 text-center text-sm uppercase tracking-[0.35em] text-newspaper-gray dark:border-white/20 dark:bg-zinc-900 dark:text-zinc-400">
         No posts yet. Fresh ink is on the way.
       </div>
     );
