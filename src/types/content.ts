@@ -6,7 +6,9 @@ export type BlogPost = Post & {
   author: Author;
 };
 
-export type BlogPostListItem = BlogPost & {
+// Optimized type for list views - excludes heavy content field
+export type BlogPostListItem = Omit<Post, "content" | "authorId"> & {
+  tags: Tag[];
   readingTime?: string;
 };
 

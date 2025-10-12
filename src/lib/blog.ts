@@ -13,24 +13,31 @@ export interface BlogFilters {
   published?: boolean;
 }
 
-const basePostSelect = {
+// Optimized select for list views - excludes heavy content field
+const listPostSelect = {
   id: true,
   slug: true,
   title: true,
   excerpt: true,
-  content: true,
   coverImage: true,
   published: true,
   publishedAt: true,
   createdAt: true,
   updatedAt: true,
   views: true,
-  authorId: true,
   tags: true,
+} satisfies Prisma.PostSelect;
+
+// Full select for detail views
+const detailPostSelect = {
+  ...listPostSelect,
+  content: true,
+  authorId: true,
   author: true,
 } satisfies Prisma.PostSelect;
 
-type SelectedPost = Prisma.PostGetPayload<{ select: typeof basePostSelect }>;
+type ListPost = Prisma.PostGetPayload<{ select: typeof listPostSelect }>;
+type DetailPost = Prisma.PostGetPayload<{ select: typeof detailPostSelect }>;
 
 export async function getPublishedPosts({
   search,
@@ -76,15 +83,15 @@ export async function getPublishedPosts({
     const posts = await prisma.post.findMany({
       where,
       orderBy,
-      select: basePostSelect,
+      select: listPostSelect,
       skip: (page - 1) * perPage,
       take: perPage,
     });
 
     return {
-      posts: posts.map((post: SelectedPost) => ({
+      posts: posts.map((post: ListPost) => ({
         ...post,
-        readingTime: getReadingTime(post.content),
+        readingTime: undefined, // Will be calculated on client if needed
       })),
       total,
     };
@@ -110,12 +117,12 @@ export const getFeaturedPosts = unstable_cache(
         publishedAt: "desc",
       },
       take: limit,
-      select: basePostSelect,
+      select: listPostSelect,
     });
 
-    return posts.map((post: SelectedPost) => ({
+    return posts.map((post: ListPost) => ({
       ...post,
-      readingTime: getReadingTime(post.content),
+      readingTime: undefined,
     }));
   },
   ["featured-posts"],
@@ -129,7 +136,7 @@ export async function getPostBySlug(slug: string, includeDraft = false) {
   const fetchPost = async () => {
     const post = await prisma.post.findUnique({
       where: { slug },
-      select: basePostSelect,
+      select: detailPostSelect,
     });
 
     if (!post) return null;
@@ -160,7 +167,7 @@ export async function getAdjacentPosts(publishedAt: Date, _postId: string) {
         publishedAt: { lt: publishedAt },
       },
       orderBy: { publishedAt: "desc" },
-      select: basePostSelect,
+      select: listPostSelect,
     }),
     prisma.post.findFirst({
       where: {
@@ -168,7 +175,7 @@ export async function getAdjacentPosts(publishedAt: Date, _postId: string) {
         publishedAt: { gt: publishedAt },
       },
       orderBy: { publishedAt: "asc" },
-      select: basePostSelect,
+      select: listPostSelect,
     }),
   ]);
 
@@ -204,13 +211,13 @@ export async function getRelatedPosts(
       },
     },
     take: limit,
-    select: basePostSelect,
+    select: listPostSelect,
     orderBy: { publishedAt: "desc" },
   });
 
-  return posts.map((post: SelectedPost) => ({
+  return posts.map((post: ListPost) => ({
     ...post,
-    readingTime: getReadingTime(post.content),
+    readingTime: undefined,
   }));
 }
 
