@@ -22,8 +22,16 @@
     @apply bg-newspaper-paper text-newspaper-ink font-sans antialiased;
   }
 
+  .dark body {
+    @apply bg-zinc-900 text-zinc-100;
+  }
+
   ::selection {
     @apply bg-newspaper-accent text-newspaper-paper;
+  }
+
+  .dark ::selection {
+    @apply bg-red-400 text-zinc-900;
   }
 }
 
@@ -33,11 +41,11 @@
   }
 
   a:hover {
-    @apply text-newspaper-accent;
+    @apply text-newspaper-accent dark:text-red-400;
   }
 
   .dropcap:first-letter {
-    @apply float-left mr-3 mt-1 text-6xl font-serif font-bold leading-none text-newspaper-accent;
+    @apply float-left mr-3 mt-1 text-6xl font-serif font-bold leading-none text-newspaper-accent dark:text-red-400;
   }
 
   .prose {
@@ -45,7 +53,7 @@
   }
 
   .prose img {
-    @apply rounded-none border border-black/5 shadow-editorial;
+    @apply rounded-none border border-black/5 shadow-editorial dark:border-white/5;
   }
 
   .prose figure {
@@ -53,10 +61,10 @@
   }
 
   .prose figcaption {
-    @apply mt-3 text-sm font-serif uppercase tracking-[0.22em] text-newspaper-gray;
+    @apply mt-3 text-sm font-serif uppercase tracking-[0.22em] text-newspaper-gray dark:text-zinc-400;
   }
 
   .sr-only-focusable:focus {
-    @apply not-sr-only absolute left-4 top-4 inline-flex items-center rounded bg-newspaper-ink px-3 py-2 text-sm font-semibold tracking-wide text-newspaper-paper shadow-lg focus:outline-none focus:ring-2 focus:ring-newspaper-accent;
+    @apply not-sr-only absolute left-4 top-4 inline-flex items-center rounded bg-newspaper-ink px-3 py-2 text-sm font-semibold tracking-wide text-newspaper-paper shadow-lg focus:outline-none focus:ring-2 focus:ring-newspaper-accent dark:bg-zinc-100 dark:text-zinc-900 dark:focus:ring-red-400;
   }
 }

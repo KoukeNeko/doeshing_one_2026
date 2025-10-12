@@ -44,14 +44,14 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           title="Stories on design, code, and creative systems"
           description="Dive into essays, field notes, and interviews that explore how modern tools meet timeless editorial principles."
         />
-        <div className="flex flex-col gap-4 border border-black/10 bg-white px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-4 border border-black/10 bg-white px-6 py-5 dark:border-white/10 dark:bg-zinc-900 sm:flex-row sm:items-center sm:justify-between">
           <form
             className="flex w-full flex-col gap-3 sm:flex-row sm:items-center"
             action=""
             method="get"
           >
-            <label className="flex flex-1 items-center gap-3 border border-black/10 px-4 py-2 focus-within:border-newspaper-ink">
-              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-gray">
+            <label className="flex flex-1 items-center gap-3 border border-black/10 px-4 py-2 focus-within:border-newspaper-ink dark:border-white/10 dark:focus-within:border-zinc-400">
+              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
                 Search
               </span>
               <input
@@ -59,13 +59,13 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 name="search"
                 defaultValue={search ?? ""}
                 placeholder="Keywords, topics, or tags"
-                className="w-full bg-transparent text-sm uppercase tracking-[0.25em] text-newspaper-ink outline-none placeholder:text-newspaper-gray"
+                className="w-full bg-transparent text-sm uppercase tracking-[0.25em] text-newspaper-ink outline-none placeholder:text-newspaper-gray dark:text-zinc-100 dark:placeholder:text-zinc-500"
               />
             </label>
             <div className="flex items-center gap-3">
               <label
                 htmlFor="sort"
-                className="text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-gray"
+                className="text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400"
               >
                 Sort
               </label>
@@ -73,7 +73,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 id="sort"
                 name="sort"
                 defaultValue={sort}
-                className="border border-black/10 bg-white px-3 py-2 text-xs uppercase tracking-[0.25em] text-newspaper-ink"
+                className="border border-black/10 bg-white px-3 py-2 text-xs uppercase tracking-[0.25em] text-newspaper-ink dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-100"
               >
                 <option value="latest">Latest</option>
                 <option value="views">Most Viewed</option>
@@ -81,13 +81,13 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
             </div>
             <button
               type="submit"
-              className="inline-flex items-center justify-center border border-newspaper-ink px-6 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-ink transition hover:bg-newspaper-ink hover:text-newspaper-paper"
+              className="inline-flex items-center justify-center border border-newspaper-ink px-6 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-ink transition hover:bg-newspaper-ink hover:text-newspaper-paper dark:border-zinc-100 dark:text-zinc-100 dark:hover:bg-zinc-100 dark:hover:text-zinc-900"
             >
               Update
             </button>
           </form>
-          <div className="text-xs uppercase tracking-[0.3em] text-newspaper-gray">
-            <span className="font-semibold text-newspaper-ink">{total}</span>{" "}
+          <div className="text-xs uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
+            <span className="font-semibold text-newspaper-ink dark:text-zinc-100">{total}</span>{" "}
             articles
           </div>
         </div>
@@ -97,9 +97,9 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
       <BlogGrid posts={posts} featuredCount={FEATURED_POST_LIMIT} />
 
-      <div className="flex flex-wrap items-center justify-between gap-3 border border-black/10 bg-white px-6 py-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 border border-black/10 bg-white px-6 py-4 dark:border-white/10 dark:bg-zinc-900">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-gray">
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
             Active filters
           </span>
           <div className="flex flex-wrap gap-2">
@@ -115,7 +115,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         </div>
         <Link
           href="/blog"
-          className="text-xs uppercase tracking-[0.3em] text-newspaper-accent"
+          className="text-xs uppercase tracking-[0.3em] text-newspaper-accent dark:text-red-400"
         >
           Reset
         </Link>

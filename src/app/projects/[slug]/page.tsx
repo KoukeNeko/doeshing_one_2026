@@ -45,18 +45,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <article className="space-y-12">
-      <header className="space-y-5 border border-black/10 bg-white px-6 py-10 shadow-editorial">
-        <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.35em] text-newspaper-gray">
+      <header className="space-y-5 border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900">
+        <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
           <span>{formatDate(frontmatter.date, "MMM yyyy")}</span>
           {frontmatter.status ? (
             <Badge variant="accent">{frontmatter.status}</Badge>
           ) : null}
           <span>{project.readingTime}</span>
         </div>
-        <h1 className="font-serif text-4xl tracking-tight text-newspaper-ink">
+        <h1 className="font-serif text-4xl tracking-tight text-newspaper-ink dark:text-zinc-50">
           {frontmatter.title}
         </h1>
-        <p className="text-base text-newspaper-gray">
+        <p className="text-base text-newspaper-gray dark:text-zinc-400">
           {frontmatter.description}
         </p>
         <div className="flex flex-wrap items-center gap-2">
@@ -66,7 +66,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </Badge>
           ))}
         </div>
-        <div className="flex flex-wrap gap-4 text-xs uppercase tracking-[0.3em] text-newspaper-accent">
+        <div className="flex flex-wrap gap-4 text-xs uppercase tracking-[0.3em] text-newspaper-accent dark:text-red-400">
           {frontmatter.github ? (
             <Link
               href={frontmatter.github}
@@ -91,12 +91,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr),280px]">
         <RenderedMarkdown
           html={html ?? ""}
-          className="dropcap prose prose-lg prose-headings:font-serif prose-headings:tracking-tight prose-p:text-newspaper-gray"
+          className="dropcap prose prose-lg prose-headings:font-serif prose-headings:tracking-tight prose-p:text-newspaper-gray dark:prose-invert"
         />
         <aside className="space-y-6">
           {toc?.length ? (
-            <div className="sticky top-32 border border-black/10 bg-white px-6 py-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray">
+            <div className="sticky top-32 border border-black/10 bg-white px-6 py-6 dark:border-white/10 dark:bg-zinc-900">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
                 Outline
               </p>
               <ul className="mt-4 space-y-2 text-sm">
@@ -107,7 +107,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   >
                     <a
                       href={`#${item.id}`}
-                      className="text-newspaper-gray transition hover:text-newspaper-ink"
+                      className="text-newspaper-gray transition hover:text-newspaper-ink dark:text-zinc-400 dark:hover:text-zinc-100"
                     >
                       {item.text}
                     </a>
@@ -116,15 +116,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </ul>
             </div>
           ) : null}
-          <div className="border border-black/10 bg-white px-6 py-6 text-sm text-newspaper-gray">
+          <div className="border border-black/10 bg-white px-6 py-6 text-sm text-newspaper-gray dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400">
             <p>
-              <strong className="font-semibold text-newspaper-ink">
+              <strong className="font-semibold text-newspaper-ink dark:text-zinc-50">
                 Status
               </strong>{" "}
               — {frontmatter.status ?? "n/a"}
             </p>
             {frontmatter.featured ? (
-              <p className="mt-2 text-newspaper-accent">Featured project</p>
+              <p className="mt-2 text-newspaper-accent dark:text-red-400">Featured project</p>
             ) : null}
           </div>
         </aside>

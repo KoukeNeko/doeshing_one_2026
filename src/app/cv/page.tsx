@@ -71,29 +71,29 @@ const awards = [
 export default function CvPage() {
   return (
     <div className="space-y-12">
-      <header className="flex flex-col gap-8 border border-black/10 bg-white px-6 py-10 shadow-editorial md:flex-row md:items-center md:justify-between">
+      <header className="flex flex-col gap-8 border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-6">
           <Image
             src="/images/avatar.svg"
             alt="Doeshing portrait"
             width={120}
             height={120}
-            className="h-24 w-24 rounded-full border border-black/10 object-cover"
+            className="h-24 w-24 rounded-full border border-black/10 object-cover dark:border-white/10 dark:invert"
           />
           <div className="space-y-2">
-            <h1 className="font-serif text-3xl tracking-tight text-newspaper-ink">
+            <h1 className="font-serif text-3xl tracking-tight text-newspaper-ink dark:text-zinc-50">
               Doeshing
             </h1>
-            <p className="text-sm text-newspaper-gray">
+            <p className="text-sm text-newspaper-gray dark:text-zinc-400">
               Design engineer crafting editorial-grade web experiences. Bridging
               storytelling, product strategy, and modern frontend stacks.
             </p>
-            <div className="flex flex-wrap gap-2 text-xs uppercase tracking-[0.3em] text-newspaper-gray">
+            <div className="flex flex-wrap gap-2 text-xs uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
               <span>Taipei</span>
               <span>&middot;</span>
               <Link
                 href="mailto:hello@doeshing.com"
-                className="text-newspaper-accent"
+                className="text-newspaper-accent dark:text-red-400"
               >
                 hello@doeshing.com
               </Link>
@@ -102,7 +102,7 @@ export default function CvPage() {
                 href="https://github.com/doeshing"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-newspaper-accent"
+                className="text-newspaper-accent dark:text-red-400"
               >
                 GitHub
               </Link>
@@ -112,7 +112,7 @@ export default function CvPage() {
         <Link
           href="/cv.pdf"
           target="_blank"
-          className="inline-flex items-center gap-2 border border-newspaper-ink px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-ink transition hover:bg-newspaper-ink hover:text-newspaper-paper"
+          className="inline-flex items-center gap-2 border border-newspaper-ink px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-ink transition hover:bg-newspaper-ink hover:text-newspaper-paper dark:border-zinc-100 dark:text-zinc-100 dark:hover:bg-zinc-100 dark:hover:text-zinc-900"
         >
           <Download size={16} strokeWidth={1.5} />
           Download PDF
@@ -136,20 +136,20 @@ export default function CvPage() {
           kicker="Experience"
           title="Selected roles and responsibilities"
         />
-        <ol className="relative border-l border-black/10 pl-6">
+        <ol className="relative border-l border-black/10 pl-6 dark:border-white/10">
           {experience.map((job) => (
             <li key={job.company} className="mb-10 last:mb-0">
-              <div className="absolute -left-3 mt-1 h-6 w-6 rounded-full border border-newspaper-ink bg-white" />
+              <div className="absolute -left-3 mt-1 h-6 w-6 rounded-full border border-newspaper-ink bg-white dark:border-zinc-100 dark:bg-zinc-900" />
               <div className="space-y-3">
-                <div className="flex flex-col gap-2 text-xs uppercase tracking-[0.3em] text-newspaper-gray md:flex-row md:items-center md:gap-4">
-                  <span className="font-semibold text-newspaper-ink">
+                <div className="flex flex-col gap-2 text-xs uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400 md:flex-row md:items-center md:gap-4">
+                  <span className="font-semibold text-newspaper-ink dark:text-zinc-50">
                     {job.role}
                   </span>
                   <span>{job.company}</span>
                   <span>{job.period}</span>
                 </div>
-                <p className="text-sm text-newspaper-gray">{job.summary}</p>
-                <ul className="list-disc space-y-2 pl-5 text-sm text-newspaper-ink">
+                <p className="text-sm text-newspaper-gray dark:text-zinc-400">{job.summary}</p>
+                <ul className="list-disc space-y-2 pl-5 text-sm text-newspaper-ink dark:text-zinc-300">
                   {job.highlights.map((highlight) => (
                     <li key={highlight}>{highlight}</li>
                   ))}
@@ -167,15 +167,15 @@ export default function CvPage() {
             {education.map((item) => (
               <li
                 key={item.school}
-                className="border border-black/10 bg-white px-6 py-4"
+                className="border border-black/10 bg-white px-6 py-4 dark:border-white/10 dark:bg-zinc-900"
               >
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-newspaper-accent">
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-newspaper-accent dark:text-red-400">
                   {item.school}
                 </p>
-                <p className="font-serif text-lg text-newspaper-ink">
+                <p className="font-serif text-lg text-newspaper-ink dark:text-zinc-50">
                   {item.degree}
                 </p>
-                <p className="text-xs uppercase tracking-[0.3em] text-newspaper-gray">
+                <p className="text-xs uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
                   {item.period}
                 </p>
               </li>
@@ -188,12 +188,12 @@ export default function CvPage() {
             {awards.map((award) => (
               <li
                 key={award.title}
-                className="flex items-center justify-between border border-black/10 bg-white px-6 py-4"
+                className="flex items-center justify-between border border-black/10 bg-white px-6 py-4 dark:border-white/10 dark:bg-zinc-900"
               >
-                <span className="font-serif text-lg text-newspaper-ink">
+                <span className="font-serif text-lg text-newspaper-ink dark:text-zinc-50">
                   {award.title}
                 </span>
-                <span className="text-xs uppercase tracking-[0.3em] text-newspaper-gray">
+                <span className="text-xs uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
                   {award.year}
                 </span>
               </li>
@@ -212,15 +212,15 @@ interface SkillCardProps {
 
 function SkillCard({ title, items }: SkillCardProps) {
   return (
-    <div className="border border-black/10 bg-white px-6 py-6">
-      <p className="text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-gray">
+    <div className="border border-black/10 bg-white px-6 py-6 dark:border-white/10 dark:bg-zinc-900">
+      <p className="text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-gray dark:text-zinc-400">
         {title}
       </p>
       <ul className="mt-4 flex flex-wrap gap-2">
         {items.map((item) => (
           <li
             key={item}
-            className="rounded-sm border border-black/10 px-3 py-1 text-sm text-newspaper-ink"
+            className="rounded-sm border border-black/10 px-3 py-1 text-sm text-newspaper-ink dark:border-white/10 dark:text-zinc-100"
           >
             {item}
           </li>

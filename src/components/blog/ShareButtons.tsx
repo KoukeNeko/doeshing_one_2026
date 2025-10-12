@@ -11,10 +11,10 @@ export function ShareButtons({ url, title }: ShareButtonsProps) {
   const encodedTitle = encodeURIComponent(title);
 
   return (
-    <div className="border border-black/10 bg-white px-6 py-5">
+    <div className="border border-black/10 bg-white px-6 py-5 dark:border-white/10 dark:bg-zinc-900">
       <div className="flex items-center gap-3">
-        <Share2 size={18} strokeWidth={1.5} className="text-newspaper-gray" />
-        <span className="text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-gray">
+        <Share2 size={18} strokeWidth={1.5} className="text-newspaper-gray dark:text-zinc-400" />
+        <span className="text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-gray dark:text-zinc-400">
           Share this article
         </span>
       </div>
@@ -42,7 +42,7 @@ export function ShareButtons({ url, title }: ShareButtonsProps) {
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-              "inline-flex items-center gap-2 border border-newspaper-ink px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-newspaper-ink transition hover:bg-newspaper-ink hover:text-newspaper-paper",
+              "inline-flex items-center gap-2 border border-newspaper-ink px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-newspaper-ink transition hover:bg-newspaper-ink hover:text-newspaper-paper dark:border-zinc-100 dark:text-zinc-100 dark:hover:bg-zinc-100 dark:hover:text-zinc-900",
             )}
           >
             {item.icon}

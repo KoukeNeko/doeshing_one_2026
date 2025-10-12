@@ -19,17 +19,17 @@ export function Pagination({
   return (
     <nav
       aria-label="Pagination"
-      className="flex items-center justify-center gap-2 border border-black/10 bg-white px-4 py-4"
+      className="flex items-center justify-center gap-2 border border-black/10 bg-white px-4 py-4 dark:border-white/10 dark:bg-zinc-900"
     >
       {pages.map((page) => (
         <Link
           key={page}
           href={buildHref(page)}
           className={cn(
-            "inline-flex h-10 w-10 items-center justify-center border border-black/10 text-xs font-semibold uppercase tracking-[0.25em] transition",
+            "inline-flex h-10 w-10 items-center justify-center border border-black/10 text-xs font-semibold uppercase tracking-[0.25em] transition dark:border-white/10",
             page === currentPage
-              ? "bg-newspaper-ink text-newspaper-paper"
-              : "hover:border-newspaper-ink hover:text-newspaper-ink",
+              ? "bg-newspaper-ink text-newspaper-paper dark:bg-zinc-100 dark:text-zinc-900"
+              : "hover:border-newspaper-ink hover:text-newspaper-ink dark:hover:border-zinc-100 dark:hover:text-zinc-100",
           )}
           aria-current={page === currentPage ? "page" : undefined}
         >

@@ -4,11 +4,11 @@ import { cn } from "@/lib/utils";
 type BadgeVariant = "default" | "outline" | "accent";
 
 const badgeClasses: Record<BadgeVariant, string> = {
-  default: "bg-newspaper-ink text-newspaper-paper border border-newspaper-ink",
+  default: "bg-newspaper-ink text-newspaper-paper border border-newspaper-ink dark:bg-zinc-100 dark:text-zinc-900 dark:border-zinc-100",
   outline:
-    "border border-newspaper-ink/30 text-newspaper-gray hover:border-newspaper-ink hover:text-newspaper-ink",
+    "border border-newspaper-ink/30 text-newspaper-gray hover:border-newspaper-ink hover:text-newspaper-ink dark:border-white/30 dark:text-zinc-400 dark:hover:border-white dark:hover:text-zinc-100",
   accent:
-    "border border-newspaper-accent text-newspaper-accent hover:bg-newspaper-accent hover:text-newspaper-paper",
+    "border border-newspaper-accent text-newspaper-accent hover:bg-newspaper-accent hover:text-newspaper-paper dark:border-red-400 dark:text-red-400 dark:hover:bg-red-400 dark:hover:text-zinc-900",
 };
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {

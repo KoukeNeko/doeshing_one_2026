@@ -13,7 +13,7 @@ export function SearchButton() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-2 rounded-sm border border-black/10 px-3 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-gray transition hover:border-newspaper-ink hover:text-newspaper-ink"
+        className="inline-flex items-center gap-2 rounded-sm border border-black/10 px-3 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-gray transition hover:border-newspaper-ink hover:text-newspaper-ink dark:border-white/10 dark:text-zinc-400 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
         aria-label="Open search"
       >
         <Search size={16} strokeWidth={1.5} />

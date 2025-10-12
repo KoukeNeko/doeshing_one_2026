@@ -76,8 +76,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <article className="grid gap-10 lg:grid-cols-[minmax(0,1fr),280px]">
       <div className="space-y-10">
-        <header className="space-y-6 border border-black/10 bg-white px-6 py-10 shadow-editorial">
-          <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.35em] text-newspaper-gray">
+        <header className="space-y-6 border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900">
+          <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
             <span>
               {formatDate(
                 post.publishedAt ?? post.createdAt,
@@ -89,11 +89,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <span>&middot;</span>
             <span>{post.views + 1} views</span>
           </div>
-          <h1 className="font-serif text-4xl tracking-tight text-newspaper-ink sm:text-5xl">
+          <h1 className="font-serif text-4xl tracking-tight text-newspaper-ink dark:text-zinc-50 sm:text-5xl">
             {post.title}
           </h1>
           {post.excerpt ? (
-            <p className="text-base text-newspaper-gray">{post.excerpt}</p>
+            <p className="text-base text-newspaper-gray dark:text-zinc-400">{post.excerpt}</p>
           ) : null}
           <div className="flex flex-wrap items-center gap-3">
             {post.tags.map((tag: BlogPostTag) => (
@@ -106,7 +106,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <RenderedMarkdown
           html={html}
-          className="dropcap prose prose-lg prose-headings:font-serif prose-headings:tracking-tight prose-p:text-newspaper-gray prose-strong:text-newspaper-ink"
+          className="dropcap prose prose-lg prose-headings:font-serif prose-headings:tracking-tight prose-p:text-newspaper-gray prose-strong:text-newspaper-ink dark:prose-invert"
         />
 
         <ShareButtons url={shareUrl} title={post.title} />
@@ -120,38 +120,38 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <BlogGrid posts={related} featuredCount={3} />
         </section>
 
-        <nav className="flex flex-col gap-6 border border-black/10 bg-white px-6 py-6 md:flex-row md:justify-between">
+        <nav className="flex flex-col gap-6 border border-black/10 bg-white px-6 py-6 dark:border-white/10 dark:bg-zinc-900 md:flex-row md:justify-between">
           {adjacent.previous ? (
             <Link
               href={`/blog/${adjacent.previous.slug}`}
-              className="flex-1 text-left text-sm text-newspaper-gray transition hover:text-newspaper-ink"
+              className="flex-1 text-left text-sm text-newspaper-gray transition hover:text-newspaper-ink dark:text-zinc-400 dark:hover:text-zinc-100"
             >
-              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-accent">
+              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-accent dark:text-red-400">
                 Previous
               </span>
-              <p className="mt-2 font-serif text-lg text-newspaper-ink">
+              <p className="mt-2 font-serif text-lg text-newspaper-ink dark:text-zinc-50">
                 {adjacent.previous.title}
               </p>
             </Link>
           ) : (
-            <div className="flex-1 text-xs uppercase tracking-[0.3em] text-newspaper-gray">
+            <div className="flex-1 text-xs uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
               Beginning of archive
             </div>
           )}
           {adjacent.next ? (
             <Link
               href={`/blog/${adjacent.next.slug}`}
-              className="flex-1 text-right text-sm text-newspaper-gray transition hover:text-newspaper-ink"
+              className="flex-1 text-right text-sm text-newspaper-gray transition hover:text-newspaper-ink dark:text-zinc-400 dark:hover:text-zinc-100"
             >
-              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-accent">
+              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-accent dark:text-red-400">
                 Next
               </span>
-              <p className="mt-2 font-serif text-lg text-newspaper-ink">
+              <p className="mt-2 font-serif text-lg text-newspaper-ink dark:text-zinc-50">
                 {adjacent.next.title}
               </p>
             </Link>
           ) : (
-            <div className="flex-1 text-right text-xs uppercase tracking-[0.3em] text-newspaper-gray">
+            <div className="flex-1 text-right text-xs uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
               Fresh ink coming soon
             </div>
           )}
@@ -161,15 +161,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <div className="flex flex-col gap-6">
         <TableOfContents items={toc ?? []} />
         <div className="sticky top-32 space-y-6">
-          <div className="border border-black/10 bg-white px-6 py-6">
-            <span className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray">
+          <div className="border border-black/10 bg-white px-6 py-6 dark:border-white/10 dark:bg-zinc-900">
+            <span className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
               Author
             </span>
-            <p className="mt-2 font-serif text-lg text-newspaper-ink">
+            <p className="mt-2 font-serif text-lg text-newspaper-ink dark:text-zinc-50">
               {post.author.name}
             </p>
             {post.author.bio ? (
-              <p className="mt-2 text-sm text-newspaper-gray">
+              <p className="mt-2 text-sm text-newspaper-gray dark:text-zinc-400">
                 {post.author.bio}
               </p>
             ) : null}

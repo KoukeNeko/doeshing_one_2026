@@ -34,8 +34,8 @@ export function TagFilter({ tags }: TagFilterProps) {
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-3 border-y border-black/10 bg-white px-6 py-4 sm:px-8">
-      <span className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray">
+    <div className="flex flex-wrap items-center gap-3 border-y border-black/10 bg-white px-6 py-4 sm:px-8 dark:border-white/10 dark:bg-zinc-900">
+      <span className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
         Filter by tag
       </span>
       <Link href={createLink()} aria-label="Show all posts">
@@ -49,10 +49,10 @@ export function TagFilter({ tags }: TagFilterProps) {
         >
           <Badge
             variant={activeTag === tag.slug ? "accent" : "outline"}
-            className={cn(activeTag === tag.slug && "border-newspaper-accent")}
+            className={cn(activeTag === tag.slug && "border-newspaper-accent dark:border-red-400")}
           >
             {tag.name}
-            <span className="ml-2 text-[9px] tracking-normal text-newspaper-gray">
+            <span className="ml-2 text-[9px] tracking-normal text-newspaper-gray dark:text-zinc-400">
               {tag.count}
             </span>
           </Badge>

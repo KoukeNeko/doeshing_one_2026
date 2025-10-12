@@ -37,16 +37,16 @@ export default function ContactPage() {
       />
 
       <div className="grid gap-6 md:grid-cols-2">
-        <div className="space-y-6 border border-black/10 bg-white px-6 py-8 shadow-editorial">
-          <h2 className="flex items-center gap-3 font-serif text-3xl text-newspaper-ink">
+        <div className="space-y-6 border border-black/10 bg-white px-6 py-8 shadow-editorial dark:border-white/10 dark:bg-zinc-900">
+          <h2 className="flex items-center gap-3 font-serif text-3xl text-newspaper-ink dark:text-zinc-50">
             <Mail size={24} strokeWidth={1.5} />
             Get in touch
           </h2>
-          <p className="text-sm text-newspaper-gray">
+          <p className="text-sm text-newspaper-gray dark:text-zinc-400">
             Send project briefs, collaboration ideas, or speaking invitations. I
             typically reply within two business days.
           </p>
-          <div className="flex flex-wrap items-center gap-3 text-lg font-semibold tracking-[0.18em] text-newspaper-ink">
+          <div className="flex flex-wrap items-center gap-3 text-lg font-semibold tracking-[0.18em] text-newspaper-ink dark:text-zinc-100">
             <Link href={`mailto:${email}`}>{email}</Link>
             <Button type="button" variant="secondary" onClick={handleCopy}>
               {copied ? "Copied" : "Copy"}
@@ -54,8 +54,8 @@ export default function ContactPage() {
           </div>
         </div>
 
-        <div className="space-y-6 border border-black/10 bg-white px-6 py-8">
-          <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray">
+        <div className="space-y-6 border border-black/10 bg-white px-6 py-8 dark:border-white/10 dark:bg-zinc-900">
+          <h3 className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
             Social channels
           </h3>
           <ul className="space-y-3">
@@ -67,13 +67,13 @@ export default function ContactPage() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between border border-black/10 px-4 py-3 text-sm text-newspaper-ink transition hover:border-newspaper-ink hover:text-newspaper-accent"
+                    className="flex items-center justify-between border border-black/10 px-4 py-3 text-sm text-newspaper-ink transition hover:border-newspaper-ink hover:text-newspaper-accent dark:border-white/10 dark:text-zinc-100 dark:hover:border-zinc-400 dark:hover:text-red-400"
                   >
                     <span className="flex items-center gap-3">
                       <Icon size={18} strokeWidth={1.5} />
                       {social.platform}
                     </span>
-                    <span className="text-xs uppercase tracking-[0.3em] text-newspaper-gray">
+                    <span className="text-xs uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
                       Visit
                     </span>
                   </Link>

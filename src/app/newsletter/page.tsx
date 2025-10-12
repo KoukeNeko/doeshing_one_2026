@@ -9,18 +9,18 @@ export default function NewsletterPage() {
         title="Stay in the loop"
         description="Subscribe to receive monthly editorial digests featuring new articles, project recaps, and behind-the-scenes notes."
       />
-      <form className="border border-black/10 bg-white px-6 py-8 shadow-editorial">
-        <label className="flex flex-col gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-gray">
+      <form className="border border-black/10 bg-white px-6 py-8 shadow-editorial dark:border-white/10 dark:bg-zinc-900">
+        <label className="flex flex-col gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
           Email Address
           <input
             type="email"
             name="email"
             required
             placeholder="you@example.com"
-            className="border border-black/10 px-4 py-3 text-sm uppercase tracking-[0.25em] text-newspaper-ink outline-none placeholder:text-newspaper-gray"
+            className="border border-black/10 px-4 py-3 text-sm uppercase tracking-[0.25em] text-newspaper-ink outline-none placeholder:text-newspaper-gray dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-100 dark:placeholder:text-zinc-500"
           />
         </label>
-        <p className="mt-3 text-xs text-newspaper-gray">
+        <p className="mt-3 text-xs text-newspaper-gray dark:text-zinc-400">
           Updates ship once a month. No spam—just curated reads and new
           releases.
         </p>

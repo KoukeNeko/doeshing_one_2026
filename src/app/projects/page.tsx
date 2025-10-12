@@ -53,8 +53,8 @@ export default async function ProjectsPage({
         description="From rapid prototypes to fully produced launch campaigns, these projects showcase the systems, visuals, and storytelling behind each engagement."
       />
 
-      <div className="flex flex-col gap-4 border border-black/10 bg-white px-6 py-5">
-        <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-gray">
+      <div className="flex flex-col gap-4 border border-black/10 bg-white px-6 py-5 dark:border-white/10 dark:bg-zinc-900">
+        <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-gray dark:text-zinc-400">
           <span>Tags</span>
           <Link href={buildHref(undefined, statusParam)}>
             <Badge variant={!tag ? "accent" : "outline"}>All</Badge>
@@ -73,7 +73,7 @@ export default async function ProjectsPage({
             </Link>
           ))}
         </div>
-        <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-gray">
+        <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-gray dark:text-zinc-400">
           <span>Status</span>
           {STATUSES.map((status) => (
             <Link

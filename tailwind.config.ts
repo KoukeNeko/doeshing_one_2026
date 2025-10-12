@@ -2,6 +2,7 @@ import typography from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: ["class"],
   content: [
     "./src/app/**/*.{ts,tsx,mdx}",
     "./src/components/**/*.{ts,tsx,mdx}",
@@ -37,7 +38,7 @@ const config: Config = {
       gridTemplateColumns: {
         editorial: "repeat(auto-fit, minmax(18rem, 1fr))",
       },
-      typography: ({ theme }) => ({
+      typography: ({ theme }: any) => ({
         DEFAULT: {
           css: {
             color: theme("colors.newspaper.ink"),
@@ -78,6 +79,61 @@ const config: Config = {
             },
             hr: {
               borderColor: theme("colors.newspaper.gray"),
+            },
+          },
+        },
+        invert: {
+          css: {
+            color: theme("colors.zinc.100"),
+            a: {
+              color: theme("colors.red.400"),
+              "&:hover": {
+                color: theme("colors.red.300"),
+              },
+            },
+            h1: {
+              color: theme("colors.zinc.50"),
+            },
+            h2: {
+              color: theme("colors.zinc.50"),
+            },
+            h3: {
+              color: theme("colors.zinc.50"),
+            },
+            h4: {
+              color: theme("colors.zinc.50"),
+            },
+            h5: {
+              color: theme("colors.zinc.50"),
+            },
+            h6: {
+              color: theme("colors.zinc.50"),
+            },
+            strong: {
+              color: theme("colors.zinc.50"),
+            },
+            code: {
+              color: theme("colors.zinc.50"),
+            },
+            blockquote: {
+              borderLeftColor: theme("colors.red.400"),
+              color: theme("colors.zinc.300"),
+            },
+            "ol > li::marker": {
+              color: theme("colors.red.400"),
+            },
+            "ul > li::marker": {
+              color: theme("colors.red.400"),
+            },
+            hr: {
+              borderColor: theme("colors.zinc.700"),
+            },
+            thead: {
+              color: theme("colors.zinc.50"),
+              borderBottomColor: theme("colors.zinc.700"),
+            },
+            "tbody tr": {
+              borderBottomColor: theme("colors.zinc.800"),
             },
           },
         },

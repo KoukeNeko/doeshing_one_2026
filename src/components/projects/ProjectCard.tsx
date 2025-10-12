@@ -15,14 +15,14 @@ export function ProjectCard({ project, highlight = false }: ProjectCardProps) {
   return (
     <article
       className={cn(
-        "group flex flex-col border border-black/10 bg-white shadow-sm shadow-black/5 transition hover:-translate-y-1 hover:shadow-editorial",
+        "group flex flex-col border border-black/10 bg-white shadow-sm shadow-black/5 transition hover:-translate-y-1 hover:shadow-editorial dark:border-white/10 dark:bg-zinc-900",
         highlight && "md:col-span-2",
       )}
     >
       {frontmatter.image ? (
         <Link
           href={`/projects/${project.slug}`}
-          className="relative aspect-[3/2] overflow-hidden border-b border-black/10"
+          className="relative aspect-[3/2] overflow-hidden border-b border-black/10 dark:border-white/10"
         >
           <Image
             src={frontmatter.image}
@@ -43,13 +43,13 @@ export function ProjectCard({ project, highlight = false }: ProjectCardProps) {
             <Badge variant="accent">{frontmatter.status}</Badge>
           ) : null}
         </div>
-        <h3 className="mt-5 font-serif text-2xl tracking-tight text-newspaper-ink group-hover:text-newspaper-accent">
+        <h3 className="mt-5 font-serif text-2xl tracking-tight text-newspaper-ink group-hover:text-newspaper-accent dark:text-zinc-50 dark:group-hover:text-red-400">
           <Link href={`/projects/${project.slug}`}>{frontmatter.title}</Link>
         </h3>
-        <p className="mt-3 text-sm text-newspaper-gray">
+        <p className="mt-3 text-sm text-newspaper-gray dark:text-zinc-400">
           {frontmatter.description}
         </p>
-        <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-6 text-xs uppercase tracking-[0.3em] text-newspaper-gray">
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-6 text-xs uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
           <span>{formatDate(frontmatter.date, "MMM yyyy")}</span>
           <div className="flex gap-4">
             {frontmatter.github ? (

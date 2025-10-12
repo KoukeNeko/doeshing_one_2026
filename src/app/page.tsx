@@ -39,16 +39,16 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-20">
-      <section className="grid gap-6 border border-black/10 bg-white px-6 py-10 shadow-editorial md:grid-cols-[2fr,1fr] md:gap-12 md:px-10 md:py-12">
+      <section className="grid gap-6 border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900 md:grid-cols-[2fr,1fr] md:gap-12 md:px-10 md:py-12">
         <div className="flex flex-col gap-6">
-          <span className="text-xs font-semibold uppercase tracking-[0.4em] text-newspaper-gray">
+          <span className="text-xs font-semibold uppercase tracking-[0.4em] text-newspaper-gray dark:text-zinc-400">
             {getNewspaperDateline()}
           </span>
-          <h1 className="font-serif text-4xl tracking-tight text-newspaper-ink sm:text-5xl md:text-6xl">
+          <h1 className="font-serif text-4xl tracking-tight text-newspaper-ink dark:text-zinc-50 sm:text-5xl md:text-6xl">
             Weekend Edition: Editorial craftsmanship for the modern web.
           </h1>
-          <p className="max-w-2xl text-base text-newspaper-gray">
-            I’m Doeshing—design engineer and storyteller. I build narrative-rich
+          <p className="max-w-2xl text-base text-newspaper-gray dark:text-zinc-400">
+            I'm Doeshing—design engineer and storyteller. I build narrative-rich
             digital experiences that read like print, feel like product, and
             scale like software.
           </p>
@@ -67,36 +67,36 @@ export default async function HomePage() {
             </Button>
           </div>
         </div>
-        <div className="flex flex-col gap-6 border-t border-black/10 pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0">
+        <div className="flex flex-col gap-6 border-t border-black/10 pt-6 dark:border-white/10 md:border-l md:border-t-0 md:pl-8 md:pt-0">
           <div>
-            <span className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-accent">
+            <span className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-accent dark:text-red-400">
               Latest Dispatch
             </span>
-            <p className="mt-4 text-sm text-newspaper-gray">
+            <p className="mt-4 text-sm text-newspaper-gray dark:text-zinc-400">
               {featuredPosts[0]?.excerpt ??
                 "Fresh essays on design systems, developer tooling, and narrative-driven product work."}
             </p>
           </div>
-          <div className="flex flex-col gap-3 text-xs uppercase tracking-[0.35em] text-newspaper-gray">
+          <div className="flex flex-col gap-3 text-xs uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
             <span>FEATURED AREAS</span>
             <span className="flex flex-wrap gap-3 text-[11px]">
-              <span className="rounded-sm border border-black/10 px-2 py-1">
+              <span className="rounded-sm border border-black/10 px-2 py-1 dark:border-white/10">
                 Product Design
               </span>
-              <span className="rounded-sm border border-black/10 px-2 py-1">
+              <span className="rounded-sm border border-black/10 px-2 py-1 dark:border-white/10">
                 Frontend Engineering
               </span>
-              <span className="rounded-sm border border-black/10 px-2 py-1">
+              <span className="rounded-sm border border-black/10 px-2 py-1 dark:border-white/10">
                 Narrative Systems
               </span>
             </span>
           </div>
-          <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray">
+          <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
             <Newspaper size={18} strokeWidth={1.5} />
             Weekly briefings direct to your inbox.
             <Link
               href="/newsletter"
-              className="text-newspaper-accent underline-offset-4 hover:underline"
+              className="text-newspaper-accent underline-offset-4 hover:underline dark:text-red-400"
             >
               Subscribe
             </Link>
@@ -115,13 +115,13 @@ export default async function HomePage() {
             <Link
               key={link.href}
               href={link.href}
-              className="flex flex-col gap-4 border border-black/10 bg-white px-6 py-8 text-left transition hover:-translate-y-1 hover:border-newspaper-ink hover:shadow-editorial"
+              className="flex flex-col gap-4 border border-black/10 bg-white px-6 py-8 text-left transition hover:-translate-y-1 hover:border-newspaper-ink hover:shadow-editorial dark:border-white/10 dark:bg-zinc-900 dark:hover:border-zinc-400"
             >
-              <span className="text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-accent">
+              <span className="text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-accent dark:text-red-400">
                 {link.title}
               </span>
-              <p className="text-sm text-newspaper-gray">{link.description}</p>
-              <span className="mt-auto inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-ink">
+              <p className="text-sm text-newspaper-gray dark:text-zinc-400">{link.description}</p>
+              <span className="mt-auto inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-ink dark:text-zinc-100">
                 Explore
                 <ArrowRight size={16} strokeWidth={1.5} />
               </span>

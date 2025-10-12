@@ -5,7 +5,7 @@ export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
-        "flex flex-col border border-black/10 bg-white shadow-sm shadow-black/5 transition hover:-translate-y-1 hover:shadow-editorial",
+        "flex flex-col border border-black/10 bg-white shadow-sm shadow-black/5 transition hover:-translate-y-1 hover:shadow-editorial dark:border-white/10 dark:bg-zinc-900 dark:shadow-white/5",
         className,
       )}
       {...props}
@@ -32,7 +32,7 @@ export function CardHeader({
   return (
     <div
       className={cn(
-        "px-6 py-4 sm:px-8 sm:py-5 border-b border-black/5",
+        "px-6 py-4 sm:px-8 sm:py-5 border-b border-black/5 dark:border-white/5",
         className,
       )}
       {...props}
@@ -47,7 +47,7 @@ export function CardFooter({
   return (
     <div
       className={cn(
-        "border-t border-black/5 px-6 py-4 sm:px-8 sm:py-5",
+        "border-t border-black/5 px-6 py-4 sm:px-8 sm:py-5 dark:border-white/5",
         className,
       )}
       {...props}

@@ -18,11 +18,11 @@ export function Navigation() {
   }, [pathname]);
 
   return (
-    <nav aria-label="Primary Navigation" className="border-t border-black/10">
+    <nav aria-label="Primary Navigation" className="border-t border-black/10 dark:border-white/10">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
         <button
           type="button"
-          className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-newspaper-ink md:hidden"
+          className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-newspaper-ink dark:text-zinc-100 md:hidden"
           onClick={() => setOpen((prev) => !prev)}
           aria-expanded={open}
           aria-controls="mobile-nav"
@@ -43,8 +43,8 @@ export function Navigation() {
                 className={cn(
                   "text-xs font-semibold uppercase tracking-[0.2em] transition-colors",
                   active
-                    ? "text-newspaper-accent"
-                    : "text-newspaper-gray hover:text-newspaper-ink",
+                    ? "text-newspaper-accent dark:text-red-400"
+                    : "text-newspaper-gray hover:text-newspaper-ink dark:text-zinc-400 dark:hover:text-zinc-100",
                 )}
               >
                 {link.label}
@@ -55,7 +55,7 @@ export function Navigation() {
         <div className="flex items-center gap-4">
           <Link
             href="/newsletter"
-            className="hidden text-xs font-semibold uppercase tracking-[0.28em] text-newspaper-accent md:inline"
+            className="hidden text-xs font-semibold uppercase tracking-[0.28em] text-newspaper-accent dark:text-red-400 md:inline"
           >
             Newsletter
           </Link>
@@ -64,7 +64,7 @@ export function Navigation() {
       <div
         id="mobile-nav"
         className={cn(
-          "border-t border-black/10 px-4 pb-6 pt-2 md:hidden",
+          "border-t border-black/10 px-4 pb-6 pt-2 dark:border-white/10 md:hidden",
           open ? "block" : "hidden",
         )}
       >
@@ -81,8 +81,8 @@ export function Navigation() {
                 className={cn(
                   "text-sm font-semibold uppercase tracking-[0.22em]",
                   active
-                    ? "text-newspaper-accent"
-                    : "text-newspaper-gray hover:text-newspaper-ink",
+                    ? "text-newspaper-accent dark:text-red-400"
+                    : "text-newspaper-gray hover:text-newspaper-ink dark:text-zinc-400 dark:hover:text-zinc-100",
                 )}
               >
                 {link.label}
