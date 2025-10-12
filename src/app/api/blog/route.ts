@@ -11,7 +11,11 @@ const createPostSchema = z.object({
   slug: z.string().min(1),
   excerpt: z.string().optional().nullable(),
   content: z.string().min(1),
-  coverImage: z.string().url().optional().nullable(),
+  coverImage: z
+    .string()
+    .optional()
+    .nullable()
+    .transform((val) => (val === "" ? null : val)),
   published: z.boolean().default(false),
   tags: z.array(z.string()).default([]),
 });
@@ -107,15 +111,23 @@ export async function POST(request: Request) {
     return NextResponse.json(post, { status: 201 });
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.error("Validation error:", error.errors);
       return NextResponse.json(
-        { message: "Validation error", errors: error.errors },
+        { 
+          message: "Validation error", 
+          errors: error.errors,
+          details: error.errors.map(e => `${e.path.join('.')}: ${e.message}`).join(', ')
+        },
         { status: 400 }
       );
     }
 
     console.error("Error creating post:", error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { 
+        message: "Internal server error",
+        error: error instanceof Error ? error.message : "Unknown error"
+      },
       { status: 500 }
     );
   }

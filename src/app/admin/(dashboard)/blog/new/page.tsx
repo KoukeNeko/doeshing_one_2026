@@ -62,7 +62,9 @@ export default function NewPostPage() {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || "Failed to create post");
+        const errorMessage = data.details || data.message || "Failed to create post";
+        console.error("API Error:", data);
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
