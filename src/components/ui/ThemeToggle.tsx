@@ -12,6 +12,20 @@ export function ThemeToggle() {
     setMounted(true);
   }, []);
 
+  const toggleTheme = () => {
+    const isDark = resolvedTheme === "dark";
+    
+    // Check if View Transitions API is supported
+    if (!document.startViewTransition) {
+      setTheme(isDark ? "light" : "dark");
+      return;
+    }
+
+    document.startViewTransition(() => {
+      setTheme(isDark ? "light" : "dark");
+    });
+  };
+
   if (!mounted) {
     return (
       <button
@@ -29,7 +43,7 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={toggleTheme}
       className="rounded-md p-2 transition-colors hover:bg-black/5 dark:hover:bg-white/10"
       aria-label="Toggle theme"
     >
