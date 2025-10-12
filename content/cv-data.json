@@ -206,6 +206,7 @@
       "role": "SITCON Camp 資訊組",
       "organization": "SITCON, Students' Information Technology Conference",
       "period": "Apr 2025 · 1 mo",
+      "description": "架設點數平行化交易系統，資料庫架構設計與部署",
       "cause": "Education"
     },
     {
@@ -217,7 +218,8 @@
     {
       "role": "2022 Maker 工作坊 課程助教",
       "organization": "國立雲林科技大學",
-      "description": "1. Created instructional content for integrating AIoT functionalities with ESP32, boosting participant knowledge and competence. 2. Coordinated the setup and integration of ESP32 boards for AIoT smart home projects, leveraging Python to boost project efficiency and participant interaction. 3. Conducted detailed diagnostics and solution walkthroughs, minimizing common implementation errors in workshop IoT projects."
+      "description": "1. Created instructional content for integrating AIoT functionalities with ESP32, boosting participant knowledge and competence. 2. Coordinated the setup and integration of ESP32 boards for AIoT smart home projects, leveraging Python to boost project efficiency and participant interaction. 3. Conducted detailed diagnostics and solution walkthroughs, minimizing common implementation errors in workshop IoT projects.",
+      "cause": "Education"
     },
     {
       "role": "活動志工",
