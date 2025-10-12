@@ -15,7 +15,7 @@ export function ProjectCard({ project, highlight = false }: ProjectCardProps) {
   return (
     <article
       className={cn(
-        "group flex flex-col border border-black/10 bg-white shadow-sm shadow-black/5 transition hover:-translate-y-1 hover:shadow-editorial dark:border-white/10 dark:bg-zinc-900",
+        "group flex flex-col border border-black/10 bg-white shadow-sm shadow-black/5 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-editorial dark:border-white/10 dark:bg-zinc-900",
         highlight && "md:col-span-2",
       )}
     >
@@ -28,7 +28,7 @@ export function ProjectCard({ project, highlight = false }: ProjectCardProps) {
             src={frontmatter.image}
             alt={frontmatter.title}
             fill
-            className="object-cover transition duration-500 group-hover:scale-105"
+            className="object-cover transition-transform duration-500 ease-out will-change-transform group-hover:scale-105"
           />
         </Link>
       ) : null}

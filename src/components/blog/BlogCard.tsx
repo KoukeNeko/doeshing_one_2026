@@ -18,7 +18,7 @@ export function BlogCard({
   return (
     <article
       className={cn(
-        "group border border-black/10 bg-white shadow-sm shadow-black/5 transition hover:-translate-y-1 hover:shadow-editorial dark:border-white/10 dark:bg-zinc-900",
+        "group border border-black/10 bg-white shadow-sm shadow-black/5 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-editorial dark:border-white/10 dark:bg-zinc-900",
         featured && "md:col-span-2 lg:col-span-3",
         orientation === "horizontal"
           ? "flex flex-col md:flex-row"
@@ -40,7 +40,7 @@ export function BlogCard({
             alt={post.title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover transition duration-500 group-hover:scale-105"
+            className="object-cover transition-transform duration-500 ease-out will-change-transform group-hover:scale-105"
           />
         </Link>
       ) : null}
@@ -60,7 +60,7 @@ export function BlogCard({
         <h3 className="mt-5 font-serif text-2xl tracking-tight text-newspaper-ink dark:text-zinc-50 md:text-3xl">
           <Link
             href={`/archive/${post.slug}`}
-            className="transition hover:text-newspaper-accent dark:hover:text-red-400"
+            className="transition-colors duration-200 ease-out hover:text-newspaper-accent dark:hover:text-red-400"
           >
             {post.title}
           </Link>
