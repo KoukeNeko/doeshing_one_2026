@@ -1,0 +1,257 @@
+{
+  "personal": {
+    "name": "陳德生",
+    "englishName": "De-Sheng Chen",
+    "title": "A student studying CSIE at CCU",
+    "location": "Kaohsiung Metropolitan Area",
+    "about": "Hello World! 我是陳德生， 畢業於國立雲林科技大學資訊工程系。 專研全端開發與行動應用程式開發，同時正在學習雲端技術的路上狂奔。",
+    "connections": 183,
+    "linkedin": "https://www.linkedin.com/in/doeshing/",
+    "openToWork": {
+      "roles": [
+        "Software Engineer",
+        "Java Software Engineer",
+        "Android Developer",
+        "Frontend Developer",
+        "Information Technology Technician"
+      ]
+    }
+  },
+  "topSkills": [
+    "軟體開發",
+    "React.js",
+    "行動應用程式開發",
+    "Python (プログラミング言語)"
+  ],
+  "education": [
+    {
+      "school": "National Chung Cheng University",
+      "schoolChinese": "國立中正大學",
+      "degree": "Computer Science Information Engineering",
+      "period": "Feb 2025 - Feb 2027",
+      "type": "碩士"
+    },
+    {
+      "school": "National Taiwan Ocean University",
+      "schoolChinese": "國立台灣海洋大學",
+      "degree": "資訊工程學系",
+      "period": "Aug 2024 - Feb 2025",
+      "type": "碩士",
+      "skills": ["Unity", "Software Engineering"]
+    },
+    {
+      "school": "National Yunlin University of Science and Technology",
+      "schoolChinese": "國立雲林科技大學",
+      "degree": "資訊工程學系",
+      "period": "Jun 2021 - Jun 2024",
+      "type": "學士",
+      "skills": [
+        "プログラミング",
+        "軟體設計",
+        "React.js",
+        "HTML5",
+        "C#",
+        "Androidデザイン",
+        "Android Jetpack",
+        "資料結構",
+        "React Native",
+        ".NET",
+        "階層式樣式表 (CSS)",
+        "Kotlin",
+        "Docker"
+      ],
+      "achievement": "［畢業專題］基於LoRaWAN 技術之電器管理系統 - 榮獲2023年實務專題競賽暨成果發表會 第二名"
+    },
+    {
+      "school": "National Kaohsiung University of Science and Technology",
+      "schoolChinese": "國立高雄科技大學",
+      "degree": "資訊工程學系",
+      "period": "Sep 2020 - Jun 2021",
+      "type": "學士",
+      "skills": ["Java"]
+    }
+  ],
+  "experience": [
+    {
+      "title": "資料科學工程師專案兼任助理",
+      "company": "National Yunlin University of Science and Technology",
+      "type": "Contract",
+      "period": "Jan 2022 - Mar 2022",
+      "duration": "3 mos",
+      "location": "台湾 Taiwan 斗六市 · On-site",
+      "description": "• Participated in the creation of training datasets for computer vision projects, ensuring data quality and completeness required for object detection models. • Enhanced understanding of AI development pipelines by engaging in technical exchanges with the research team to learn about the Kubernetes (K8s) architecture and data processing workflows.",
+      "organization": "國立雲林科技大學智慧辨識產業服務研究中心"
+    }
+  ],
+  "certifications": [
+    {
+      "name": "AWS Certified AI Practitioner",
+      "issuer": "Amazon Web Services (AWS)",
+      "issued": "Nov 2024",
+      "expires": "Nov 2027",
+      "credentialId": "335232ec32704b97a2c47b128b04744f",
+      "skills": [
+        "Amazon Web Services (AWS)",
+        "Generative AI",
+        "Machine Learning",
+        "Foundation Models",
+        "AWS Cloud",
+        "Artificial Intelligence (AI)"
+      ]
+    },
+    {
+      "name": "AWS Certified AI Practitioner Early Adopter",
+      "issuer": "Amazon Web Services (AWS)",
+      "issued": "Nov 2024",
+      "skills": [
+        "Machine Learning (ML)",
+        "Foundation Models",
+        "AWS Cloud",
+        "Artificial Intelligence (AI)"
+      ],
+      "description": "Earners of this badge passed the AWS Certified AI Practitioner exam by February 15, 2025 and are an Early Adopter of this certification."
+    },
+    {
+      "name": "Inspect Rich Documents with Gemini Multimodality and Multimodal RAG Skill Badge",
+      "issuer": "Google Cloud Skills Boost",
+      "issued": "Nov 2024",
+      "skills": ["Google Gemini", "Retrieval-Augmented Generation (RAG)"]
+    },
+    {
+      "name": "Develop GenAI Apps with Gemini and Streamlit Skill Badge",
+      "issuer": "Google Cloud Skills Boost",
+      "issued": "Oct 2024",
+      "skills": [
+        "Python (プログラミング言語)",
+        "軟體開發",
+        "Google Gemini",
+        "Generative AI"
+      ]
+    },
+    {
+      "name": "Foundational C# with Microsoft",
+      "issuer": "freeCodeCamp",
+      "issued": "Oct 2024",
+      "credentialId": "doeshing-fcswm",
+      "skills": ["C#", "軟體設計", "プログラミング"]
+    },
+    {
+      "name": "LinkedIn Premium 活用術",
+      "issuer": "LinkedIn",
+      "issued": "Oct 2024",
+      "skills": ["LinkedIn"]
+    },
+    {
+      "name": "Prompt Design in Vertex AI Skill Badge",
+      "issuer": "Google Cloud Skills Boost",
+      "issued": "Oct 2024",
+      "skills": [
+        "Google Gemini",
+        "Prompt Engineering",
+        "Generative AI",
+        "Artificial Intelligence (AI)"
+      ]
+    },
+    {
+      "name": "学生のためのLinkedIn 入門",
+      "issuer": "LinkedIn",
+      "issued": "Oct 2024",
+      "skills": ["LinkedIn"]
+    },
+    {
+      "name": "[計畫辦公室] AI CUP 2022: 農地作物現況調查影像辨識競賽-秋季賽",
+      "issuer": "教育部人工智慧競賽與標註資料蒐集計畫 (AI CUP)",
+      "issued": "Mar 2023",
+      "skills": ["TensorFlow", "Python (プログラミング言語)"]
+    },
+    {
+      "name": "MTA: Networking Fundamentals",
+      "issuer": "Microsoft",
+      "issued": "Dec 2018",
+      "skills": [
+        "網際網路協定套組 (TCP/IP)",
+        "OSI Model",
+        "網路建構",
+        "網路服務"
+      ]
+    },
+    {
+      "name": "丙級電腦軟體應用技術士",
+      "issuer": "中華民國勞動部",
+      "issued": "Oct 2017",
+      "credentialId": "118-810409",
+      "skills": ["Microsoft Excel", "Microsoft Word", "Microsoft Access"]
+    }
+  ],
+  "projects": [
+    {
+      "name": "基於LoRaWAN 技術之電器管理系統",
+      "period": "Jul 2023 - Nov 2023",
+      "associatedWith": "國立雲林科技大學",
+      "description": {
+        "zh": "本系統透過LoRaWAN技術，針對大範圍的電器進行遠端控制與監控，包括電力消耗及健康狀況分析。我們的專案目標是讓管理者能自動監控多設備的開關狀態及使用情形，並透過資料庫及WebSocket傳輸實現即時管理。與WiFi相比，LoRaWAN傳輸距離更長、能耗更低，適用於大範圍的應用場景。本系統具備電器健康分析、前端操作等功能，讓使用者能輕鬆管理電器並進行維護。",
+        "ja": "このシステムは、LoRaWAN技術を活用して、広範囲にわたる電気機器を遠隔で制御・監視することが可能です。また、電力消費や健康状態の分析も行います。私たちのプロジェクトの目標は、管理者が多数のデバイスのオン・オフの状態や使用状況を自動的に監視し、データベースとWebSocketを利用してリアルタイムで管理できる環境を提供することです。WiFiと比較して、LoRaWANは通信距離が長く、エネルギー消費が少ないため、広範囲での利用に非常に適しています。このシステムは、電気機器の健康分析機能やフロントエンドでの操作機能を備えており、ユーザーが電気機器を簡単に管理し、メンテナンスを行うことができます。",
+        "en": "Our system uses LoRaWAN technology to remotely control and monitor electrical appliances over large areas, including analyzing power consumption and health status. Our project aims to enable managers to automatically monitor the on/off status and usage of multiple devices, achieving real-time management through databases and WebSocket transmission. Compared to WiFi, LoRaWAN offers longer transmission distances and lower energy consumption, making it suitable for wide-area applications. The system features appliance health analysis and a user-friendly interface, allowing users to easily manage and maintain their devices."
+      },
+      "skills": [
+        "資料結構",
+        "C#",
+        "+7 skills"
+      ],
+      "achievement": "榮獲2023年實務專題競賽暨成果發表會 第二名"
+    }
+  ],
+  "volunteering": [
+    {
+      "role": "活動志工",
+      "organization": "油廠社區生態保存協會"
+    },
+    {
+      "role": "2022 Maker 工作坊 課程助教",
+      "organization": "國立雲林科技大學",
+      "description": "1. Created instructional content for integrating AIoT functionalities with ESP32, boosting participant knowledge and competence. 2. Coordinated the setup and integration of ESP32 boards for AIoT smart home projects, leveraging Python to boost project efficiency and participant interaction. 3. Conducted detailed diagnostics and solution walkthroughs, minimizing common implementation errors in workshop IoT projects."
+    }
+  ],
+  "skills": {
+    "highlighted": [
+      {
+        "name": "Software Engineering",
+        "endorsedBy": "National Taiwan Ocean University"
+      },
+      {
+        "name": "Machine Learning (ML)",
+        "endorsedBy": "AWS Certified AI Practitioner Early Adopter"
+      }
+    ],
+    "totalCount": 42
+  },
+  "testScores": [
+    {
+      "name": "TOEIC",
+      "score": "655",
+      "date": "Mar 2024",
+      "associatedWith": "國立雲林科技大學"
+    },
+    {
+      "name": "Collegiate Programming Examination",
+      "score": "7.6%",
+      "date": "May 2022",
+      "associatedWith": "國立雲林科技大學"
+    }
+  ],
+  "languages": [
+    {
+      "name": "中国語",
+      "proficiency": "Native or bilingual proficiency"
+    },
+    {
+      "name": "日本語",
+      "proficiency": "Elementary proficiency"
+    }
+  ],
+  "causes": [
+    "Civil Rights and Social Action",
+    "Education",
+    "Science and Technology"
+  ]
+}
