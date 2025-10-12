@@ -230,6 +230,46 @@ export default function AboutPage() {
         ))}
       </section>
 
+      {/* Volunteering Section */}
+      <section className="space-y-8">
+        <SectionHeading
+          kicker="Volunteering"
+          title="Community contributions"
+        />
+        <ol className="relative border-l border-black/10 pl-6 dark:border-white/10">
+          {cvData.volunteering.map((volunteer, index) => (
+            <li key={volunteer.role + index} className="mb-8 last:mb-0">
+              <div className="absolute -left-2 mt-1 h-4 w-4 rounded-full border border-newspaper-accent bg-white dark:border-red-400 dark:bg-zinc-900" />
+              <div className="space-y-2">
+                <div className="flex flex-col gap-1">
+                  <span className="font-serif text-lg text-newspaper-ink dark:text-zinc-50">
+                    {volunteer.role}
+                  </span>
+                  <span className="text-xs uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
+                    {volunteer.organization}
+                  </span>
+                  {volunteer.period && (
+                    <span className="text-xs text-newspaper-gray dark:text-zinc-400">
+                      {volunteer.period}
+                    </span>
+                  )}
+                  {volunteer.cause && (
+                    <span className="inline-block rounded-sm border border-newspaper-accent px-2 py-0.5 text-xs font-medium text-newspaper-accent dark:border-red-400 dark:text-red-400">
+                      {volunteer.cause}
+                    </span>
+                  )}
+                </div>
+                {volunteer.description && (
+                  <p className="whitespace-pre-line text-sm text-newspaper-gray dark:text-zinc-400">
+                    {volunteer.description}
+                  </p>
+                )}
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
       {/* Test Scores */}
       <section className="grid gap-6 md:grid-cols-2">
         <div className="border border-black/10 bg-white px-6 py-6 dark:border-white/10 dark:bg-zinc-900">
