@@ -2,10 +2,12 @@ import { Download } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { CertificationsList } from "@/components/about/CertificationsList";
 import cvData from "@/../../content/cv-data.json";
 
 export const metadata = {
   title: "About - De-Sheng Chen | Doeshing Gazette",
+  avator_img: "https://scontent.fkhh1-2.fna.fbcdn.net/v/t39.30808-6/496947431_1221429682941302_6506391249836038991_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=FqS-PZD61QsQ7kNvwE7c7hq&_nc_oc=Admd3fQ7IYRibM9jiAmnfGAhf-xJKu-RcO8fBdyrZYTwAxnSUmryW3oN8A8UOYJlCRLwTcIscYsIsNTB_IJZHnjS&_nc_zt=23&_nc_ht=scontent.fkhh1-2.fna&_nc_gid=830pCqS9B8JuGG7J8fJXfA&oh=00_AffuV0FAJF6JLkopHOqguZhsjuPOLslphju2-kJn39g2aw&oe=68F15F90",
   description:
     "陳德生 - 畢業於國立雲林科技大學資訊工程系。專研全端開發與行動應用程式開發，同時正在學習雲端技術的路上狂奔。",
 };
@@ -28,7 +30,7 @@ export default function AboutPage() {
       <header className="flex flex-col gap-8 border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-6">
           <Image
-            src="/images/avatar.svg"
+            src={metadata.avator_img}
             alt="De-Sheng Chen portrait"
             width={120}
             height={120}
@@ -168,24 +170,7 @@ export default function AboutPage() {
         </div>
         <div className="space-y-4">
           <SectionHeading kicker="Certifications" title="Professional credentials" />
-          <ul className="space-y-3">
-            {cvData.certifications.slice(0, 6).map((cert) => (
-              <li
-                key={cert.name}
-                className="border border-black/10 bg-white px-6 py-4 dark:border-white/10 dark:bg-zinc-900"
-              >
-                <p className="font-serif text-base text-newspaper-ink dark:text-zinc-50">
-                  {cert.name}
-                </p>
-                <p className="text-xs uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
-                  {cert.issuer} · {cert.issued}
-                </p>
-              </li>
-            ))}
-          </ul>
-          <p className="text-xs text-center text-newspaper-gray dark:text-zinc-400">
-            + {cvData.certifications.length - 6} more certifications
-          </p>
+          <CertificationsList certifications={cvData.certifications} />
         </div>
       </section>
 
