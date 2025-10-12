@@ -12,7 +12,7 @@ const iconMap: Record<string, ReactNode> = {
 
 export function Footer() {
   return (
-    <footer className="mt-16 border-t border-black/10 bg-white dark:border-white/10 dark:bg-zinc-900">
+    <footer className="mt-16 border-t border-black/10 bg-white pb-[env(safe-area-inset-bottom)] dark:border-white/10 dark:bg-zinc-900">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 py-12 md:grid-cols-4 md:px-6">
         <div className="md:col-span-2">
           <p className="text-xs font-semibold uppercase tracking-[0.5em] text-newspaper-gray dark:text-zinc-400">
@@ -64,7 +64,7 @@ export function Footer() {
           </ul>
         </div>
       </div>
-  <div className="border-t border-black/10 bg-newspaper-paper pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] dark:border-white/10 dark:bg-zinc-950">
+      <div className="border-t border-black/10 bg-newspaper-paper py-6 dark:border-white/10 dark:bg-zinc-950">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 text-xs text-newspaper-gray dark:text-zinc-400 md:flex-row md:px-6">
           <span>
             &copy; {new Date().getFullYear()} Doeshing. All rights reserved.
