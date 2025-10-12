@@ -42,8 +42,10 @@ export async function generateMetadata({
       description: post.excerpt ?? post.title,
       type: "article",
       url,
-      publishedTime: post.publishedAt?.toISOString(),
-      modifiedTime: post.updatedAt.toISOString(),
+      publishedTime: post.publishedAt
+        ? new Date(post.publishedAt).toISOString()
+        : undefined,
+      modifiedTime: new Date(post.updatedAt).toISOString(),
     },
     alternates: {
       canonical: url,
