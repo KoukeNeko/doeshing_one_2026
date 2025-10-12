@@ -3,6 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
+export const metadata = {
+  title: "About",
+  description:
+    "Design engineer crafting editorial-grade web experiences. Background, experience, and skills.",
+};
+
 const skills = {
   languages: ["TypeScript", "JavaScript", "Python", "SQL"],
   frameworks: ["Next.js", "React", "Node.js", "Tailwind"],
@@ -68,9 +74,15 @@ const awards = [
   },
 ];
 
-export default function CvPage() {
+export default function AboutPage() {
   return (
     <div className="space-y-12">
+      <SectionHeading
+        kicker="About"
+        title="Design engineer & editorial craftsperson"
+        description="Blending code, design thinking, and storytelling to craft web experiences that feel like print but scale like software."
+      />
+      
       <header className="flex flex-col gap-8 border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-6">
           <Image

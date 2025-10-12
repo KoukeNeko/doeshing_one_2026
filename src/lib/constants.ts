@@ -1,12 +1,12 @@
-export const SITE_NAME = "Doeshing — Editorial Portfolio";
+export const SITE_NAME = "Doeshing Gazette — Editorial Portfolio";
 export const SITE_DESCRIPTION =
-  "A magazine-inspired personal site featuring blog posts, projects, and credentials.";
+  "A magazine-inspired personal site featuring articles, work, and credentials.";
 
 export const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "/blog", label: "Blog" },
-  { href: "/projects", label: "Projects" },
-  { href: "/cv", label: "CV" },
+  { href: "/archive", label: "Archive" },
+  { href: "/work", label: "Work" },
+  { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ] as const;
 

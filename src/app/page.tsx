@@ -10,22 +10,22 @@ import { getNewspaperDateline } from "@/lib/utils";
 
 const quickLinks = [
   {
-    title: "The Studio Log",
+    title: "The Archive",
     description:
-      "Long-form essays, process notes, and behind-the-scenes breakdowns from current projects.",
-    href: "/blog",
+      "Long-form essays, process notes, and behind-the-scenes breakdowns from studio practice.",
+    href: "/archive",
   },
   {
-    title: "Selected Works",
+    title: "Studio Work",
     description:
       "A curated collection of client engagements, experiments, and shipped products.",
-    href: "/projects",
+    href: "/work",
   },
   {
-    title: "Résumé / CV",
+    title: "About",
     description:
-      "Experience, skills, and credentials—formatted for both screen and print.",
-    href: "/cv",
+      "Background, experience, and credentials—the story behind the work.",
+    href: "/about",
   },
 ];
 
@@ -45,17 +45,15 @@ export default async function HomePage() {
             {getNewspaperDateline()}
           </span>
           <h1 className="font-serif text-4xl tracking-tight text-newspaper-ink dark:text-zinc-50 sm:text-5xl md:text-6xl">
-            Weekend Edition: Editorial craftsmanship for the modern web.
+            Doeshing Gazette: Editorial craftsmanship for the modern web
           </h1>
           <p className="max-w-2xl text-base text-newspaper-gray dark:text-zinc-400">
-            I'm Doeshing—design engineer and storyteller. I build narrative-rich
-            digital experiences that read like print, feel like product, and
-            scale like software.
+            A magazine-style portfolio blending design engineering, narrative systems, and modern web craft. New dispatches weekly.
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <Button asChild>
-              <Link href="/projects" className="gap-2">
-                View Projects
+              <Link href="/work" className="gap-2">
+                View Work
                 <ArrowRight size={16} strokeWidth={1.5} />
               </Link>
             </Button>
@@ -139,7 +137,7 @@ export default async function HomePage() {
         <BlogGrid posts={featuredPosts} featuredCount={2} />
         <div className="flex justify-end">
           <Button asChild variant="ghost">
-            <Link href="/blog" className="gap-2">
+            <Link href="/archive" className="gap-2">
               Read the archive
               <ArrowRight size={16} strokeWidth={1.5} />
             </Link>
@@ -149,7 +147,7 @@ export default async function HomePage() {
 
       <section className="space-y-10">
         <SectionHeading
-          kicker="Studio Projects"
+          kicker="Studio Work"
           title="Current focus and featured collaborations"
           description="Case studies that blend storytelling with product thinking across web, mobile, and experiential media."
         />
@@ -164,8 +162,8 @@ export default async function HomePage() {
         </div>
         <div className="flex justify-end">
           <Button asChild variant="ghost">
-            <Link href="/projects" className="gap-2">
-              View all projects
+            <Link href="/work" className="gap-2">
+              View all work
               <ArrowRight size={16} strokeWidth={1.5} />
             </Link>
           </Button>

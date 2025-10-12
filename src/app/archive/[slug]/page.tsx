@@ -30,7 +30,7 @@ export async function generateMetadata({
     ? process.env.NEXT_PUBLIC_SITE_URL
     : undefined;
 
-  const url = baseUrl ? `${baseUrl}/blog/${post.slug}` : undefined;
+  const url = baseUrl ? `${baseUrl}/archive/${post.slug}` : undefined;
 
   return {
     title: post.title,
@@ -71,7 +71,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL?.startsWith("http")
     ? process.env.NEXT_PUBLIC_SITE_URL
     : "http://localhost:3000";
-  const shareUrl = `${baseUrl}/blog/${post.slug}`;
+  const shareUrl = `${baseUrl}/archive/${post.slug}`;
 
   return (
     <article className="grid gap-10 lg:grid-cols-[minmax(0,1fr),280px]">
@@ -123,7 +123,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <nav className="flex flex-col gap-6 border border-black/10 bg-white px-6 py-6 dark:border-white/10 dark:bg-zinc-900 md:flex-row md:justify-between">
           {adjacent.previous ? (
             <Link
-              href={`/blog/${adjacent.previous.slug}`}
+              href={`/archive/${adjacent.previous.slug}`}
               className="flex-1 text-left text-sm text-newspaper-gray transition hover:text-newspaper-ink dark:text-zinc-400 dark:hover:text-zinc-100"
             >
               <span className="text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-accent dark:text-red-400">
@@ -140,7 +140,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           )}
           {adjacent.next ? (
             <Link
-              href={`/blog/${adjacent.next.slug}`}
+              href={`/archive/${adjacent.next.slug}`}
               className="flex-1 text-right text-sm text-newspaper-gray transition hover:text-newspaper-ink dark:text-zinc-400 dark:hover:text-zinc-100"
             >
               <span className="text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-accent dark:text-red-400">

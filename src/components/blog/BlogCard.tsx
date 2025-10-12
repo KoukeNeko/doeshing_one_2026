@@ -27,7 +27,7 @@ export function BlogCard({
     >
       {post.coverImage ? (
         <Link
-          href={`/blog/${post.slug}`}
+          href={`/archive/${post.slug}`}
           className={cn(
             "relative aspect-[16/10] w-full overflow-hidden border-b border-black/10 bg-newspaper-paper dark:border-white/10 dark:bg-zinc-800",
             orientation === "horizontal"
@@ -59,7 +59,7 @@ export function BlogCard({
         </div>
         <h3 className="mt-5 font-serif text-2xl tracking-tight text-newspaper-ink dark:text-zinc-50 md:text-3xl">
           <Link
-            href={`/blog/${post.slug}`}
+            href={`/archive/${post.slug}`}
             className="transition hover:text-newspaper-accent dark:hover:text-red-400"
           >
             {post.title}

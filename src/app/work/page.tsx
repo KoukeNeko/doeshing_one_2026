@@ -48,7 +48,7 @@ export default async function ProjectsPage({
   return (
     <div className="space-y-10">
       <SectionHeading
-        kicker="Project Portfolio"
+        kicker="Studio Work"
         title="A cross-disciplinary practice of editorial web builds"
         description="From rapid prototypes to fully produced launch campaigns, these projects showcase the systems, visuals, and storytelling behind each engagement."
       />

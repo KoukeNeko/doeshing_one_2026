@@ -62,7 +62,7 @@ function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
     event.preventDefault();
     if (!query.trim()) return;
     const searchParams = new URLSearchParams({ search: query.trim() });
-    router.push(`/blog?${searchParams.toString()}`);
+    router.push(`/archive?${searchParams.toString()}`);
     onOpenChange(false);
   };
 

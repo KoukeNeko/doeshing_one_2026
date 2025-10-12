@@ -20,7 +20,7 @@ export async function generateMetadata({
     ? process.env.NEXT_PUBLIC_SITE_URL
     : undefined;
 
-  const url = baseUrl ? `${baseUrl}/projects/${project.slug}` : undefined;
+  const url = baseUrl ? `${baseUrl}/work/${project.slug}` : undefined;
 
   return {
     title: project.frontmatter.title,

@@ -47,6 +47,35 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/blog",
+        destination: "/archive",
+        permanent: true,
+      },
+      {
+        source: "/blog/:slug",
+        destination: "/archive/:slug",
+        permanent: true,
+      },
+      {
+        source: "/projects",
+        destination: "/work",
+        permanent: true,
+      },
+      {
+        source: "/projects/:slug",
+        destination: "/work/:slug",
+        permanent: true,
+      },
+      {
+        source: "/cv",
+        destination: "/about",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default withMDX(nextConfig);

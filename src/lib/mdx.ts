@@ -36,7 +36,7 @@ export interface ProjectContent {
   toc?: TocItem[];
 }
 
-const PROJECTS_DIR = path.join(process.cwd(), "content", "projects");
+const PROJECTS_DIR = path.join(process.cwd(), "content", "work");
 
 export interface TocItem {
   id: string;

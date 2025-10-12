@@ -21,7 +21,7 @@ export function ProjectCard({ project, highlight = false }: ProjectCardProps) {
     >
       {frontmatter.image ? (
         <Link
-          href={`/projects/${project.slug}`}
+          href={`/work/${project.slug}`}
           className="relative aspect-[3/2] overflow-hidden border-b border-black/10 dark:border-white/10"
         >
           <Image
@@ -44,7 +44,7 @@ export function ProjectCard({ project, highlight = false }: ProjectCardProps) {
           ) : null}
         </div>
         <h3 className="mt-5 font-serif text-2xl tracking-tight text-newspaper-ink group-hover:text-newspaper-accent dark:text-zinc-50 dark:group-hover:text-red-400">
-          <Link href={`/projects/${project.slug}`}>{frontmatter.title}</Link>
+          <Link href={`/work/${project.slug}`}>{frontmatter.title}</Link>
         </h3>
         <p className="mt-3 text-sm text-newspaper-gray dark:text-zinc-400">
           {frontmatter.description}

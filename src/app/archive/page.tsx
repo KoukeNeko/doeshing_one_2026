@@ -40,9 +40,9 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     <div className="space-y-10">
       <header className="space-y-6">
         <SectionHeading
-          kicker="The Editorial Log"
+          kicker="The Archive"
           title="Stories on design, code, and creative systems"
-          description="Dive into essays, field notes, and interviews that explore how modern tools meet timeless editorial principles."
+          description="Essays, field notes, and interviews exploring how modern tools meet timeless editorial principles."
         />
         <div className="flex flex-col gap-4 border border-black/10 bg-white px-6 py-5 dark:border-white/10 dark:bg-zinc-900 sm:flex-row sm:items-center sm:justify-between">
           <form
@@ -114,7 +114,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           </div>
         </div>
         <Link
-          href="/blog"
+          href="/archive"
           className="text-xs uppercase tracking-[0.3em] text-newspaper-accent dark:text-red-400"
         >
           Reset
