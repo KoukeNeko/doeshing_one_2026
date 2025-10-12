@@ -7,13 +7,14 @@ import { loadProjectContent } from "@/lib/mdx";
 import { formatDate } from "@/lib/utils";
 
 interface ProjectPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({
   params,
 }: ProjectPageProps): Promise<Metadata> {
-  const project = await loadProjectContent(params.slug).catch(() => null);
+  const { slug } = await params;
+  const project = await loadProjectContent(slug).catch(() => null);
   if (!project) return {};
 
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL?.startsWith("http")
@@ -38,7 +39,8 @@ export async function generateMetadata({
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-  const project = await loadProjectContent(params.slug).catch(() => null);
+  const { slug } = await params;
+  const project = await loadProjectContent(slug).catch(() => null);
   if (!project) notFound();
 
   const { frontmatter, html, toc } = project;

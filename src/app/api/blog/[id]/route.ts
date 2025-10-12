@@ -13,12 +13,13 @@ const updatePostSchema = z.object({
 });
 
 interface RouteContext {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export async function GET(_request: Request, { params }: RouteContext) {
+  const { id } = await params;
   const post = await prisma.post.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       tags: true,
       author: true,
@@ -33,6 +34,7 @@ export async function GET(_request: Request, { params }: RouteContext) {
 }
 
 export async function PUT(request: Request, { params }: RouteContext) {
+  const { id } = await params;
   const payload = await request.json();
   const parsed = updatePostSchema.safeParse(payload);
 
@@ -45,7 +47,7 @@ export async function PUT(request: Request, { params }: RouteContext) {
 
   const { tags, ...data } = parsed.data;
 
-  const post = await prisma.post.findUnique({ where: { id: params.id } });
+  const post = await prisma.post.findUnique({ where: { id } });
   if (!post) {
     return NextResponse.json({ message: "Post not found" }, { status: 404 });
   }
@@ -54,7 +56,7 @@ export async function PUT(request: Request, { params }: RouteContext) {
     data.published && !post.published ? new Date() : undefined;
 
   const updated = await prisma.post.update({
-    where: { id: params.id },
+    where: { id },
     data: {
       ...data,
       publishedAt: publishedAtUpdate ?? post.publishedAt,
@@ -74,8 +76,9 @@ export async function PUT(request: Request, { params }: RouteContext) {
 }
 
 export async function DELETE(_request: Request, { params }: RouteContext) {
+  const { id } = await params;
   try {
-    await prisma.post.delete({ where: { id: params.id } });
+    await prisma.post.delete({ where: { id } });
     return NextResponse.json({ success: true });
   } catch (error) {
     if (

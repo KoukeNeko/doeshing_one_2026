@@ -4,8 +4,10 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Save, Eye, Trash2, ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { use } from "react";
 
-export default function EditPostPage({ params }: { params: { id: string } }) {
+export default function EditPostPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -22,11 +24,11 @@ export default function EditPostPage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     fetchPost();
-  }, [params.id]);
+  }, [id]);
 
   const fetchPost = async () => {
     try {
-      const response = await fetch(`/api/blog/${params.id}`);
+      const response = await fetch(`/api/blog/${id}`);
       if (!response.ok) throw new Error("Failed to fetch post");
       
       const post = await response.json();
@@ -68,7 +70,7 @@ export default function EditPostPage({ params }: { params: { id: string } }) {
         .map((t) => t.trim())
         .filter(Boolean);
 
-      const response = await fetch(`/api/blog/${params.id}`, {
+      const response = await fetch(`/api/blog/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -95,7 +97,7 @@ export default function EditPostPage({ params }: { params: { id: string } }) {
     if (!confirm("Are you sure you want to delete this post?")) return;
 
     try {
-      const response = await fetch(`/api/blog/${params.id}`, {
+      const response = await fetch(`/api/blog/${id}`, {
         method: "DELETE",
       });
 
