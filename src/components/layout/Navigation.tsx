@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SearchButton } from "@/components/ui/Search";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { NAV_LINKS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -59,6 +60,7 @@ export function Navigation() {
           >
             Newsletter
           </Link>
+          <ThemeToggle />
         </div>
       </div>
       <div
@@ -91,6 +93,9 @@ export function Navigation() {
           })}
           <div>
             <SearchButton />
+          </div>
+          <div>
+            <ThemeToggle />
           </div>
         </div>
       </div>

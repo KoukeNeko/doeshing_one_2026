@@ -1,14 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SearchButton } from "@/components/ui/Search";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { getNewspaperDateline } from "@/lib/utils";
 import { Navigation } from "./Navigation";
 
 export function Header() {
   return (
     <>
-      <header className="border-b border-black/10 bg-newspaper-paper dark:border-white/10 dark:bg-zinc-900">
+      <header className="bg-newspaper-paper dark:border-white/10 dark:bg-zinc-900">
         <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 md:px-6 md:py-12">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="flex flex-col gap-3">
@@ -48,11 +47,8 @@ export function Header() {
                 <span>台北・遠端</span>
                 <span>EST. 2016</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="hidden md:block">
-                  <SearchButton />
-                </div>
-                <ThemeToggle />
+              <div className="hidden md:block">
+                <SearchButton />
               </div>
             </div>
           </div>
