@@ -7,6 +7,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getPublishedPosts, getTagsWithCount } from "@/lib/blog";
 import { FEATURED_POST_LIMIT, POSTS_PER_PAGE } from "@/lib/constants";
 
+// Revalidate this page every 60 seconds
+export const revalidate = 60;
+
 interface BlogPageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }

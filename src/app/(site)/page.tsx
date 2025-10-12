@@ -8,6 +8,9 @@ import { getFeaturedPosts } from "@/lib/blog";
 import { loadAllProjects } from "@/lib/mdx";
 import { getNewspaperDateline } from "@/lib/utils";
 
+// Revalidate this page every 60 seconds
+export const revalidate = 60;
+
 const quickLinks: Array<{
   title: string;
   description: string;

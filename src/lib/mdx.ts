@@ -4,6 +4,7 @@ import GithubSlugger from "github-slugger";
 import matter from "gray-matter";
 import type { Heading, Root as MdastRoot } from "mdast";
 import { toString as mdastToString } from "mdast-util-to-string";
+import { unstable_cache } from "next/cache";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
@@ -45,33 +46,45 @@ export interface TocItem {
 }
 
 export async function renderMarkdown(markdown: string) {
-  const slugger = new GithubSlugger();
-  const headings: TocItem[] = [];
+  // Create a hash of the markdown content for cache key
+  const contentHash = Buffer.from(markdown).toString("base64").slice(0, 32);
 
-  const processor = unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(extractHeadings, { slugger, headings })
-    .use(remarkRehype)
-    .use(rehypeSlug)
-    .use(rehypeAutolinkHeadings, {
-      behavior: "wrap",
-      properties: {
-        className: ["heading-link"],
-      },
-    })
-    .use(rehypePrettyCode, {
-      theme: "github-dark",
-      keepBackground: false,
-    })
-    .use(rehypeStringify);
+  return unstable_cache(
+    async () => {
+      const slugger = new GithubSlugger();
+      const headings: TocItem[] = [];
 
-  const file = await processor.process(markdown);
+      const processor = unified()
+        .use(remarkParse)
+        .use(remarkGfm)
+        .use(extractHeadings, { slugger, headings })
+        .use(remarkRehype)
+        .use(rehypeSlug)
+        .use(rehypeAutolinkHeadings, {
+          behavior: "wrap",
+          properties: {
+            className: ["heading-link"],
+          },
+        })
+        .use(rehypePrettyCode, {
+          theme: "github-dark",
+          keepBackground: false,
+        })
+        .use(rehypeStringify);
 
-  return {
-    html: String(file),
-    toc: headings,
-  };
+      const file = await processor.process(markdown);
+
+      return {
+        html: String(file),
+        toc: headings,
+      };
+    },
+    [`markdown-${contentHash}`],
+    {
+      revalidate: 3600, // Cache for 1 hour
+      tags: ["markdown"],
+    },
+  )();
 }
 
 function extractHeadings(
@@ -102,22 +115,31 @@ export async function getProjectSlugs() {
 export async function loadProjectContent(
   slug: string,
 ): Promise<ProjectContent> {
-  const filePath = path.join(PROJECTS_DIR, `${slug}.md`);
-  const fallbackMdx = path.join(PROJECTS_DIR, `${slug}.mdx`);
+  return unstable_cache(
+    async () => {
+      const filePath = path.join(PROJECTS_DIR, `${slug}.md`);
+      const fallbackMdx = path.join(PROJECTS_DIR, `${slug}.mdx`);
 
-  const content = await fs
-    .readFile(filePath, "utf8")
-    .catch(async () => fs.readFile(fallbackMdx, "utf8"));
+      const content = await fs
+        .readFile(filePath, "utf8")
+        .catch(async () => fs.readFile(fallbackMdx, "utf8"));
 
-  const { data, content: body } = matter(content);
+      const { data, content: body } = matter(content);
 
-  return {
-    slug,
-    frontmatter: data as ProjectFrontmatter,
-    content: body,
-    readingTime: getReadingTime(body),
-    ...(await renderMarkdown(body)),
-  };
+      return {
+        slug,
+        frontmatter: data as ProjectFrontmatter,
+        content: body,
+        readingTime: getReadingTime(body),
+        ...(await renderMarkdown(body)),
+      };
+    },
+    [`project-${slug}`],
+    {
+      revalidate: 3600,
+      tags: ["projects", `project-${slug}`],
+    },
+  )();
 }
 
 export async function loadAllProjects() {

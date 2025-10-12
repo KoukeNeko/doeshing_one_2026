@@ -27,6 +27,9 @@ model Post {
 
   @@index([publishedAt])
   @@index([slug])
+  @@index([published, publishedAt(sort: Desc)])
+  @@index([published, views(sort: Desc)])
+  @@index([authorId])
 }
 
 model Tag {

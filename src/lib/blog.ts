@@ -1,5 +1,6 @@
 import type { Prisma } from "@prisma/client";
 import type { BlogPostListItem } from "@/types/content";
+import { unstable_cache } from "next/cache";
 import { prisma } from "./db";
 import { getReadingTime } from "./utils";
 
@@ -41,80 +42,114 @@ export async function getPublishedPosts({
   posts: BlogPostListItem[];
   total: number;
 }> {
-  const where: Prisma.PostWhereInput = {
-    published: true,
+  // Use cache for queries without search/filter params
+  const shouldCache = !search && !tag;
+  const cacheKey = `posts-${sort}-${page}-${perPage}`;
+
+  const fetchPosts = async () => {
+    const where: Prisma.PostWhereInput = {
+      published: true,
+    };
+
+    if (tag) {
+      where.tags = {
+        some: {
+          slug: tag,
+        },
+      };
+    }
+
+    if (search) {
+      where.OR = [
+        { title: { contains: search, mode: "insensitive" } },
+        { content: { contains: search, mode: "insensitive" } },
+      ];
+    }
+
+    const total = await prisma.post.count({ where });
+
+    const orderBy =
+      sort === "views"
+        ? { views: "desc" as const }
+        : { publishedAt: "desc" as const };
+
+    const posts = await prisma.post.findMany({
+      where,
+      orderBy,
+      select: basePostSelect,
+      skip: (page - 1) * perPage,
+      take: perPage,
+    });
+
+    return {
+      posts: posts.map((post: SelectedPost) => ({
+        ...post,
+        readingTime: getReadingTime(post.content),
+      })),
+      total,
+    };
   };
 
-  if (tag) {
-    where.tags = {
-      some: {
-        slug: tag,
+  if (shouldCache) {
+    return unstable_cache(fetchPosts, [cacheKey], {
+      revalidate: 60, // Revalidate every 60 seconds
+      tags: ["posts"],
+    })();
+  }
+
+  return fetchPosts();
+}
+
+export const getFeaturedPosts = unstable_cache(
+  async (limit = 3) => {
+    const posts = await prisma.post.findMany({
+      where: {
+        published: true,
       },
-    };
-  }
+      orderBy: {
+        publishedAt: "desc",
+      },
+      take: limit,
+      select: basePostSelect,
+    });
 
-  if (search) {
-    where.OR = [
-      { title: { contains: search, mode: "insensitive" } },
-      { content: { contains: search, mode: "insensitive" } },
-    ];
-  }
-
-  const total = await prisma.post.count({ where });
-
-  const orderBy =
-    sort === "views"
-      ? { views: "desc" as const }
-      : { publishedAt: "desc" as const };
-
-  const posts = await prisma.post.findMany({
-    where,
-    orderBy,
-    select: basePostSelect,
-    skip: (page - 1) * perPage,
-    take: perPage,
-  });
-
-  return {
-    posts: posts.map((post: SelectedPost) => ({
+    return posts.map((post: SelectedPost) => ({
       ...post,
       readingTime: getReadingTime(post.content),
-    })),
-    total,
-  };
-}
-
-export async function getFeaturedPosts(limit = 3) {
-  const posts = await prisma.post.findMany({
-    where: {
-      published: true,
-    },
-    orderBy: {
-      publishedAt: "desc",
-    },
-    take: limit,
-    select: basePostSelect,
-  });
-
-  return posts.map((post: SelectedPost) => ({
-    ...post,
-    readingTime: getReadingTime(post.content),
-  }));
-}
+    }));
+  },
+  ["featured-posts"],
+  {
+    revalidate: 60,
+    tags: ["posts", "featured"],
+  },
+);
 
 export async function getPostBySlug(slug: string, includeDraft = false) {
-  const post = await prisma.post.findUnique({
-    where: { slug },
-    select: basePostSelect,
-  });
+  const fetchPost = async () => {
+    const post = await prisma.post.findUnique({
+      where: { slug },
+      select: basePostSelect,
+    });
 
-  if (!post) return null;
-  if (!includeDraft && !post.published) return null;
+    if (!post) return null;
+    if (!includeDraft && !post.published) return null;
 
-  return {
-    ...post,
-    readingTime: getReadingTime(post.content),
+    return {
+      ...post,
+      readingTime: getReadingTime(post.content),
+    };
   };
+
+  // Only cache published posts
+  if (!includeDraft) {
+    return unstable_cache(fetchPost, [`post-${slug}`], {
+      revalidate: 60,
+      tags: ["posts", `post-${slug}`],
+    })();
+  }
+
+  return fetchPost();
 }
 
 export async function getAdjacentPosts(publishedAt: Date, _postId: string) {
@@ -183,19 +218,26 @@ type TagWithPostCount = Prisma.TagGetPayload<{
   include: { _count: { select: { posts: true } } };
 }>;
 
-export async function getTagsWithCount() {
-  const tags: TagWithPostCount[] = await prisma.tag.findMany({
-    orderBy: { name: "asc" },
-    include: {
-      _count: {
-        select: { posts: true },
+export const getTagsWithCount = unstable_cache(
+  async () => {
+    const tags: TagWithPostCount[] = await prisma.tag.findMany({
+      orderBy: { name: "asc" },
+      include: {
+        _count: {
+          select: { posts: true },
+        },
       },
-    },
-  });
+    });
 
-  return tags.map((tagItem) => ({
-    slug: tagItem.slug,
-    name: tagItem.name,
-    count: tagItem._count.posts,
-  }));
-}
+    return tags.map((tagItem) => ({
+      slug: tagItem.slug,
+      name: tagItem.name,
+      count: tagItem._count.posts,
+    }));
+  },
+  ["tags-with-count"],
+  {
+    revalidate: 120,
+    tags: ["tags"],
+  },
+);

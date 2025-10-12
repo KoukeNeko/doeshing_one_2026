@@ -16,6 +16,9 @@ import {
 import { renderMarkdown } from "@/lib/mdx";
 import { formatDate } from "@/lib/utils";
 
+// Revalidate this page every 60 seconds
+export const revalidate = 60;
+
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
 }
