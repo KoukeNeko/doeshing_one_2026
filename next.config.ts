@@ -32,8 +32,8 @@ const withMDX = createMDX({
 });
 
 const nextConfig: NextConfig = {
+  typedRoutes: true,
   experimental: {
-    typedRoutes: true,
     serverActions: {
       bodySizeLimit: "2mb",
     },
