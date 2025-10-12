@@ -26,6 +26,7 @@
 
   body {
     @apply bg-newspaper-paper text-newspaper-ink font-sans antialiased;
+    min-height: -webkit-fill-available;
   }
 
   .dark body {
