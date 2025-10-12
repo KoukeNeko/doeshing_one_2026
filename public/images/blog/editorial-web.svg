@@ -1,0 +1,10 @@
+<svg width="960" height="540" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="540" fill="#fafafa" />
+  <rect x="40" y="40" width="880" height="460" fill="none" stroke="#1a1a1a" stroke-width="4" />
+  <text x="60" y="120" font-family="'Playfair Display', serif" font-size="64" fill="#1a1a1a">Editorial Web</text>
+  <rect x="60" y="160" width="320" height="6" fill="#dc2626" />
+  <text x="60" y="236" font-family="'Inter', sans-serif" font-size="28" fill="#1a1a1a">Design systems for narrative-driven teams.</text>
+  <rect x="60" y="280" width="240" height="140" fill="#1a1a1a" opacity="0.08" />
+  <rect x="320" y="280" width="180" height="140" fill="#1a1a1a" opacity="0.05" />
+  <rect x="520" y="280" width="180" height="140" fill="#1a1a1a" opacity="0.05" />
+</svg>

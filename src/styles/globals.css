@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-serif: "Playfair Display", "Merriweather", serif;
+    --font-sans: "Inter", "Roboto", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+    --color-ink: #1a1a1a;
+    --color-paper: #fafafa;
+    --color-accent: #dc2626;
+    --color-gray: #6b7280;
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-newspaper-paper text-newspaper-ink font-sans antialiased;
+  }
+
+  ::selection {
+    @apply bg-newspaper-accent text-newspaper-paper;
+  }
+}
+
+@layer components {
+  a {
+    @apply underline-offset-4 transition-colors duration-150 ease-out;
+  }
+
+  a:hover {
+    @apply text-newspaper-accent;
+  }
+
+  .dropcap:first-letter {
+    @apply float-left mr-3 mt-1 text-6xl font-serif font-bold leading-none text-newspaper-accent;
+  }
+
+  .prose {
+    @apply max-w-prose;
+  }
+
+  .prose img {
+    @apply rounded-none border border-black/5 shadow-editorial;
+  }
+
+  .prose figure {
+    @apply my-8;
+  }
+
+  .prose figcaption {
+    @apply mt-3 text-sm font-serif uppercase tracking-[0.22em] text-newspaper-gray;
+  }
+
+  .sr-only-focusable:focus {
+    @apply not-sr-only absolute left-4 top-4 inline-flex items-center rounded bg-newspaper-ink px-3 py-2 text-sm font-semibold tracking-wide text-newspaper-paper shadow-lg focus:outline-none focus:ring-2 focus:ring-newspaper-accent;
+  }
+}

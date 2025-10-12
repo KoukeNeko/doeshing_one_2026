@@ -1,103 +1,176 @@
-import Image from "next/image";
+import { ArrowRight, Newspaper } from "lucide-react";
+import Link from "next/link";
+import { BlogGrid } from "@/components/blog/BlogGrid";
+import { ProjectCard } from "@/components/projects/ProjectCard";
+import { Button } from "@/components/ui/Button";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { getFeaturedPosts } from "@/lib/blog";
+import { loadAllProjects } from "@/lib/mdx";
+import { getNewspaperDateline } from "@/lib/utils";
 
-export default function Home() {
+const quickLinks = [
+  {
+    title: "The Studio Log",
+    description:
+      "Long-form essays, process notes, and behind-the-scenes breakdowns from current projects.",
+    href: "/blog",
+  },
+  {
+    title: "Selected Works",
+    description:
+      "A curated collection of client engagements, experiments, and shipped products.",
+    href: "/projects",
+  },
+  {
+    title: "Résumé / CV",
+    description:
+      "Experience, skills, and credentials—formatted for both screen and print.",
+    href: "/cv",
+  },
+];
+
+export default async function HomePage() {
+  const [featuredPosts, projects] = await Promise.all([
+    getFeaturedPosts(3),
+    loadAllProjects(),
+  ]);
+
+  const featuredProjects = projects.slice(0, 3);
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="space-y-20">
+      <section className="grid gap-6 border border-black/10 bg-white px-6 py-10 shadow-editorial md:grid-cols-[2fr,1fr] md:gap-12 md:px-10 md:py-12">
+        <div className="flex flex-col gap-6">
+          <span className="text-xs font-semibold uppercase tracking-[0.4em] text-newspaper-gray">
+            {getNewspaperDateline()}
+          </span>
+          <h1 className="font-serif text-4xl tracking-tight text-newspaper-ink sm:text-5xl md:text-6xl">
+            Weekend Edition: Editorial craftsmanship for the modern web.
+          </h1>
+          <p className="max-w-2xl text-base text-newspaper-gray">
+            I’m Doeshing—design engineer and storyteller. I build narrative-rich
+            digital experiences that read like print, feel like product, and
+            scale like software.
+          </p>
+          <div className="flex flex-wrap items-center gap-4">
+            <Button asChild>
+              <Link href="/projects" className="gap-2">
+                View Projects
+                <ArrowRight size={16} strokeWidth={1.5} />
+              </Link>
+            </Button>
+            <Button asChild variant="secondary">
+              <Link href="/contact" className="gap-2">
+                Get In Touch
+                <ArrowRight size={16} strokeWidth={1.5} />
+              </Link>
+            </Button>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="flex flex-col gap-6 border-t border-black/10 pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0">
+          <div>
+            <span className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-accent">
+              Latest Dispatch
+            </span>
+            <p className="mt-4 text-sm text-newspaper-gray">
+              {featuredPosts[0]?.excerpt ??
+                "Fresh essays on design systems, developer tooling, and narrative-driven product work."}
+            </p>
+          </div>
+          <div className="flex flex-col gap-3 text-xs uppercase tracking-[0.35em] text-newspaper-gray">
+            <span>FEATURED AREAS</span>
+            <span className="flex flex-wrap gap-3 text-[11px]">
+              <span className="rounded-sm border border-black/10 px-2 py-1">
+                Product Design
+              </span>
+              <span className="rounded-sm border border-black/10 px-2 py-1">
+                Frontend Engineering
+              </span>
+              <span className="rounded-sm border border-black/10 px-2 py-1">
+                Narrative Systems
+              </span>
+            </span>
+          </div>
+          <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray">
+            <Newspaper size={18} strokeWidth={1.5} />
+            Weekly briefings direct to your inbox.
+            <Link
+              href="/newsletter"
+              className="text-newspaper-accent underline-offset-4 hover:underline"
+            >
+              Subscribe
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="space-y-10">
+        <SectionHeading
+          kicker="Quick Navigation"
+          title="Highlights from the newsroom"
+          description="Browse the latest writing, explore featured projects, or download the résumé for offline reading."
+        />
+        <div className="grid gap-6 md:grid-cols-3">
+          {quickLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="flex flex-col gap-4 border border-black/10 bg-white px-6 py-8 text-left transition hover:-translate-y-1 hover:border-newspaper-ink hover:shadow-editorial"
+            >
+              <span className="text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-accent">
+                {link.title}
+              </span>
+              <p className="text-sm text-newspaper-gray">{link.description}</p>
+              <span className="mt-auto inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.32em] text-newspaper-ink">
+                Explore
+                <ArrowRight size={16} strokeWidth={1.5} />
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="space-y-10">
+        <SectionHeading
+          kicker="Featured Stories"
+          title="Latest essays and field notes"
+          description="The editorial feed surfaces well-crafted pieces on design, development, and the craft of storytelling."
+        />
+        <BlogGrid posts={featuredPosts} featuredCount={2} />
+        <div className="flex justify-end">
+          <Button asChild variant="ghost">
+            <Link href="/blog" className="gap-2">
+              Read the archive
+              <ArrowRight size={16} strokeWidth={1.5} />
+            </Link>
+          </Button>
+        </div>
+      </section>
+
+      <section className="space-y-10">
+        <SectionHeading
+          kicker="Studio Projects"
+          title="Current focus and featured collaborations"
+          description="Case studies that blend storytelling with product thinking across web, mobile, and experiential media."
+        />
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {featuredProjects.map((project) => (
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              highlight={false}
+            />
+          ))}
+        </div>
+        <div className="flex justify-end">
+          <Button asChild variant="ghost">
+            <Link href="/projects" className="gap-2">
+              View all projects
+              <ArrowRight size={16} strokeWidth={1.5} />
+            </Link>
+          </Button>
+        </div>
+      </section>
     </div>
   );
 }

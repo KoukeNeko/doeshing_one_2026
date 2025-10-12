@@ -1,0 +1,11 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" fill="#fdfcf8" />
+  <rect x="80" y="80" width="1040" height="515" fill="none" stroke="#1a1a1a" stroke-width="4" />
+  <text x="120" y="180" font-family="'Playfair Display', serif" font-size="88" fill="#1a1a1a">Atlas</text>
+  <text x="120" y="240" font-family="'Inter', sans-serif" font-size="32" fill="#1a1a1a">Editorial Systems Guide</text>
+  <rect x="120" y="280" width="200" height="220" fill="#1a1a1a" opacity="0.08" />
+  <rect x="360" y="280" width="200" height="220" fill="#1a1a1a" opacity="0.08" />
+  <rect x="600" y="280" width="200" height="220" fill="#1a1a1a" opacity="0.08" />
+  <rect x="840" y="280" width="200" height="220" fill="#1a1a1a" opacity="0.08" />
+  <line x1="120" y1="530" x2="1080" y2="530" stroke="#dc2626" stroke-width="6" />
+</svg>

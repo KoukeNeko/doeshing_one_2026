@@ -1,0 +1,13 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" fill="#f0f4f8" />
+  <path d="M0 480 L1200 360 L1200 675 L0 675 Z" fill="#dc2626" opacity="0.12" />
+  <text x="120" y="180" font-family="'Playfair Display', serif" font-size="76" fill="#1a1a1a">Field Notes</text>
+  <text x="120" y="230" font-family="'Inter', sans-serif" font-size="28" fill="#1a1a1a">Immersive Annual Report</text>
+  <polyline points="120,300 260,280 420,320 600,260 780,310 940,270" stroke="#1a1a1a" stroke-width="4" fill="none" />
+  <circle cx="120" cy="300" r="8" fill="#1a1a1a" />
+  <circle cx="260" cy="280" r="8" fill="#1a1a1a" />
+  <circle cx="420" cy="320" r="8" fill="#1a1a1a" />
+  <circle cx="600" cy="260" r="8" fill="#1a1a1a" />
+  <circle cx="780" cy="310" r="8" fill="#1a1a1a" />
+  <circle cx="940" cy="270" r="8" fill="#1a1a1a" />
+</svg>
