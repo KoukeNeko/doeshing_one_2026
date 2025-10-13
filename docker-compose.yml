@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  web:
+    image: node:20-bookworm-slim
+    container_name: doeshing-one-dev
+    working_dir: /app
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    env_file:
+      - .env
+    environment:
+      NEXT_TELEMETRY_DISABLED: "1"
+      WATCHPACK_POLLING: "true"
+    profiles: ["dev"]
+
+  app:
+    build:
+      context: .
+    image: doeshing-one:latest
+    env_file:
+      - .env
+    environment:
+      PORT: "3000"
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    profiles: ["prod"]
+
+volumes:
+  node_modules:

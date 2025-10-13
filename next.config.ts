@@ -32,6 +32,7 @@ const withMDX = createMDX({
 });
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   typedRoutes: true,
   experimental: {
     serverActions: {

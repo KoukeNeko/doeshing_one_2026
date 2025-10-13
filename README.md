@@ -113,6 +113,26 @@ npm run format
 - **Blog posts:** Stored in Supabase via Prisma. Use the `/api/blog` endpoints or Prisma Studio to create entries. Markdown in the `content` column is rendered with typographic enhancements, Shiki-powered code blocks, and automatic table of contents generation.
 - **Projects:** Add `.md` or `.mdx` files to `content/projects/`. Frontmatter supports `{ title, description, tags, image, github, demo, date, featured, status }`. Content is processed through unified/remark/rehype for typography, code highlighting, and TOC data.
 
+## 🐳 Docker
+
+Container images are built with a multi-stage `Dockerfile` (Next.js standalone output) and a `docker-compose.yml` that exposes development and production-ready profiles.
+
+### Build a production image
+
+```bash
+docker compose --profile prod up --build
+```
+
+The command builds the image, injects environment variables from `.env`, and serves the app on port `3000`. Override `PORT` or set additional secrets via `docker compose --profile prod run app env` as needed. Ensure the Supabase host defined in `.env` is reachable from inside the container (use `host.docker.internal` when the database runs on the Docker host).
+
+### Run with hot reload during development
+
+```bash
+docker compose --profile dev up
+```
+
+The development profile mounts the repository into a Node 20 container, installs dependencies (cached in the `node_modules` named volume), and runs `npm run dev` with file watching enabled.
+
 ## 🔌 API Endpoints
 
 | Method | Endpoint                  | Description                              |
