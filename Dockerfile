@@ -3,13 +3,17 @@
 FROM node:20-slim AS deps
 ENV PYTHON=python3
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends python3 make g++ \
+  && apt-get install -y --no-install-recommends python3 make g++ openssl libssl-dev \
   && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
 FROM node:20-slim AS builder
+ENV PYTHON=python3
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends python3 make g++ openssl libssl-dev \
+  && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/doeshing?schema=public"
