@@ -23,6 +23,19 @@ ENV NODE_ENV=production
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
+
+# Build arguments for environment variables
+ARG DATABASE_URL
+ARG DIRECT_URL
+ARG NEXTAUTH_URL
+ARG NEXTAUTH_SECRET
+
+# Set environment variables for build time
+ENV DATABASE_URL=${DATABASE_URL}
+ENV DIRECT_URL=${DIRECT_URL}
+ENV NEXTAUTH_URL=${NEXTAUTH_URL}
+ENV NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+
 RUN npm run build
 
 FROM base AS runner

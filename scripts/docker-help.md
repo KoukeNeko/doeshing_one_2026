@@ -158,16 +158,28 @@ docker container prune
 ```
 
 ### 3. 資料庫連接失敗
+
+**錯誤訊息：** `Environment variable not found: DATABASE_URL`
+
+**原因：** Next.js 在構建時嘗試預渲染頁面，需要連接資料庫
+
+**解決方案：** 
+
+1. 確保 `.env` 檔案包含所有必要的環境變數
+2. Docker Compose 會自動將 `.env` 中的變數傳遞給構建過程
+
 **檢查步驟：**
+
 ```bash
 # 1. 確認 .env 檔案存在且包含正確的 DATABASE_URL
 cat .env | grep DATABASE_URL
 
-# 2. 進入容器檢查
-./scripts/dev.sh shell
+# 2. 確認所有必要的環境變數都存在
+cat .env | grep -E "DATABASE_URL|DIRECT_URL|NEXTAUTH_URL|NEXTAUTH_SECRET"
 
-# 3. 在容器內測試資料庫連接
-npx prisma db pull
+# 3. 重新構建
+./scripts/prod.sh clean
+./scripts/prod.sh deploy
 ```
 
 ### 4. node_modules 權限問題
