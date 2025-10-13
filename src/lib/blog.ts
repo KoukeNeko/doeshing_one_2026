@@ -49,9 +49,12 @@ export async function getPublishedPosts({
   posts: BlogPostListItem[];
   total: number;
 }> {
-  // Use cache for queries without search/filter params
-  const shouldCache = !search && !tag;
-  const cacheKey = `posts-${sort}-${page}-${perPage}`;
+  // Build cache key including all parameters
+  const cacheKey = `posts-${sort}-${page}-${perPage}-${tag || "all"}-${search || "none"}`;
+  
+  // Cache tags for targeted revalidation
+  const cacheTags = ["posts"];
+  if (tag) cacheTags.push(`tag-${tag}`);
 
   const fetchPosts = async () => {
     const where: Prisma.PostWhereInput = {
@@ -97,14 +100,11 @@ export async function getPublishedPosts({
     };
   };
 
-  if (shouldCache) {
-    return unstable_cache(fetchPosts, [cacheKey], {
-      revalidate: 60, // Revalidate every 60 seconds
-      tags: ["posts"],
-    })();
-  }
-
-  return fetchPosts();
+  // Cache all queries, with longer revalidation for search results
+  return unstable_cache(fetchPosts, [cacheKey], {
+    revalidate: search ? 300 : 60, // Search: 5 min, Others: 1 min
+    tags: cacheTags,
+  })();
 }
 
 export const getFeaturedPosts = unstable_cache(

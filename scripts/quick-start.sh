@@ -4,6 +4,8 @@
 # Usage: ./scripts/quick-start.sh
 
 set -e
+echo "移除現有容器（如果有的話）..."
+docker compose --profile prod down
 
 echo "🚀 啟動正式環境容器..."
 docker compose --profile prod up -d

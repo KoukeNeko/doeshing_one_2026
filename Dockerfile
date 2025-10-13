@@ -56,6 +56,10 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
+# Create cache directories with correct permissions
+RUN mkdir -p .next/cache/fetch-cache .next/cache/images \
+  && chown -R nextjs:nodejs .next
+
 USER nextjs
 EXPOSE 3000
 
