@@ -40,6 +40,32 @@ const nextConfig: NextConfig = {
     },
   },
   pageExtensions: ["ts", "tsx", "md", "mdx"],
+  
+  // Configure cache headers for CDN optimization
+  async headers() {
+    return [
+      {
+        source: "/archive/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value:
+              "public, s-maxage=300, stale-while-revalidate=600",
+          },
+        ],
+      },
+      {
+        source: "/_next/static/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
+  },
+  
   images: {
     remotePatterns: [
       {
