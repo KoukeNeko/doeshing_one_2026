@@ -10,6 +10,7 @@ Magazine-style personal site built with Next.js 15, Tailwind CSS, and Prisma. Th
 - Comprehensive CV page with printable styles and timeline layout
 - API routes for blog listing, CRUD-ready endpoints, and view aggregation hooks
 - Accessible navigation, skip links, responsive design from 320px to 1440px+
+- Docker Compose workflow for bundled PostgreSQL + Next.js development
 
 ## 🧱 Tech Stack
 
@@ -86,6 +87,17 @@ Visit `http://localhost:3000` to explore the editorial layout. Biome linting kee
 npm run lint
 npm run format
 ```
+
+### Docker (optional)
+
+Spin everything up (app + PostgreSQL) inside containers:
+
+```bash
+cp .env.docker.example .env.docker
+docker compose up --build
+```
+
+The compose file runs `prisma migrate deploy` on start to keep the database schema in sync. Once booted, the site is available at `http://localhost:3000`, and PostgreSQL listens on `localhost:5432`. Press `Ctrl+C` to stop, or add `-d` to run detached. The persistent database volume is named `postgres-data`.
 
 ## 📝 Content Authoring
 
