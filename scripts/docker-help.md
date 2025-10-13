@@ -117,13 +117,28 @@ chmod +x scripts/prod.sh
 ## 🐛 常見問題與解決方案
 
 ### 1. OpenSSL 錯誤
+
 **錯誤訊息：** `libssl.so.1.1: cannot open shared object file`
 
 **解決方案：**
+
 ```bash
 # 重新構建並啟動
 ./scripts/prod.sh clean
 ./scripts/prod.sh deploy
+```
+
+### 1-1. TypeScript 找不到模組錯誤
+
+**錯誤訊息：** `Cannot find module 'typescript'`
+
+**原因：** 構建階段需要 devDependencies（如 TypeScript）
+
+**解決方案：** 已在 Dockerfile 中修復，使用 `npm ci --include=dev`
+
+```bash
+# 重新構建
+./scripts/prod.sh build
 ```
 
 ### 2. Port 已被佔用
