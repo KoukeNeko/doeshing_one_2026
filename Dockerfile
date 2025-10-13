@@ -13,13 +13,16 @@ ENV NODE_ENV=production \
 FROM base AS deps
 
 COPY package.json package-lock.json ./
+COPY prisma ./prisma
 RUN npm ci
+RUN npx prisma generate
 
 FROM base AS builder
 
 ENV NODE_ENV=production
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN npx prisma generate
 RUN npm run build
 
 FROM base AS runner
