@@ -5,7 +5,7 @@ Magazine-style personal site built with Next.js 15, Tailwind CSS, and Prisma. Th
 ## ✨ Highlights
 
 - Multi-column editorial layout with serif/sans typography pairings and accent red detailing
-- Blog engine backed by Supabase (Postgres) via Prisma with search, tag filters, view tracking, and related articles
+- Blog engine backed by PostgreSQL via Prisma with search, tag filters, view tracking, and related articles
 - Markdown-driven project case studies rendered via a unified/rehype pipeline
 - Comprehensive CV page with printable styles and timeline layout
 - API routes for blog listing, CRUD-ready endpoints, and view aggregation hooks
@@ -15,7 +15,7 @@ Magazine-style personal site built with Next.js 15, Tailwind CSS, and Prisma. Th
 
 - **Framework:** Next.js 15 (App Router, React 19)
 - **Styling:** Tailwind CSS 3 with typography plugin and custom magazine tokens
-- **Database:** Supabase (Postgres) managed through Prisma ORM
+- **Database:** PostgreSQL managed through Prisma ORM
 - **Content:** Prisma-backed blog posts + Markdown/MDX project content
 - **Auth Ready:** Prisma schema ships with NextAuth-compatible tables for future admin tooling
 - **Tooling:** TypeScript, Biome, Zod, unified/remark/rehype, Shiki
@@ -55,35 +55,14 @@ Copy the template and update values for your setup:
 cp .env.example .env
 ```
 
-- `DATABASE_URL` — Supabase Postgres URL (`postgresql://USER:PASSWORD@HOST:5432/postgres?pgbouncer=true&connection_limit=1`)
+- `DATABASE_URL` — PostgreSQL connection string (example for local dev: `postgresql://postgres:postgres@localhost:5432/doeshing?schema=public`)
+- `DIRECT_URL` — optional extra connection string for migrations/CLI tools when your provider requires a non-pooled connection
 - `NEXTAUTH_SECRET` / `NEXTAUTH_URL` — reserved for future admin routes
 - `NEXT_PUBLIC_SITE_URL` — public base URL used for metadata + sharing
+- `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` — OAuth credentials for admin login
+- `ADMIN_EMAIL` / `AUTHOR_NAME` — email allowed in the admin UI and default author metadata
 
-If you're using Supabase:
-
-```bash
-supabase init
-supabase link --project-ref <project-ref>
-supabase db credentials get
-```
-
-Copy the pooled `connectionString` into `DATABASE_URL`.
-
-The project exposes a typed Supabase helper at `src/lib/supabase.ts`:
-
-```ts
-import { getSupabaseClient } from "@/lib/supabase";
-
-const supabase = getSupabaseClient();            // uses anon key by default
-const supabaseAdmin = getSupabaseClient({ serviceRole: true }); // requires SUPABASE_SERVICE_ROLE_KEY
-
-const { data, error } = await supabase.from("posts").select("*");
-
-// To enable end-to-end type safety, replace src/types/supabase.ts by running:
-// supabase gen types typescript --project-id <project-ref> > src/types/supabase.ts
-```
-
-Make sure `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` (and `SUPABASE_SERVICE_ROLE_KEY` when needed) are configured before using the helper.
+Run `npm run db:test` anytime you want to verify Prisma can reach your database; the script checks connectivity, runs a heartbeat query, and reports on seeded tables.
 
 ### 3. Prepare the database
 
@@ -110,7 +89,7 @@ npm run format
 
 ## 📝 Content Authoring
 
-- **Blog posts:** Stored in Supabase via Prisma. Use the `/api/blog` endpoints or Prisma Studio to create entries. Markdown in the `content` column is rendered with typographic enhancements, Shiki-powered code blocks, and automatic table of contents generation.
+- **Blog posts:** Stored in PostgreSQL via Prisma. Use the `/api/blog` endpoints or Prisma Studio to create entries. Markdown in the `content` column is rendered with typographic enhancements, Shiki-powered code blocks, and automatic table of contents generation.
 - **Projects:** Add `.md` or `.mdx` files to `content/projects/`. Frontmatter supports `{ title, description, tags, image, github, demo, date, featured, status }`. Content is processed through unified/remark/rehype for typography, code highlighting, and TOC data.
 
 ## 🔌 API Endpoints
@@ -135,7 +114,7 @@ Query parameters for the list endpoint mirror the UI: `page`, `tag`, `search`, `
 ## 📄 Deployment Notes
 
 - Tailwind + typography plugin is fully static and deployment ready for Vercel.
-- Grab the Supabase pooled URL via `supabase db credentials get`, then run the migrate/generate scripts whenever the schema changes.
+- Ensure `DATABASE_URL` targets your production PostgreSQL instance, then run the migrate/generate scripts whenever the schema changes.
 - `NEXT_PUBLIC_SITE_URL` should point to the deployed host to ensure accurate Open Graph links.
 - NextAuth tables are already modeled in Prisma for future admin routes; enable when needed.
 
