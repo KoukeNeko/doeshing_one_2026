@@ -29,9 +29,21 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account, profile }) {
       // 只允許特定的 email 登入（管理員）
       const allowedEmail = process.env.ADMIN_EMAIL;
-      if (user.email === allowedEmail) {
+      
+      // 記錄登入嘗試（用於除錯）
+      console.log('=== SignIn Attempt ===');
+      console.log('User email:', user.email);
+      console.log('Allowed email:', allowedEmail);
+      console.log('Match:', user.email?.toLowerCase() === allowedEmail?.toLowerCase());
+      
+      // 使用不區分大小寫的比對
+      if (user.email && allowedEmail && 
+          user.email.toLowerCase() === allowedEmail.toLowerCase()) {
+        console.log('✅ Access granted');
         return true;
       }
+      
+      console.log('❌ Access denied');
       return false; // 拒絕其他用戶
     },
     async jwt({ token, user, account }) {
