@@ -13,6 +13,8 @@ const updatePostSchema = z.object({
     .optional()
     .transform((val) => (val === "" ? null : val)),
   published: z.boolean().optional(),
+  featured: z.boolean().optional(),
+  featuredOrder: z.number().int().positive().nullable().optional(),
   tags: z.array(z.string()).optional(),
 });
 

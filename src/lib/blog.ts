@@ -25,6 +25,8 @@ const listPostSelect = {
   createdAt: true,
   updatedAt: true,
   views: true,
+  featured: true,
+  featuredOrder: true,
   tags: true,
 } satisfies Prisma.PostSelect;
 
@@ -109,18 +111,40 @@ export async function getPublishedPosts({
 
 export const getFeaturedPosts = unstable_cache(
   async (limit = 3) => {
-    const posts = await prisma.post.findMany({
+    // First, try to get manually featured posts
+    const featuredPosts = await prisma.post.findMany({
       where: {
         published: true,
+        featured: true,
       },
       orderBy: {
-        publishedAt: "desc",
+        featuredOrder: "asc",
       },
       take: limit,
       select: listPostSelect,
     });
 
-    return posts.map((post: ListPost) => ({
+    // If we don't have enough featured posts, fill with latest posts
+    if (featuredPosts.length < limit) {
+      const additionalPosts = await prisma.post.findMany({
+        where: {
+          published: true,
+          featured: false,
+        },
+        orderBy: {
+          publishedAt: "desc",
+        },
+        take: limit - featuredPosts.length,
+        select: listPostSelect,
+      });
+
+      return [...featuredPosts, ...additionalPosts].map((post: ListPost) => ({
+        ...post,
+        readingTime: undefined,
+      }));
+    }
+
+    return featuredPosts.map((post: ListPost) => ({
       ...post,
       readingTime: undefined,
     }));

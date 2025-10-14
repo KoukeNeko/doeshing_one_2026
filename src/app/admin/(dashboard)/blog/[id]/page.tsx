@@ -20,6 +20,8 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
     coverImage: "",
     published: false,
     tags: "",
+    featured: false,
+    featuredOrder: "",
   });
 
   useEffect(() => {
@@ -40,6 +42,8 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
         coverImage: post.coverImage || "",
         published: post.published,
         tags: post.tags.map((t: { name: string }) => t.name).join(", "),
+        featured: post.featured || false,
+        featuredOrder: post.featuredOrder?.toString() || "",
       });
       setLoading(false);
     } catch (err) {
@@ -76,6 +80,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
         body: JSON.stringify({
           ...formData,
           published: publish !== undefined ? publish : formData.published,
+          featuredOrder: formData.featuredOrder ? parseInt(formData.featuredOrder, 10) : null,
           tags,
         }),
       });
@@ -287,6 +292,50 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
               >
                 Published
               </label>
+            </div>
+
+            {/* Featured Status */}
+            <div className="space-y-4 rounded-lg border border-black/10 bg-zinc-50 p-4 dark:border-white/10 dark:bg-zinc-800">
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="featured"
+                  name="featured"
+                  checked={formData.featured}
+                  onChange={handleChange}
+                  className="h-4 w-4 rounded border-black/10 text-newspaper-accent focus:ring-newspaper-accent dark:border-white/10"
+                />
+                <label
+                  htmlFor="featured"
+                  className="text-sm font-medium text-newspaper-ink dark:text-zinc-50"
+                >
+                  Featured on Homepage
+                </label>
+              </div>
+
+              {formData.featured && (
+                <div>
+                  <label
+                    htmlFor="featuredOrder"
+                    className="mb-2 block text-sm font-medium text-newspaper-ink dark:text-zinc-50"
+                  >
+                    Featured Order (lower number = higher priority)
+                  </label>
+                  <input
+                    type="number"
+                    id="featuredOrder"
+                    name="featuredOrder"
+                    value={formData.featuredOrder}
+                    onChange={handleChange}
+                    min="1"
+                    className="w-full rounded-md border border-black/10 bg-white px-4 py-2 focus:border-newspaper-accent focus:outline-none focus:ring-1 focus:ring-newspaper-accent dark:border-white/10 dark:bg-zinc-900 dark:focus:border-red-400 dark:focus:ring-red-400"
+                    placeholder="e.g., 1, 2, 3..."
+                  />
+                  <p className="mt-2 text-xs text-newspaper-gray dark:text-zinc-400">
+                    Posts with lower order numbers will appear first. If left empty, it will be shown after ordered posts.
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
