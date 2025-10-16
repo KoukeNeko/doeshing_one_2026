@@ -42,7 +42,7 @@ export function MarkdownEditor({
     <div
       data-color-mode="auto"
       className={cn(
-        "markdown-editor flex flex-col overflow-hidden rounded-lg",
+        "markdown-editor flex flex-col overflow-hidden",
         className,
       )}
     >
@@ -64,7 +64,7 @@ export function MarkdownEditor({
           }}
         />
       </div>
-      <div className="flex items-center justify-between border-t border-black/5 px-4 py-2 text-xs text-newspaper-gray dark:border-white/5 dark:text-zinc-400">
+      <div className="flex items-center justify-between border-t border-black/10 px-4 py-2 text-xs uppercase tracking-[0.25em] text-newspaper-gray dark:border-white/10 dark:text-zinc-400">
         <span>{stats.characters} characters</span>
         <span>{stats.words} words</span>
       </div>
