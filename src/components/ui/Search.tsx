@@ -6,19 +6,11 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
 
+// Global state to track if any search dialog is open
+let globalSearchOpen = false;
+
 export function SearchButton() {
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
-        setOpen(true);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
 
   return (
     <>
@@ -52,13 +44,30 @@ function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
     return () => setMounted(false);
   }, []);
 
+  // Global keyboard shortcut for opening search (CMD+K / CTRL+K)
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        if (!globalSearchOpen) {
+          globalSearchOpen = true;
+          onOpenChange(true);
+        }
+      }
+    };
+    window.addEventListener("keydown", handleGlobalKeyDown);
+    return () => window.removeEventListener("keydown", handleGlobalKeyDown);
+  }, [onOpenChange]);
+
   useEffect(() => {
     if (open) {
+      globalSearchOpen = true;
       document.body.style.overflow = "hidden";
       const timer = window.setTimeout(() => {
         inputRef.current?.focus();
       }, 100);
       return () => {
+        globalSearchOpen = false;
         document.body.style.overflow = "";
         window.clearTimeout(timer);
       };
