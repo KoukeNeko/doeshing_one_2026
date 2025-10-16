@@ -4,6 +4,9 @@
 # Usage: ./scripts/quick-start.sh
 
 set -e
+# Disable BuildKit to avoid transient /proc/stat transport issues during build.
+export DOCKER_BUILDKIT=0
+export COMPOSE_DOCKER_CLI_BUILD=0
 echo "移除現有容器（如果有的話）..."
 docker compose --profile prod down
 
