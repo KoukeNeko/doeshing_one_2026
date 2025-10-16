@@ -171,6 +171,20 @@
     @apply !px-4 !py-3;
   }
 
+  /* Fix text wrapping in editor */
+  .markdown-editor .w-md-editor-text-pre,
+  .markdown-editor .w-md-editor-text-input {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .markdown-editor .w-md-editor-text-pre > code {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
   .markdown-editor .w-md-editor-preview {
     @apply !bg-transparent !px-5 !py-4 !text-newspaper-ink dark:!text-zinc-100;
     background-color: transparent !important;
