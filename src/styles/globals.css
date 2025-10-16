@@ -129,6 +129,85 @@
       background-size: 100% 100%;
     }
   }
+
+  .markdown-editor {
+    @apply border border-black/10 bg-white dark:border-white/10 dark:bg-zinc-900;
+  }
+
+  .markdown-editor .w-md-editor {
+    @apply !bg-transparent !shadow-none !border-0 !text-newspaper-ink dark:!text-zinc-100;
+    --md-editor-background-color: transparent;
+    --md-editor-box-shadow-color: rgba(17, 24, 39, 0.12);
+  }
+
+  .dark .markdown-editor .w-md-editor {
+    --md-editor-box-shadow-color: rgba(250, 250, 250, 0.12);
+  }
+
+  .markdown-editor .w-md-editor-toolbar {
+    @apply !bg-transparent !border-b !border-black/10 !px-3 !py-2 dark:!border-white/10;
+  }
+
+  .markdown-editor .w-md-editor-toolbar ul {
+    @apply flex flex-wrap gap-1;
+  }
+
+  .markdown-editor .w-md-editor-toolbar ul li button {
+    @apply !h-8 !w-8 !rounded-md !border !border-transparent !bg-transparent !text-newspaper-gray hover:!border-black/10 hover:!bg-zinc-100 hover:!text-newspaper-ink dark:!text-zinc-400 dark:hover:!border-white/10 dark:hover:!bg-zinc-800 dark:hover:!text-zinc-100;
+  }
+
+  .markdown-editor .w-md-editor-toolbar-divider {
+    @apply !mx-2 !border-r !border-black/10 dark:!border-white/10;
+  }
+
+  .markdown-editor .w-md-editor-content,
+  .markdown-editor .w-md-editor-text,
+  .markdown-editor .w-md-editor-text-pre,
+  .markdown-editor .w-md-editor-text-input {
+    @apply !bg-transparent !font-mono !text-sm !text-newspaper-ink dark:!text-zinc-100;
+  }
+
+  .markdown-editor .w-md-editor-text {
+    @apply !px-4 !py-3;
+  }
+
+  .markdown-editor .w-md-editor-preview {
+    @apply !bg-transparent !px-5 !py-4 !text-newspaper-ink dark:!text-zinc-100;
+  }
+
+  .markdown-editor .wmde-markdown {
+    @apply prose prose-sm max-w-none text-newspaper-ink dark:text-zinc-100;
+  }
+
+  .markdown-editor .wmde-markdown hr {
+    @apply border-black/10 dark:border-white/10;
+  }
+
+  .markdown-editor .wmde-markdown table {
+    @apply w-full border-collapse border border-black/10 dark:border-white/10;
+  }
+
+  .markdown-editor .wmde-markdown th,
+  .markdown-editor .wmde-markdown td {
+    @apply border border-black/10 px-3 py-2 text-left dark:border-white/10;
+  }
+
+  .markdown-editor .w-md-editor-bar {
+    @apply !bg-transparent;
+  }
+
+  .markdown-editor .w-md-editor-content {
+    @apply !border-0;
+  }
+
+  .markdown-editor .w-md-editor-input {
+    @apply !border-r !border-black/10 dark:!border-white/10;
+  }
+
+  .markdown-editor .w-md-editor-preview {
+    @apply !border-l !border-black/10 dark:!border-white/10;
+    box-shadow: none !important;
+  }
 }
 
 @layer utilities {

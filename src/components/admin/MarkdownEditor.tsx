@@ -42,7 +42,7 @@ export function MarkdownEditor({
     <div
       data-color-mode="auto"
       className={cn(
-        "flex flex-col overflow-hidden rounded-lg border border-black/10 bg-white dark:border-white/10 dark:bg-zinc-900",
+        "markdown-editor flex flex-col overflow-hidden rounded-lg",
         className,
       )}
     >
