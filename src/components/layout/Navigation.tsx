@@ -57,6 +57,9 @@ export function Navigation() {
           })}
         </div>
         <div className="flex items-center gap-4">
+          <div className="hidden md:block">
+            <SearchButton />
+          </div>
           <Link
             href="/newsletter"
             className="hidden text-xs font-semibold uppercase tracking-[0.28em] text-newspaper-accent dark:text-red-400 md:inline"

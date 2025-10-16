@@ -1,12 +1,24 @@
 "use client";
 
-import { Search, X } from "lucide-react";
+import { Search, X, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
 
 export function SearchButton() {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setOpen(true);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <>
@@ -33,13 +45,23 @@ function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
   useEffect(() => {
     if (open) {
+      document.body.style.overflow = "hidden";
       const timer = window.setTimeout(() => {
         inputRef.current?.focus();
       }, 100);
-      return () => window.clearTimeout(timer);
+      return () => {
+        document.body.style.overflow = "";
+        window.clearTimeout(timer);
+      };
     }
     setQuery("");
     return undefined;
@@ -66,63 +88,141 @@ function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
     onOpenChange(false);
   };
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 px-4 py-24 backdrop-blur-sm dark:bg-black/70"
+      className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto px-4 py-8 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-label="Search the site"
+      onClick={() => onOpenChange(false)}
     >
-      <div className="relative w-full max-w-2xl border border-black/10 bg-white shadow-editorial dark:border-white/10 dark:bg-zinc-900">
-        <button
-          type="button"
-          onClick={() => onOpenChange(false)}
-          className="absolute right-4 top-4 text-newspaper-gray transition hover:text-newspaper-ink dark:text-zinc-400 dark:hover:text-zinc-100"
-          aria-label="Close search dialog"
-        >
-          <X size={18} strokeWidth={1.5} />
-        </button>
-        <form onSubmit={handleSubmit} className="px-6 pb-6 pt-10 sm:px-10">
-          <label
-            htmlFor="site-search"
-            className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400"
-          >
-            Search the archive
-          </label>
-          <div className="mt-4 flex items-center gap-3 border border-black/10 bg-newspaper-paper px-4 py-3 focus-within:border-newspaper-ink dark:border-white/10 dark:bg-zinc-800 dark:focus-within:border-zinc-300">
-            <Search
-              size={18}
-              strokeWidth={1.5}
-              className="text-newspaper-gray dark:text-zinc-400"
-            />
-            <input
-              ref={inputRef}
-              id="site-search"
-              type="search"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Type keywords, tags, or topics..."
-              className="w-full bg-transparent text-sm uppercase tracking-[0.25em] text-newspaper-ink outline-none placeholder:text-newspaper-gray dark:text-zinc-100 dark:placeholder:text-zinc-500"
-            />
-            <button
-              type="submit"
-              className={cn(
-                "text-xs font-semibold uppercase tracking-[0.25em] transition",
-                query
-                  ? "text-newspaper-accent dark:text-red-400"
-                  : "text-newspaper-gray dark:text-zinc-500",
-              )}
-            >
-              Enter
-            </button>
+      {/* Backdrop */}
+      <div className="fixed inset-0 bg-black/40 dark:bg-black/70" />
+
+      {/* Modal content */}
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative z-10 w-full max-w-2xl"
+      >
+        <div className="relative border border-black/10 bg-white shadow-editorial dark:border-white/10 dark:bg-zinc-900">
+          {/* Header */}
+          <div className="border-b border-black/10 bg-newspaper-paper px-8 py-6 dark:border-white/10 dark:bg-zinc-800">
+            <div className="flex items-start justify-between">
+              <div>
+                <div className="mb-2 flex items-center gap-2">
+                  <Search size={16} strokeWidth={1.5} className="text-newspaper-accent dark:text-red-400" />
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.35em] text-newspaper-accent dark:text-red-400">
+                    Search
+                  </span>
+                </div>
+                <h2 className="font-serif text-3xl font-bold tracking-tight text-newspaper-ink dark:text-zinc-50">
+                  Archive Search
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => onOpenChange(false)}
+                className="mt-1 text-newspaper-gray transition hover:text-newspaper-ink dark:text-zinc-400 dark:hover:text-zinc-100"
+                aria-label="Close search dialog"
+              >
+                <X size={20} strokeWidth={1.5} />
+              </button>
+            </div>
           </div>
-          <p className="mt-4 text-[11px] uppercase tracking-[0.25em] text-newspaper-gray dark:text-zinc-500">
-            Try “Next.js” or “Editorial Design”
-          </p>
-        </form>
+
+          {/* Search form */}
+          <form onSubmit={handleSubmit} className="px-8 py-8">
+            <div className="space-y-6">
+              {/* Input field */}
+              <div>
+                <label
+                  htmlFor="site-search"
+                  className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400"
+                >
+                  Enter Keywords
+                </label>
+                <div className="relative flex items-center border border-black/10 bg-newspaper-paper transition focus-within:border-newspaper-ink dark:border-white/10 dark:bg-zinc-800 dark:focus-within:border-zinc-300">
+                  <Search
+                    size={18}
+                    strokeWidth={1.5}
+                    className="ml-4 text-newspaper-gray dark:text-zinc-400"
+                  />
+                  <input
+                    ref={inputRef}
+                    id="site-search"
+                    type="search"
+                    value={query}
+                    onChange={(event) => setQuery(event.target.value)}
+                    placeholder="Search articles, tags, topics..."
+                    className="w-full bg-transparent px-4 py-4 text-base text-newspaper-ink outline-none placeholder:text-newspaper-gray/50 dark:text-zinc-100 dark:placeholder:text-zinc-500"
+                  />
+                </div>
+              </div>
+
+              {/* Submit button */}
+              <button
+                type="submit"
+                disabled={!query.trim()}
+                className={cn(
+                  "w-full border px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] transition",
+                  query.trim()
+                    ? "border-newspaper-ink bg-newspaper-ink text-newspaper-paper hover:bg-newspaper-accent hover:border-newspaper-accent dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-red-400 dark:hover:border-red-400"
+                    : "border-black/10 bg-transparent text-newspaper-gray dark:border-white/10 dark:text-zinc-500"
+                )}
+              >
+                {query.trim() ? "Search Archive" : "Enter a search term"}
+              </button>
+
+              {/* Divider */}
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-black/10 dark:border-white/10" />
+                </div>
+                <div className="relative flex justify-center">
+                  <span className="bg-white px-4 text-[10px] font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:bg-zinc-900 dark:text-zinc-500">
+                    Quick Searches
+                  </span>
+                </div>
+              </div>
+
+              {/* Quick search tags */}
+              <div className="flex flex-wrap gap-2">
+                {["Next.js", "Design", "TypeScript", "Editorial"].map((tag) => (
+                  <button
+                    key={tag}
+                    type="button"
+                    onClick={() => setQuery(tag)}
+                    className="border border-black/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-newspaper-gray transition hover:border-newspaper-ink hover:bg-newspaper-ink hover:text-newspaper-paper dark:border-white/10 dark:text-zinc-400 dark:hover:border-zinc-100 dark:hover:bg-zinc-100 dark:hover:text-zinc-900"
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
+
+              {/* Keyboard shortcuts */}
+              <div className="border-t border-black/10 pt-6 dark:border-white/10">
+                <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-500">
+                  <div className="flex items-center gap-2">
+                    <kbd className="border border-black/10 bg-black/5 px-2 py-1 font-mono dark:border-white/10 dark:bg-white/5">
+                      ESC
+                    </kbd>
+                    <span>Close</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <kbd className="border border-black/10 bg-black/5 px-2 py-1 font-mono dark:border-white/10 dark:bg-white/5">
+                      ⌘K
+                    </kbd>
+                    <span>Open Search</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
