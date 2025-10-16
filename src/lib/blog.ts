@@ -272,3 +272,28 @@ export const getTagsWithCount = unstable_cache(
     tags: ["tags"],
   },
 );
+
+export const getLatestPost = unstable_cache(
+  async () => {
+    const post = await prisma.post.findFirst({
+      where: {
+        published: true,
+      },
+      orderBy: {
+        publishedAt: "desc",
+      },
+      select: {
+        slug: true,
+        title: true,
+        publishedAt: true,
+      },
+    });
+
+    return post;
+  },
+  ["latest-post"],
+  {
+    revalidate: 60,
+    tags: ["posts", "latest"],
+  },
+);

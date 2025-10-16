@@ -2,9 +2,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { SearchButton } from "@/components/ui/Search";
 import { getNewspaperDateline } from "@/lib/utils";
+import { getLatestPost } from "@/lib/blog";
 import { Navigation } from "./Navigation";
 
-export function Header() {
+export async function Header() {
+  const latestPost = await getLatestPost();
+
+  const formatPostDate = (date: Date | null) => {
+    if (!date) return "";
+    return new Intl.DateTimeFormat("zh-TW", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(new Date(date));
+  };
+
   return (
     <>
       <header className="border-b border-black/10 bg-newspaper-paper dark:border-white/10 dark:bg-zinc-900">
@@ -29,19 +41,24 @@ export function Header() {
               </p>
             </div>
             <div className="flex items-end gap-6">
-              <div className="hidden flex-col items-end gap-2 text-sm font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400 md:flex">
-                <span>Latest Issue</span>
-                <span className="inline-flex items-center gap-2 text-newspaper-ink dark:text-zinc-50">
-                  <Image
-                    src="/images/stamp.svg"
-                    alt=""
-                    width={48}
-                    height={48}
-                    className="opacity-75 dark:invert"
-                  />
-                  Vol. 26
-                </span>
-              </div>
+              {latestPost && (
+                <Link
+                  href={`/blog/${latestPost.slug}`}
+                  className="group hidden flex-col items-end gap-2 text-sm font-semibold uppercase tracking-[0.35em] text-newspaper-gray transition-colors hover:text-newspaper-accent dark:text-zinc-400 dark:hover:text-red-400 md:flex"
+                >
+                  <span>Latest Issue</span>
+                  <span className="inline-flex items-center gap-2 text-newspaper-ink transition-colors group-hover:text-newspaper-accent dark:text-zinc-50 dark:group-hover:text-red-400">
+                    <Image
+                      src="/images/stamp.svg"
+                      alt=""
+                      width={48}
+                      height={48}
+                      className="opacity-75 dark:invert"
+                    />
+                    {formatPostDate(latestPost.publishedAt)}
+                  </span>
+                </Link>
+              )}
               <div className="hidden h-12 w-px bg-black/10 dark:bg-white/10 md:block" />
               <div className="flex flex-col gap-2 text-right text-xs uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
                 <span>台北・遠端</span>
