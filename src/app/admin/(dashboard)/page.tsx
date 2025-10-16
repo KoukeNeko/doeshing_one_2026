@@ -30,39 +30,40 @@ export default async function AdminDashboard() {
       value: totalPosts,
       icon: FileText,
       href: "/admin/blog",
-      color: "bg-blue-500",
     },
     {
       name: "Published",
       value: publishedPosts,
       icon: FolderOpen,
       href: "/admin/blog?status=published",
-      color: "bg-green-500",
     },
     {
       name: "Total Views",
       value: totalViews._sum.views || 0,
       icon: Eye,
       href: "/admin/blog",
-      color: "bg-purple-500",
     },
     {
       name: "Tags",
       value: totalTags,
       icon: Tag,
       href: "/admin/blog",
-      color: "bg-orange-500",
     },
   ];
 
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-serif font-bold text-newspaper-ink dark:text-zinc-50">
+      <div className="border-b border-black/10 pb-6 dark:border-white/10">
+        <div className="mb-2 flex items-center gap-2">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.35em] text-newspaper-accent dark:text-red-400">
+            Overview
+          </span>
+        </div>
+        <h1 className="font-serif text-3xl font-bold uppercase tracking-tight text-newspaper-ink dark:text-zinc-50">
           Dashboard
         </h1>
-        <p className="mt-2 text-newspaper-gray dark:text-zinc-400">
+        <p className="mt-3 text-sm text-newspaper-gray dark:text-zinc-400">
           Welcome to your admin dashboard
         </p>
       </div>
@@ -73,17 +74,17 @@ export default async function AdminDashboard() {
           <Link
             key={stat.name}
             href={stat.href as any}
-            className="group relative overflow-hidden rounded-lg border border-black/10 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-zinc-900"
+            className="group border border-black/10 bg-white p-6 shadow-editorial transition hover:border-newspaper-accent dark:border-white/10 dark:bg-zinc-900"
           >
             <div className="flex items-center gap-4">
-              <div className={`rounded-lg ${stat.color} p-3 text-white`}>
-                <stat.icon size={24} />
+              <div className="border border-black/10 bg-newspaper-paper p-3 dark:border-white/10 dark:bg-zinc-800">
+                <stat.icon size={20} strokeWidth={1.5} className="text-newspaper-accent dark:text-red-400" />
               </div>
               <div>
-                <p className="text-sm font-medium text-newspaper-gray dark:text-zinc-400">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
                   {stat.name}
                 </p>
-                <p className="text-2xl font-bold text-newspaper-ink dark:text-zinc-50">
+                <p className="mt-1 font-serif text-2xl font-bold text-newspaper-ink dark:text-zinc-50">
                   {stat.value}
                 </p>
               </div>
@@ -94,13 +95,13 @@ export default async function AdminDashboard() {
 
       {/* Quick Actions */}
       <div>
-        <h2 className="text-xl font-semibold text-newspaper-ink dark:text-zinc-50 mb-4">
+        <h2 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
           Quick Actions
         </h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <Link
             href="/admin/blog/new"
-            className="rounded-lg border border-black/10 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-zinc-900"
+            className="border border-black/10 bg-white p-6 shadow-editorial transition hover:border-newspaper-accent dark:border-white/10 dark:bg-zinc-900"
           >
             <h3 className="font-semibold text-newspaper-ink dark:text-zinc-50">
               New Blog Post
@@ -111,7 +112,7 @@ export default async function AdminDashboard() {
           </Link>
           <Link
             href="/admin/work"
-            className="rounded-lg border border-black/10 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-zinc-900"
+            className="border border-black/10 bg-white p-6 shadow-editorial transition hover:border-newspaper-accent dark:border-white/10 dark:bg-zinc-900"
           >
             <h3 className="font-semibold text-newspaper-ink dark:text-zinc-50">
               Manage Work
@@ -123,7 +124,7 @@ export default async function AdminDashboard() {
           <Link
             href="/"
             target="_blank"
-            className="rounded-lg border border-black/10 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-zinc-900"
+            className="border border-black/10 bg-white p-6 shadow-editorial transition hover:border-newspaper-accent dark:border-white/10 dark:bg-zinc-900"
           >
             <h3 className="font-semibold text-newspaper-ink dark:text-zinc-50">
               View Site
@@ -138,52 +139,52 @@ export default async function AdminDashboard() {
       {/* Recent Posts */}
       <div>
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-newspaper-ink dark:text-zinc-50">
+          <h2 className="text-[11px] font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
             Recent Posts
           </h2>
           <Link
             href="/admin/blog"
-            className="text-sm font-medium text-newspaper-accent hover:underline dark:text-red-400"
+            className="text-xs font-semibold uppercase tracking-[0.25em] text-newspaper-accent transition hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
           >
             View all
           </Link>
         </div>
-        <div className="overflow-hidden rounded-lg border border-black/10 bg-white shadow-sm dark:border-white/10 dark:bg-zinc-900">
+        <div className="overflow-hidden border border-black/10 bg-white shadow-editorial dark:border-white/10 dark:bg-zinc-900">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="border-b border-black/10 bg-zinc-50 dark:border-white/10 dark:bg-zinc-800">
+              <thead className="border-b border-black/10 bg-newspaper-paper dark:border-white/10 dark:bg-zinc-800">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-newspaper-gray dark:text-zinc-400">
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
                     Title
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-newspaper-gray dark:text-zinc-400">
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-newspaper-gray dark:text-zinc-400">
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
                     Views
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-newspaper-gray dark:text-zinc-400">
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">
                     Updated
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-black/10 dark:divide-white/10">
                 {recentPosts.map((post) => (
-                  <tr key={post.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-800">
+                  <tr key={post.id} className="transition hover:bg-newspaper-paper dark:hover:bg-zinc-800">
                     <td className="px-6 py-4">
                       <Link
                         href={`/admin/blog/${post.id}`}
-                        className="font-medium text-newspaper-ink hover:text-newspaper-accent dark:text-zinc-50 dark:hover:text-red-400"
+                        className="font-medium text-newspaper-ink transition hover:text-newspaper-accent dark:text-zinc-50 dark:hover:text-red-400"
                       >
                         {post.title}
                       </Link>
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${
+                        className={`inline-flex border px-2 py-1 text-[10px] font-semibold uppercase tracking-wider ${
                           post.published
-                            ? "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400"
-                            : "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400"
+                            ? "border-green-600 bg-green-50 text-green-700 dark:border-green-400 dark:bg-green-900/20 dark:text-green-400"
+                            : "border-gray-400 bg-gray-50 text-gray-600 dark:border-gray-600 dark:bg-gray-900/20 dark:text-gray-400"
                         }`}
                       >
                         {post.published ? "Published" : "Draft"}
