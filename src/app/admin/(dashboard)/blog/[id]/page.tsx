@@ -126,56 +126,63 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <div className="text-newspaper-gray dark:text-zinc-400">Loading...</div>
+        <div className="text-xs uppercase tracking-[0.3em] text-newspaper-gray dark:text-zinc-400">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Link
-            href="/admin/blog"
-            className="rounded-md p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800"
-          >
-            <ArrowLeft size={20} />
-          </Link>
-          <div>
-            <h1 className="text-3xl font-serif font-bold text-newspaper-ink dark:text-zinc-50">
-              Edit Post
-            </h1>
-            <p className="mt-2 text-newspaper-gray dark:text-zinc-400">
-              Update your blog article
-            </p>
+      <div className="border-b border-black/10 pb-6 dark:border-white/10">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Link
+              href="/admin/blog"
+              className="border border-black/10 p-2 transition hover:border-newspaper-ink hover:bg-newspaper-ink hover:text-newspaper-paper dark:border-white/10 dark:hover:border-zinc-100 dark:hover:bg-zinc-100 dark:hover:text-zinc-900"
+            >
+              <ArrowLeft size={20} strokeWidth={1.5} />
+            </Link>
+            <div>
+              <div className="mb-2 flex items-center gap-2">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.35em] text-newspaper-accent dark:text-red-400">
+                  Content Editing
+                </span>
+              </div>
+              <h1 className="font-serif text-3xl font-bold uppercase tracking-tight text-newspaper-ink dark:text-zinc-50">
+                Edit Post
+              </h1>
+              <p className="mt-3 text-sm text-newspaper-gray dark:text-zinc-400">
+                Update your blog article
+              </p>
+            </div>
           </div>
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="inline-flex items-center gap-2 border border-red-600 bg-red-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-red-700 transition hover:bg-red-600 hover:text-white dark:border-red-400 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-400 dark:hover:text-zinc-900"
+          >
+            <Trash2 size={16} strokeWidth={1.5} />
+            Delete
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={handleDelete}
-          className="inline-flex items-center gap-2 rounded-md border border-red-300 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:text-red-400 dark:hover:bg-red-900/20"
-        >
-          <Trash2 size={16} />
-          Delete
-        </button>
       </div>
 
       {error && (
-        <div className="rounded-md bg-red-50 p-4 text-sm text-red-800 dark:bg-red-900/20 dark:text-red-400">
+        <div className="border border-red-600 bg-red-50 p-4 text-sm text-red-800 dark:border-red-400 dark:bg-red-900/20 dark:text-red-400">
           {error}
         </div>
       )}
 
       {/* Form */}
       <form className="space-y-6">
-        <div className="rounded-lg border border-black/10 bg-white p-6 dark:border-white/10 dark:bg-zinc-900">
+        <div className="border border-black/10 bg-white p-6 shadow-editorial dark:border-white/10 dark:bg-zinc-900">
           <div className="space-y-6">
             {/* Title */}
             <div>
               <label
                 htmlFor="title"
-                className="mb-2 block text-sm font-medium text-newspaper-ink dark:text-zinc-50"
+                className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400"
               >
                 Title *
               </label>
@@ -186,7 +193,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
                 value={formData.title}
                 onChange={handleChange}
                 required
-                className="w-full rounded-md border border-black/10 bg-white px-4 py-2 focus:border-newspaper-accent focus:outline-none focus:ring-1 focus:ring-newspaper-accent dark:border-white/10 dark:bg-zinc-800 dark:focus:border-red-400 dark:focus:ring-red-400"
+                className="w-full border border-black/10 bg-newspaper-paper px-4 py-3 text-newspaper-ink outline-none transition focus:border-newspaper-ink dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:border-zinc-300"
               />
             </div>
 
@@ -194,7 +201,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
             <div>
               <label
                 htmlFor="slug"
-                className="mb-2 block text-sm font-medium text-newspaper-ink dark:text-zinc-50"
+                className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400"
               >
                 Slug *
               </label>
@@ -205,7 +212,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
                 value={formData.slug}
                 onChange={handleChange}
                 required
-                className="w-full rounded-md border border-black/10 bg-white px-4 py-2 focus:border-newspaper-accent focus:outline-none focus:ring-1 focus:ring-newspaper-accent dark:border-white/10 dark:bg-zinc-800 dark:focus:border-red-400 dark:focus:ring-red-400"
+                className="w-full border border-black/10 bg-newspaper-paper px-4 py-3 text-newspaper-ink outline-none transition focus:border-newspaper-ink dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:border-zinc-300"
               />
             </div>
 
@@ -213,7 +220,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
             <div>
               <label
                 htmlFor="excerpt"
-                className="mb-2 block text-sm font-medium text-newspaper-ink dark:text-zinc-50"
+                className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400"
               >
                 Excerpt
               </label>
@@ -223,7 +230,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
                 value={formData.excerpt}
                 onChange={handleChange}
                 rows={3}
-                className="w-full rounded-md border border-black/10 bg-white px-4 py-2 focus:border-newspaper-accent focus:outline-none focus:ring-1 focus:ring-newspaper-accent dark:border-white/10 dark:bg-zinc-800 dark:focus:border-red-400 dark:focus:ring-red-400"
+                className="w-full border border-black/10 bg-newspaper-paper px-4 py-3 text-newspaper-ink outline-none transition focus:border-newspaper-ink dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:border-zinc-300"
               />
             </div>
 
@@ -231,7 +238,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
             <div>
               <label
                 htmlFor="content"
-                className="mb-2 block text-sm font-medium text-newspaper-ink dark:text-zinc-50"
+                className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400"
               >
                 Content (Markdown) *
               </label>
@@ -249,7 +256,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
             <div>
               <label
                 htmlFor="coverImage"
-                className="mb-2 block text-sm font-medium text-newspaper-ink dark:text-zinc-50"
+                className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400"
               >
                 Cover Image URL
               </label>
@@ -259,7 +266,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
                 name="coverImage"
                 value={formData.coverImage}
                 onChange={handleChange}
-                className="w-full rounded-md border border-black/10 bg-white px-4 py-2 focus:border-newspaper-accent focus:outline-none focus:ring-1 focus:ring-newspaper-accent dark:border-white/10 dark:bg-zinc-800 dark:focus:border-red-400 dark:focus:ring-red-400"
+                className="w-full border border-black/10 bg-newspaper-paper px-4 py-3 text-newspaper-ink outline-none transition placeholder:text-newspaper-gray/50 focus:border-newspaper-ink dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-zinc-300"
                 placeholder="/images/blog/example.svg"
               />
             </div>
@@ -268,7 +275,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
             <div>
               <label
                 htmlFor="tags"
-                className="mb-2 block text-sm font-medium text-newspaper-ink dark:text-zinc-50"
+                className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400"
               >
                 Tags (comma-separated)
               </label>
@@ -278,43 +285,45 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
                 name="tags"
                 value={formData.tags}
                 onChange={handleChange}
-                className="w-full rounded-md border border-black/10 bg-white px-4 py-2 focus:border-newspaper-accent focus:outline-none focus:ring-1 focus:ring-newspaper-accent dark:border-white/10 dark:bg-zinc-800 dark:focus:border-red-400 dark:focus:ring-red-400"
+                className="w-full border border-black/10 bg-newspaper-paper px-4 py-3 text-newspaper-ink outline-none transition placeholder:text-newspaper-gray/50 focus:border-newspaper-ink dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-zinc-300"
                 placeholder="nextjs, design, typescript"
               />
             </div>
 
             {/* Published Status */}
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="published"
-                name="published"
-                checked={formData.published}
-                onChange={handleChange}
-                className="h-4 w-4 rounded border-black/10 text-newspaper-accent focus:ring-newspaper-accent dark:border-white/10"
-              />
-              <label
-                htmlFor="published"
-                className="text-sm font-medium text-newspaper-ink dark:text-zinc-50"
-              >
-                Published
-              </label>
+            <div className="border-t border-black/10 pt-6 dark:border-white/10">
+              <div className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  id="published"
+                  name="published"
+                  checked={formData.published}
+                  onChange={handleChange}
+                  className="h-4 w-4 border-black/10 text-newspaper-accent focus:ring-newspaper-accent dark:border-white/10"
+                />
+                <label
+                  htmlFor="published"
+                  className="text-[11px] font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400"
+                >
+                  Published
+                </label>
+              </div>
             </div>
 
             {/* Featured Status */}
-            <div className="space-y-4 rounded-lg border border-black/10 bg-zinc-50 p-4 dark:border-white/10 dark:bg-zinc-800">
-              <div className="flex items-center gap-2">
+            <div className="space-y-4 border border-black/10 bg-newspaper-paper p-4 dark:border-white/10 dark:bg-zinc-800">
+              <div className="flex items-center gap-3">
                 <input
                   type="checkbox"
                   id="featured"
                   name="featured"
                   checked={formData.featured}
                   onChange={handleChange}
-                  className="h-4 w-4 rounded border-black/10 text-newspaper-accent focus:ring-newspaper-accent dark:border-white/10"
+                  className="h-4 w-4 border-black/10 text-newspaper-accent focus:ring-newspaper-accent dark:border-white/10"
                 />
                 <label
                   htmlFor="featured"
-                  className="text-sm font-medium text-newspaper-ink dark:text-zinc-50"
+                  className="text-[11px] font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400"
                 >
                   Featured on Homepage
                 </label>
@@ -324,7 +333,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
                 <div>
                   <label
                     htmlFor="featuredOrder"
-                    className="mb-2 block text-sm font-medium text-newspaper-ink dark:text-zinc-50"
+                    className="mb-3 block text-[11px] font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400"
                   >
                     Featured Order (lower number = higher priority)
                   </label>
@@ -335,10 +344,10 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
                     value={formData.featuredOrder}
                     onChange={handleChange}
                     min="1"
-                    className="w-full rounded-md border border-black/10 bg-white px-4 py-2 focus:border-newspaper-accent focus:outline-none focus:ring-1 focus:ring-newspaper-accent dark:border-white/10 dark:bg-zinc-900 dark:focus:border-red-400 dark:focus:ring-red-400"
+                    className="w-full border border-black/10 bg-white px-4 py-3 text-newspaper-ink outline-none transition placeholder:text-newspaper-gray/50 focus:border-newspaper-ink dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-zinc-300"
                     placeholder="e.g., 1, 2, 3..."
                   />
-                  <p className="mt-2 text-xs text-newspaper-gray dark:text-zinc-400">
+                  <p className="mt-3 text-xs leading-relaxed text-newspaper-gray dark:text-zinc-400">
                     Posts with lower order numbers will appear first. If left empty, it will be shown after ordered posts.
                   </p>
                 </div>
@@ -348,23 +357,23 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
         </div>
 
         {/* Actions */}
-        <div className="flex flex-col gap-4 sm:flex-row sm:justify-end">
+        <div className="flex flex-col gap-4 border-t border-black/10 pt-6 dark:border-white/10 sm:flex-row sm:justify-end">
           <button
             type="button"
             onClick={(e) => handleSubmit(e, false)}
             disabled={saving}
-            className="inline-flex items-center justify-center gap-2 rounded-md border border-black/10 bg-white px-4 py-2 text-sm font-semibold hover:bg-zinc-50 disabled:opacity-50 dark:border-white/10 dark:bg-zinc-800 dark:hover:bg-zinc-700"
+            className="inline-flex items-center justify-center gap-2 border border-black/10 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-newspaper-ink transition hover:border-newspaper-ink hover:bg-newspaper-ink hover:text-newspaper-paper disabled:opacity-50 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:border-zinc-100 dark:hover:bg-zinc-100 dark:hover:text-zinc-900"
           >
-            <Save size={16} />
+            <Save size={16} strokeWidth={1.5} />
             Save as Draft
           </button>
           <button
             type="button"
             onClick={(e) => handleSubmit(e, true)}
             disabled={saving}
-            className="inline-flex items-center justify-center gap-2 rounded-md bg-newspaper-accent px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-50 dark:bg-red-600 dark:hover:bg-red-500"
+            className="inline-flex items-center justify-center gap-2 border border-newspaper-ink bg-newspaper-ink px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-newspaper-paper transition hover:bg-newspaper-accent hover:border-newspaper-accent disabled:opacity-50 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-red-400 dark:hover:border-red-400"
           >
-            <Eye size={16} />
+            <Eye size={16} strokeWidth={1.5} />
             {formData.published ? "Update & Keep Published" : "Publish"}
           </button>
         </div>
