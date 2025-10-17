@@ -192,8 +192,7 @@
   }
 
   .markdown-editor .w-md-editor-preview {
-    @apply !bg-transparent !px-5 !py-4 !text-newspaper-ink dark:!text-zinc-100;
-    background-color: transparent !important;
+    @apply !px-5 !py-4 !text-newspaper-ink !bg-newspaper-paper dark:!text-zinc-100 dark:!bg-zinc-900;
   }
 
   .markdown-editor .wmde-markdown {
@@ -236,9 +235,8 @@
   }
 
   .markdown-editor .w-md-editor-preview {
-    @apply !border-l !border-black/10 dark:!border-white/10;
+    @apply !border-l !border-black/10 !bg-newspaper-paper dark:!border-white/10 dark:!bg-zinc-900;
     box-shadow: none !important;
-    background: transparent !important;
   }
 
   /* Additional fixes for markdown editor preview background */
@@ -251,7 +249,11 @@
   /* Allow specific elements to have backgrounds */
   .markdown-editor .wmde-markdown code,
   .markdown-editor .wmde-markdown pre {
-    @apply !bg-zinc-100 dark:!bg-zinc-800;
+    @apply !bg-zinc-100 !text-newspaper-ink dark:!bg-zinc-800 dark:!text-zinc-100;
+  }
+
+  .markdown-editor .wmde-markdown pre code {
+    @apply !text-newspaper-ink dark:!text-zinc-100;
   }
 
   .markdown-editor .wmde-markdown blockquote {
