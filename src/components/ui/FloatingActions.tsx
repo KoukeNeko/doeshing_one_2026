@@ -117,8 +117,11 @@ export function FloatingActions() {
       {/* Dark Mode Toggle Button */}
       <button
         onClick={toggleTheme}
-        className="flex h-12 w-12 items-center justify-center border border-newspaper-ink bg-newspaper-paper shadow-editorial transition-all duration-300 hover:-translate-y-1 hover:bg-newspaper-ink hover:text-newspaper-paper dark:border-zinc-100 dark:bg-zinc-900 dark:hover:bg-zinc-100 dark:hover:text-zinc-900"
+        className={`flex h-12 w-12 items-center justify-center border border-newspaper-ink bg-newspaper-paper shadow-editorial transition-all duration-300 hover:-translate-y-1 hover:bg-newspaper-ink hover:text-newspaper-paper dark:border-zinc-100 dark:bg-zinc-900 dark:hover:bg-zinc-100 dark:hover:text-zinc-900 ${
+          isVisible ? "translate-y-0 opacity-100" : "translate-y-16 opacity-0"
+        }`}
         aria-label="Toggle theme"
+        style={{ pointerEvents: isVisible ? "auto" : "none" }}
       >
         {isDark ? (
           <svg
