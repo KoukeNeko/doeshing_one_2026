@@ -78,8 +78,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const shareUrl = `${baseUrl}/archive/${post.slug}`;
 
   return (
-    <article className="grid gap-10 lg:grid-cols-[minmax(0,1fr),280px]">
-      <div className="space-y-10">
+    <article className="grid gap-10 lg:grid-cols-[minmax(0,1fr),280px] overflow-hidden">
+      <div className="space-y-10 min-w-0">
         <header className="space-y-6 border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900">
           <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
             <span>
@@ -93,7 +93,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <span>&middot;</span>
             <span>{post.views + 1} views</span>
           </div>
-          <h1 className="font-serif text-4xl tracking-tight text-newspaper-ink dark:text-zinc-50 sm:text-5xl">
+          <h1 className="break-words font-serif text-4xl tracking-tight text-newspaper-ink dark:text-zinc-50 sm:text-5xl">
             {post.title}
           </h1>
           {post.excerpt ? (
@@ -110,7 +110,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <RenderedMarkdown
           html={html}
-          className="dropcap prose prose-lg prose-headings:font-serif prose-headings:tracking-tight prose-p:text-newspaper-gray prose-strong:text-newspaper-ink dark:prose-invert"
+          className="break-words dropcap prose prose-lg prose-headings:font-serif prose-headings:tracking-tight prose-p:text-newspaper-gray prose-strong:text-newspaper-ink dark:prose-invert"
         />
 
         <ShareButtons url={shareUrl} title={post.title} />
