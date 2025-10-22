@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { TableOfContents } from "@/components/blog/TableOfContents";
 import { RenderedMarkdown } from "@/components/mdx/RenderedMarkdown";
 import { Badge } from "@/components/ui/Badge";
 import { loadProjectContent } from "@/lib/mdx";
@@ -98,28 +99,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           />
         </div>
         <aside className="space-y-6">
-          {toc?.length ? (
-            <div className="top-32 border border-black/10 bg-white px-6 py-6 dark:border-white/10 dark:bg-zinc-900">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
-                Outline
-              </p>
-              <ul className="mt-4 space-y-2 text-sm">
-                {toc.map((item) => (
-                  <li
-                    key={item.id}
-                    style={{ marginLeft: `${(item.depth - 2) * 16}px` }}
-                  >
-                    <a
-                      href={`#${item.id}`}
-                      className="text-newspaper-gray transition hover:text-newspaper-ink dark:text-zinc-400 dark:hover:text-zinc-100"
-                    >
-                      {item.text}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
+          <TableOfContents items={toc ?? []} />
           <div className="border border-black/10 bg-white px-6 py-6 text-sm text-newspaper-gray dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400">
             <p>
               <strong className="font-semibold text-newspaper-ink dark:text-zinc-50">
