@@ -94,7 +94,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <span>&middot;</span>
             <span>{post.views + 1} views</span>
           </div>
-          <h1 className="font-serif text-4xl tracking-tight text-newspaper-ink dark:text-zinc-50 sm:text-5xl">
+          <h1 className="break-words font-serif text-4xl tracking-tight text-newspaper-ink dark:text-zinc-50 sm:text-5xl">
             {post.title}
           </h1>
           {post.excerpt ? (
@@ -134,7 +134,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <span className="text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-accent dark:text-red-400">
                 Previous
               </span>
-              <p className="mt-2 font-serif text-lg text-newspaper-ink dark:text-zinc-50">
+              <p className="mt-2 break-words font-serif text-lg text-newspaper-ink dark:text-zinc-50">
                 {adjacent.previous.title}
               </p>
             </Link>
@@ -151,7 +151,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <span className="text-xs font-semibold uppercase tracking-[0.3em] text-newspaper-accent dark:text-red-400">
                 Next
               </span>
-              <p className="mt-2 font-serif text-lg text-newspaper-ink dark:text-zinc-50">
+              <p className="mt-2 break-words font-serif text-lg text-newspaper-ink dark:text-zinc-50">
                 {adjacent.next.title}
               </p>
             </Link>

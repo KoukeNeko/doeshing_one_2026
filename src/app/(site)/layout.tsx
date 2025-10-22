@@ -15,7 +15,7 @@ export default function SiteLayout({
       <Header />
       <main
         id="main-content"
-        className="mx-auto min-h-[calc(100vh-16rem)] max-w-6xl px-4 pb-24 pt-12 md:px-6"
+        className="mx-auto min-h-[calc(100vh-16rem)] max-w-6xl overflow-x-hidden px-4 pb-24 pt-12 md:px-6"
       >
         {children}
       </main>

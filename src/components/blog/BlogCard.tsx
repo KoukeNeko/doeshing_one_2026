@@ -57,7 +57,7 @@ export function BlogCard({
             </Badge>
           ))}
         </div>
-        <h3 className="mt-5 font-serif text-2xl tracking-tight text-newspaper-ink dark:text-zinc-50 md:text-3xl">
+        <h3 className="mt-5 break-words font-serif text-2xl tracking-tight text-newspaper-ink dark:text-zinc-50 md:text-3xl">
           <Link
             href={`/archive/${post.slug}`}
             className="transition-colors duration-200 ease-out hover:text-newspaper-accent dark:hover:text-red-400"

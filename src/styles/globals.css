@@ -27,6 +27,9 @@
   body {
     @apply bg-newspaper-paper text-newspaper-ink font-sans antialiased;
     min-height: -webkit-fill-available;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .dark body {
@@ -57,6 +60,8 @@
 
   .prose {
     @apply max-w-prose;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .prose img {
@@ -83,6 +88,7 @@
   .prose code {
     word-wrap: break-word;
     overflow-wrap: break-word;
+    word-break: break-all;
   }
 
   .prose table {

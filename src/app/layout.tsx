@@ -63,7 +63,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh" className={fontVariables} suppressHydrationWarning>
-      <body className="min-h-screen bg-newspaper-paper text-newspaper-ink antialiased dark:bg-zinc-900 dark:text-zinc-100">
+      <body className="min-h-screen overflow-x-hidden bg-newspaper-paper text-newspaper-ink antialiased dark:bg-zinc-900 dark:text-zinc-100">
         <Providers>
           <ThemeProvider
             attribute="class"
