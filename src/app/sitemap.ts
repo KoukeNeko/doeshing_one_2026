@@ -11,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 獲取所有專案
   const projects = await loadAllProjects();
 
-  // 靜態頁面
+  // 靜態頁面（只包含最終目標 URL，不包含會被重定向的 URL）
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
@@ -24,12 +24,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.9,
     },
     {
       url: `${baseUrl}/archive`,
@@ -51,20 +45,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // 部落格文章頁面
-  const blogPages: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: post.updatedAt || post.publishedAt || new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.8,
-  }));
-
-  // Archive 文章頁面
+  // Archive 文章頁面（不包含 /blog/:slug，因為會被重定向到 /archive/:slug）
   const archivePages: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${baseUrl}/archive/${post.slug}`,
     lastModified: post.updatedAt || post.publishedAt || new Date(),
     changeFrequency: "weekly" as const,
-    priority: 0.7,
+    priority: 0.8,
   }));
 
   // 專案頁面
@@ -77,5 +63,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...blogPages, ...archivePages, ...projectPages];
+  return [...staticPages, ...archivePages, ...projectPages];
 }
