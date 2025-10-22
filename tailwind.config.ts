@@ -22,7 +22,14 @@ const config: Config = {
         },
       },
       fontFamily: {
-        serif: ["Playfair Display", "Merriweather", "serif"],
+        serif: [
+          "GenRyuMin JP Auto",
+          "GenRyuMin TW Auto",
+          "var(--font-genryumin)",
+          "Playfair Display",
+          "Merriweather",
+          "serif",
+        ],
         sans: ["Inter", "Roboto", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
       },

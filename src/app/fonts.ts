@@ -5,6 +5,7 @@ import {
   Playfair_Display,
   Roboto,
 } from "next/font/google";
+import localFont from "next/font/local";
 
 export const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -39,10 +40,98 @@ export const jetbrains = JetBrains_Mono({
   weight: ["400", "500", "700"],
 });
 
+// Traditional Chinese version (主要使用)
+export const genRyuMin = localFont({
+  src: [
+    {
+      path: "../../public/fonts/GenRyuMin2TW-otf/GenRyuMin2TW-EL.otf",
+      weight: "200",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/GenRyuMin2TW-otf/GenRyuMin2TW-L.otf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/GenRyuMin2TW-otf/GenRyuMin2TW-R.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/GenRyuMin2TW-otf/GenRyuMin2TW-M.otf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/GenRyuMin2TW-otf/GenRyuMin2TW-SB.otf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/GenRyuMin2TW-otf/GenRyuMin2TW-B.otf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/GenRyuMin2TW-otf/GenRyuMin2TW-H.otf",
+      weight: "800",
+      style: "normal",
+    },
+  ],
+  variable: "--font-genryumin",
+  display: "swap",
+});
+
+// Japanese version (for Japanese content)
+export const genRyuMinJP = localFont({
+  src: [
+    {
+      path: "../../public/fonts/GenRyuMin2JP-otf/GenRyuMin2JP-EL.otf",
+      weight: "200",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/GenRyuMin2JP-otf/GenRyuMin2JP-L.otf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/GenRyuMin2JP-otf/GenRyuMin2JP-R.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/GenRyuMin2JP-otf/GenRyuMin2JP-M.otf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/GenRyuMin2JP-otf/GenRyuMin2JP-SB.otf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/GenRyuMin2JP-otf/GenRyuMin2JP-B.otf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/GenRyuMin2JP-otf/GenRyuMin2JP-H.otf",
+      weight: "800",
+      style: "normal",
+    },
+  ],
+  variable: "--font-genryumin-jp",
+  display: "swap",
+});
+
 export const fontVariables = [
   playfair.variable,
   merriweather.variable,
   inter.variable,
   roboto.variable,
   jetbrains.variable,
+  genRyuMin.variable,
+  genRyuMinJP.variable,
 ].join(" ");
