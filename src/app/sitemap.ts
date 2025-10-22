@@ -2,8 +2,15 @@ import type { MetadataRoute } from "next";
 import { getPublishedPosts } from "@/lib/blog";
 import { loadAllProjects } from "@/lib/mdx";
 
+// 讓 sitemap 在每次請求時重新生成，並快取 1 分鐘
+export const revalidate = 60; // 60 秒重新驗證一次
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  // 確保使用正確的基礎 URL，優先使用環境變數，否則使用生產域名
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  const baseUrl = siteUrl?.startsWith("http")
+    ? siteUrl
+    : "https://doeshing.one";
 
   // 獲取所有已發布的部落格文章（不分頁，獲取所有文章）
   const { posts } = await getPublishedPosts({ perPage: 1000 });
