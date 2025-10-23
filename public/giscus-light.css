@@ -1,0 +1,275 @@
+/**
+ * Giscus Light Theme - Newspaper Editorial Style
+ * Matches the Doeshing Portfolio design system
+ */
+
+/* Main container */
+main.gsc-main {
+  background-color: transparent;
+}
+
+/* Header and reactions */
+.gsc-reactions {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.gsc-reactions-count {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: #6b7280;
+}
+
+/* Comment form */
+.gsc-comment-box {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.gsc-comment-box-tabs {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.gsc-comment-box-tab {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: #6b7280;
+  border: none;
+  padding: 0.5rem 1rem;
+}
+
+.gsc-comment-box-tab[aria-selected="true"] {
+  color: #0a0a0a;
+  border-bottom: 2px solid #0a0a0a;
+}
+
+.gsc-comment-box-textarea {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #0a0a0a;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 1rem;
+}
+
+.gsc-comment-box-textarea:focus {
+  outline: none;
+  border-color: #0a0a0a;
+  box-shadow: 0 0 0 1px #0a0a0a;
+}
+
+.gsc-comment-box-textarea::placeholder {
+  color: rgba(107, 114, 128, 0.5);
+}
+
+/* Submit button */
+.gsc-comment-box-button {
+  background-color: #0a0a0a;
+  color: #f5f3ee;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid #0a0a0a;
+  transition: all 150ms ease;
+}
+
+.gsc-comment-box-button:hover:not(:disabled) {
+  background-color: #dc2626;
+  border-color: #dc2626;
+}
+
+.gsc-comment-box-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Comments list */
+.gsc-comments {
+  margin-top: 2.5rem;
+}
+
+.gsc-header {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  color: #6b7280;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.gsc-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Individual comment */
+.gsc-comment {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.gsc-comment-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.gsc-comment-author-avatar {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+}
+
+.gsc-comment-author-name {
+  font-family: var(--font-lora), serif;
+  font-size: 1.125rem;
+  color: #0a0a0a;
+}
+
+.gsc-comment-timestamp {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: #6b7280;
+}
+
+.gsc-comment-content {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #6b7280;
+}
+
+.gsc-comment-content p {
+  margin-bottom: 1rem;
+}
+
+.gsc-comment-content a {
+  color: #dc2626;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.gsc-comment-content a:hover {
+  color: #0a0a0a;
+}
+
+/* Code blocks in comments */
+.gsc-comment-content code {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0.125rem 0.375rem;
+  font-size: 0.8125rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.gsc-comment-content pre {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  overflow-x: auto;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 1rem 0;
+}
+
+.gsc-comment-content pre code {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+}
+
+/* Comment reactions */
+.gsc-comment-reactions {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.gsc-comment-reactions-button {
+  font-size: 0.75rem;
+  color: #6b7280;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.25rem 0.75rem;
+  transition: all 150ms ease;
+}
+
+.gsc-comment-reactions-button:hover {
+  border-color: #0a0a0a;
+  color: #0a0a0a;
+}
+
+/* Reply button */
+.gsc-reply-button {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: #6b7280;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 1rem;
+  transition: all 150ms ease;
+}
+
+.gsc-reply-button:hover {
+  border-color: #0a0a0a;
+  color: #0a0a0a;
+}
+
+/* Loading and error states */
+.gsc-loading {
+  color: #6b7280;
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.gsc-error {
+  color: #dc2626;
+  font-size: 0.875rem;
+  padding: 1rem;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  background-color: rgba(220, 38, 38, 0.05);
+}
+
+/* Pagination */
+.gsc-pagination {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.gsc-pagination-button {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: #6b7280;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 1rem;
+  transition: all 150ms ease;
+}
+
+.gsc-pagination-button:hover:not(:disabled) {
+  border-color: #0a0a0a;
+  color: #0a0a0a;
+}
+
+.gsc-pagination-button[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.gsc-pagination-button[aria-current="true"] {
+  background-color: #0a0a0a;
+  color: #f5f3ee;
+  border-color: #0a0a0a;
+}
