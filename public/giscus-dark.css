@@ -149,3 +149,21 @@ main .pagination-loader-container {
 main .gsc-loading-image {
   background-image: url(https://github.githubassets.com/images/mona-loading-dimmed.gif);
 }
+
+/* Remove all rounded corners */
+* {
+  border-radius: 0 !important;
+}
+
+.rounded,
+.rounded-md,
+.rounded-lg,
+.rounded-xl,
+.rounded-2xl,
+.rounded-full,
+.rounded-t,
+.rounded-b,
+.rounded-l,
+.rounded-r {
+  border-radius: 0 !important;
+}
