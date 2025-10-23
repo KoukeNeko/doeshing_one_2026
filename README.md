@@ -5,38 +5,51 @@ Magazine-style personal site built with Next.js 15, Tailwind CSS, and static MDX
 ## ✨ Highlights
 
 - Multi-column editorial layout with serif/sans typography pairings and accent red detailing
-- **Static MDX blog system** with search, tag filters, subcategory support, and related articles
+- **100% Static** - No database required! All content is file-based
+- **File-based blog system** with MDX support, search, tag filters, category support, and related articles
 - Markdown-driven project case studies rendered via a unified/rehype pipeline
 - Comprehensive CV page with printable styles and timeline layout
-- API routes for blog listing and view tracking
+- Automatic SEO with static sitemap and robots.txt generation
+- View tracking with in-memory cache (optional database support available)
 - Accessible navigation, skip links, responsive design from 320px to 1440px+
 
 ## 🧱 Tech Stack
 
 - **Framework:** Next.js 15 (App Router, React 19)
 - **Styling:** Tailwind CSS 3 with typography plugin and custom magazine tokens
-- **Content:** Static MDX files for blog posts and projects (no database required!)
-- **Auth Ready:** Prisma schema available for future admin tooling (optional)
-- **Tooling:** TypeScript, Biome, Zod, unified/remark/rehype, Shiki
+- **Content:** 100% File-based - MDX blog posts + Markdown projects (no database!)
+- **Content Processing:** gray-matter, unified, remark, rehype
+- **Code Highlighting:** Shiki with rehype-pretty-code
+- **Tooling:** TypeScript, Biome, Zod, reading-time, date-fns
+- **Optional:** Prisma schema available for future database features
 
 ## 📁 Project Structure
 
 ```
 src/
-  app/                App Router pages + API routes
-    archive/          Blog list + detail + loading state
-    work/             Project list + detail driven by Markdown content
-    about/            CV/résumé page
-    contact/          Contact info + clipboard helper
-    api/              REST endpoints for blog listing + view tracking
+  app/
+    (site)/           Public-facing pages
+      archive/        Blog list + detail pages
+      work/           Project list + detail pages
+      about/          CV/résumé page
+      contact/        Contact info + clipboard helper
+    admin/            Admin panel (optional, requires database setup)
+    api/              REST endpoints (optional)
+    sitemap.ts        Auto-generated sitemap (static)
+    robots.ts         Auto-generated robots.txt (static)
   components/         Layout, blog, project, and UI primitives
-  lib/                MDX utilities, markdown rendering, data helpers
+  lib/
+    blog.ts           File-based blog post loader and utilities
+    mdx.ts            MDX/Markdown rendering pipeline
+    utils.ts          Helper functions (slugify, date formatting, etc.)
   styles/             Tailwind global layers
   types/              Shared type definitions
 content/
-  blog/               MDX blog posts (supports subcategories)
-  work/               Markdown case studies (frontmatter + prose)
-prisma/               Prisma schema (optional, for future admin features)
+  blog/               MDX blog posts (supports nested categories)
+    tutorials/        Example category
+      advanced/       Example subcategory
+  work/               Markdown project case studies
+prisma/               Optional: Prisma schema for future features
 public/images/        Editorial placeholder artwork + icons
 ```
 
@@ -50,16 +63,26 @@ npm install
 
 ### 2. Configure environment variables (Optional)
 
-For basic usage, the site works without any configuration. For production deployment:
+The site works out of the box without any configuration! For production deployment, create a `.env` file:
 
 ```bash
-# Create .env file
-echo 'NEXT_PUBLIC_SITE_URL="https://yourdomain.com"' > .env
+# Site Configuration (Optional, recommended for production)
+NEXT_PUBLIC_SITE_URL="https://yourdomain.com"
 ```
 
-- `NEXT_PUBLIC_SITE_URL` — public base URL used for metadata + sharing (default: http://localhost:3000)
-- `NEXTAUTH_SECRET` / `NEXTAUTH_URL` — optional, for future admin features
-- `DATABASE_URL` — optional, only needed if you want to use Prisma for admin features
+**Environment Variables:**
+
+- `NEXT_PUBLIC_SITE_URL` — Public site URL for metadata, SEO, and social sharing (default: <http://localhost:3000>)
+
+**Optional - For Database Features:**
+
+If you want to enable the admin panel or database features in the future:
+
+```bash
+DATABASE_URL="postgresql://..."
+NEXTAUTH_SECRET="your-secret-key"
+NEXTAUTH_URL="http://localhost:3000"
+```
 
 ### 3. Run the development server
 
@@ -67,17 +90,105 @@ echo 'NEXT_PUBLIC_SITE_URL="https://yourdomain.com"' > .env
 npm run dev
 ```
 
-Visit `http://localhost:3000` to explore the editorial layout. Biome linting keeps formatting consistent:
+Visit <http://localhost:3000> to explore the editorial layout.
+
+**Development Commands:**
 
 ```bash
-npm run lint
-npm run format
+npm run dev     # Start development server
+npm run build   # Build for production
+npm run start   # Start production server
+npm run lint    # Check code formatting with Biome
+npm run format  # Format code with Biome
 ```
 
 ## 📝 Content Authoring
 
-- **Blog posts:** Add `.mdx` files to `content/blog/`. Supports subcategories via folders (e.g., `content/blog/tutorials/post.mdx`). Frontmatter supports `{ title, excerpt, coverImage, date, author, tags, published, featured, category }`. Content is rendered with typographic enhancements, Shiki-powered code blocks, and automatic table of contents generation. See `content/blog/README.md` for detailed documentation.
-- **Projects:** Add `.md` or `.mdx` files to `content/work/`. Frontmatter supports `{ title, description, tags, image, github, demo, date, featured, status }`. Content is processed through unified/remark/rehype for typography, code highlighting, and TOC data.
+### Blog Posts (File-based)
+
+Blog posts are managed as MDX files in `content/blog/`:
+
+1. Create a new `.mdx` file in `content/blog/` (or a subdirectory for categories)
+2. Add frontmatter at the top:
+
+```mdx
+---
+title: "Your Post Title"
+excerpt: "A brief description that appears in listings and SEO"
+coverImage: "/images/blog/cover.svg"
+date: "2025-10-23"
+author:
+  name: "Your Name"
+  avatar: "/images/avatar.svg"
+  bio: "Your bio here"
+tags: ["Next.js", "TypeScript", "Web Development"]
+published: true
+featured: false
+featuredOrder: 1
+---
+
+## Your Content Here
+
+Write your blog post content using Markdown and MDX...
+```
+
+**Frontmatter Fields:**
+
+- `title` (required) — Post title
+- `excerpt` (required) — Brief description for listings and SEO
+- `date` (required) — Publication date in YYYY-MM-DD format
+- `author.name` (required) — Author's name
+- `tags` (required) — Array of tags
+- `published` (required) — Whether the post is published (true/false)
+- `coverImage` (optional) — Path to cover image
+- `author.avatar` (optional) — Path to author avatar
+- `author.bio` (optional) — Author biography
+- `featured` (optional) — Show on homepage (true/false)
+- `featuredOrder` (optional) — Order for featured posts (lower = higher priority)
+- `slug` (optional) — Custom URL slug (defaults to filename)
+
+**Categories:**
+
+Categories are automatically determined by folder structure:
+
+```text
+content/blog/
+├── post-1.mdx              # No category
+├── post-2.mdx              # No category
+└── tutorials/              # Category: "tutorials"
+    ├── getting-started.mdx # Category: "tutorials"
+    └── advanced/           # Category: "tutorials/advanced"
+        └── deep-dive.mdx   # Category: "tutorials/advanced"
+```
+
+See [content/blog/README.md](content/blog/README.md) for detailed documentation.
+
+### Work/Projects (File-based)
+
+Projects are managed as Markdown files in `content/work/`:
+
+1. Create a new `.md` or `.mdx` file in `content/work/`
+2. Add frontmatter:
+
+```md
+---
+title: "Project Title"
+description: "Project description"
+tags: ["Tag1", "Tag2"]
+image: "/images/projects/cover.svg"
+github: "https://github.com/user/repo"
+demo: "https://demo.example.com"
+date: "2025-10-23"
+featured: true
+status: "completed"
+---
+
+## Project Content
+
+Write your project case study here...
+```
+
+Projects are automatically loaded and displayed on the `/work` page.
 
 ## 🐳 Docker
 
@@ -99,16 +210,22 @@ docker compose --profile dev up
 
 The development profile mounts the repository into a Node 20 container, installs dependencies (cached in the `node_modules` named volume), and runs `npm run dev` with file watching enabled.
 
-## 🔌 API Endpoints
+## 🔌 API Endpoints (Optional)
+
+The site works fully static without any API. Optional endpoints are available if you set up a database:
 
 | Method | Endpoint                  | Description                              |
 | ------ | ------------------------- | ---------------------------------------- |
 | GET    | `/api/blog`               | Paginated, filterable list of posts      |
 | POST   | `/api/views`              | Increment a post view count              |
 
-Query parameters for the list endpoint mirror the UI: `page`, `tag`, `search`, `sort=latest|views`, `perPage`.
+**Query parameters for `/api/blog`:**
 
-**Note:** POST/PUT/DELETE endpoints for blog management are disabled. Blog posts are now managed as static MDX files in `content/blog/`.
+- `page` — Page number (default: 1)
+- `perPage` — Items per page (default: 9)
+- `tag` — Filter by tag slug
+- `search` — Search in title and excerpt
+- `sort` — Sort by `latest` or `views` (default: latest)
 
 ## 🧩 UI Components
 
@@ -117,19 +234,69 @@ Query parameters for the list endpoint mirror the UI: `page`, `tag`, `search`, `
 - **Projects:** `ProjectGrid`, `ProjectCard` render feature cards from Markdown sources.
 - **UI:** `Button`, `Badge`, `Card`, `Pagination`, `SearchButton`, and `RenderedMarkdown` provide reusable primitives.
 
-## 📄 Deployment Notes
+## 📄 Deployment
 
-- **No database required!** Blog content is static and builds directly into the site.
-- Tailwind + typography plugin is fully static and deployment ready for Vercel, Netlify, or any static host.
-- Set `NEXT_PUBLIC_SITE_URL` to your deployed host URL to ensure accurate Open Graph links.
-- Content updates require a rebuild (push to git to trigger automatic deployment on Vercel/Netlify).
-- Optional: Prisma schema is available if you want to add admin features in the future.
+The site is **100% static** and can be deployed anywhere!
+
+### Quick Deploy
+
+**Vercel (Recommended):**
+
+1. Push your code to GitHub
+2. Import project to Vercel
+3. Add environment variable: `NEXT_PUBLIC_SITE_URL="https://yourdomain.com"`
+4. Deploy!
+
+**Netlify:**
+
+1. Connect your GitHub repository
+2. Build command: `npm run build`
+3. Publish directory: `.next`
+4. Add environment variable: `NEXT_PUBLIC_SITE_URL="https://yourdomain.com"`
+
+**Other Platforms:**
+
+- Works with any static host (Cloudflare Pages, GitHub Pages, etc.)
+- Build command: `npm run build`
+- Output: `.next` (Next.js standalone mode)
+- No database required!
+
+### Content Updates
+
+To update content:
+
+1. Edit MDX files in `content/blog/` or `content/work/`
+2. Commit and push to your repository
+3. Your deployment platform will automatically rebuild and deploy
+
+**SEO Files:**
+
+- Sitemap and robots.txt are automatically generated during build
+- They update with each deployment to include new content
 
 ## 🤝 Conventions
 
-- TypeScript strict mode is enabled; prefer explicit types.
-- All markdown rendering passes through sanitizing rehype pipelines before hydration.
-- Boostrapped styles favor accessible semantic HTML, focus states, and skip links.
-- Blog posts are managed as MDX files in `content/blog/` - no CMS needed!
+- TypeScript strict mode is enabled; prefer explicit types
+- All markdown rendering passes through sanitizing rehype pipelines before hydration
+- Bootstrap styles favor accessible semantic HTML, focus states, and skip links
+- **Blog posts are file-based** - MDX files in `content/blog/`
+- **Projects are file-based** - Markdown files in `content/work/`
+- Use Biome for linting and formatting
+- Follow the magazine-inspired design system with serif/sans typography pairings
+
+## 🎨 Features
+
+- **Static Site Generation** - No database, no backend, just pure static files
+- **MDX Support** - Rich content with React components
+- **Automatic TOC** - Table of contents generated from headings
+- **Code Highlighting** - Beautiful code blocks with Shiki
+- **Tag System** - Auto-generated from frontmatter, automatically slugified
+- **Category System** - Folder-based organization
+- **Search & Filter** - Client-side search and tag filtering
+- **Related Posts** - Automatic related post suggestions
+- **View Tracking** - In-memory view counts (optional database support)
+- **SEO Optimized** - Auto-generated sitemap, robots.txt, and metadata
+- **Dark Mode** - System-aware theme switching
+- **Responsive** - Mobile-first design from 320px to 1440px+
 
 Happy shipping! 📰
