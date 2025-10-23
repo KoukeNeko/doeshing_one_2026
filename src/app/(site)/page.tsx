@@ -38,7 +38,7 @@ const quickLinks: Array<{
 
 export default async function HomePage() {
   const [featuredPosts, projects] = await Promise.all([
-    getFeaturedPosts(3),
+    getFeaturedPosts(7), // Fetch 7 posts to have enough for featured display on homepage
     loadAllProjects(),
   ]);
 
