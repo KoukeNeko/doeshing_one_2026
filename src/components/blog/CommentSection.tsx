@@ -1,8 +1,70 @@
 "use client";
 
-import Giscus from "@giscus/react";
+import { useEffect, useRef } from "react";
+import { useTheme } from "next-themes";
 
 export default function CommentSection() {
+  const commentBoxRef = useRef<HTMLDivElement>(null);
+  const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.setAttribute("data-repo", "KoukeNeko/doeshing_one_2026");
+    script.setAttribute("data-repo-id", "R_kgDOQA8TqA");
+    script.setAttribute("data-category", "General");
+    script.setAttribute("data-category-id", "DIC_kwDOQA8TqM4Cw-UU");
+    script.setAttribute("data-mapping", "pathname");
+    script.setAttribute("data-strict", "0");
+    script.setAttribute("data-reactions-enabled", "1");
+    script.setAttribute("data-emit-metadata", "0");
+    script.setAttribute("data-input-position", "top");
+
+    // Use custom theme based on site theme
+    const theme = resolvedTheme === "dark"
+      ? `${window.location.origin}/giscus-dark.css`
+      : `${window.location.origin}/giscus-light.css`;
+    script.setAttribute("data-theme", theme);
+
+    script.setAttribute("data-lang", "zh-TW");
+    script.setAttribute("data-loading", "lazy");
+    script.setAttribute("crossorigin", "anonymous");
+    script.async = true;
+
+    if (commentBoxRef.current) {
+      commentBoxRef.current.appendChild(script);
+    }
+
+    return () => {
+      if (commentBoxRef.current) {
+        commentBoxRef.current.innerHTML = "";
+      }
+    };
+  }, []);
+
+  // Handle theme changes dynamically
+  useEffect(() => {
+    const iframe = document.querySelector<HTMLIFrameElement>(
+      "iframe.giscus-frame"
+    );
+    if (!iframe) return;
+
+    const theme = resolvedTheme === "dark"
+      ? `${window.location.origin}/giscus-dark.css`
+      : `${window.location.origin}/giscus-light.css`;
+
+    iframe.contentWindow?.postMessage(
+      {
+        giscus: {
+          setConfig: {
+            theme: theme,
+          },
+        },
+      },
+      "https://giscus.app"
+    );
+  }, [resolvedTheme]);
+
   return (
     <section
       aria-labelledby="comment-heading"
@@ -27,22 +89,7 @@ export default function CommentSection() {
         </div>
       </header>
 
-      <div className="mt-8">
-        <Giscus
-          id="comments"
-          repo="KoukeNeko/doeshing_one_2026"
-          repoId="R_kgDOQA8TqA"
-          category="General"
-          categoryId="DIC_kwDOQA8TqM4Cw-UU"
-          mapping="pathname"
-          strict="0"
-          reactionsEnabled="1"
-          emitMetadata="0"
-          inputPosition="top"
-          theme="light"
-          lang="zh-TW"
-        />
-      </div>
+      <div ref={commentBoxRef} className="mt-8" />
     </section>
   );
 }
