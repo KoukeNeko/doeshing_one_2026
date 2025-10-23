@@ -261,6 +261,11 @@
     overflow-wrap: break-word;
   }
 
+  /* Ensure callouts stay within prose container width */
+  .prose .callout {
+    max-width: 100%;
+  }
+
   .prose img {
     @apply rounded-none border border-black/5 shadow-editorial dark:border-white/5;
     max-width: 100%;
@@ -497,16 +502,26 @@
 
   /* Callout blocks - Editorial newspaper style */
   .callout {
-    @apply my-6 flex gap-4 border border-black/10 bg-white px-6 py-5 shadow-sm shadow-black/5 dark:border-white/10 dark:bg-zinc-900;
+    @apply my-8 flex gap-4 border border-black/10 bg-white px-0 py-5 shadow-sm shadow-black/5 dark:border-white/10 dark:bg-zinc-900;
     border-left-width: 4px !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+
+  /* Ensure callouts in prose don't overflow */
+  .prose .callout {
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .callout-icon {
-    @apply mt-0.5 flex-shrink-0;
+    @apply flex-shrink-0;
+    margin-top: 0.125rem;
   }
 
   .callout-content {
-    @apply flex-1 text-sm leading-relaxed text-newspaper-ink dark:text-zinc-100;
+    @apply flex-1 leading-relaxed text-newspaper-ink dark:text-zinc-100;
+    font-size: 0.95rem;
   }
 
   .callout-content p:first-child {
