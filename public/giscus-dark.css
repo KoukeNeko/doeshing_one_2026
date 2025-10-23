@@ -128,10 +128,7 @@ main .gsc-loading-image {
   background-image: url(https://github.githubassets.com/images/mona-loading-dimmed.gif);
 }
 
-.gsc-comment-box {
-  border: none !important;
-}
 
-.rounded .rounded-md .gsc-social-reaction-summary-item .rounded-xl {
-  border-radius: 0 !important;
+.rounded .rounded-md .gsc-social-reaction-summary-item .rounded-xl .BtnGroup-item .gsc-comment-box-textarea .gsc-comment-box {
+  border-radius: unset !important;
 }
