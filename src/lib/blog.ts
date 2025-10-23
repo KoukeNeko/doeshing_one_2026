@@ -72,20 +72,25 @@ function slugify(input: string): string {
 }
 
 async function getAllBlogFiles(dir: string, baseDir: string = dir): Promise<string[]> {
-  const entries = await fs.readdir(dir, { withFileTypes: true });
-  const files = await Promise.all(
-    entries.map(async (entry) => {
-      const fullPath = path.join(dir, entry.name);
-      if (entry.isDirectory()) {
-        return getAllBlogFiles(fullPath, baseDir);
-      }
-      if (/\.mdx?$/.test(entry.name)) {
-        return [path.relative(baseDir, fullPath)];
-      }
-      return [];
-    })
-  );
-  return files.flat();
+  try {
+    const entries = await fs.readdir(dir, { withFileTypes: true });
+    const files = await Promise.all(
+      entries.map(async (entry) => {
+        const fullPath = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+          return getAllBlogFiles(fullPath, baseDir);
+        }
+        if (/\.mdx?$/.test(entry.name)) {
+          return [path.relative(baseDir, fullPath)];
+        }
+        return [];
+      })
+    );
+    return files.flat();
+  } catch (error) {
+    console.error(`Error reading directory ${dir}:`, error);
+    return [];
+  }
 }
 
 async function loadBlogPost(filePath: string): Promise<BlogPost> {
@@ -152,7 +157,20 @@ async function getAllBlogPosts(): Promise<BlogPost[]> {
   return unstable_cache(
     async () => {
       try {
+        // Check if directory exists
+        try {
+          await fs.access(BLOG_DIR);
+        } catch {
+          console.warn(`Blog directory ${BLOG_DIR} does not exist, returning empty array`);
+          return [];
+        }
+        
         const files = await getAllBlogFiles(BLOG_DIR);
+        if (files.length === 0) {
+          console.warn("No blog post files found");
+          return [];
+        }
+        
         const posts = await Promise.all(files.map((file) => loadBlogPost(file)));
         return posts;
       } catch (error) {
