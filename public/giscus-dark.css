@@ -503,6 +503,13 @@ main.gsc-main {
   border-radius: 0 !important;
 }
 
+/* Remove all borders */
+.border,
+.w-full.min-w-0.rounded-md.border,
+.color-bg-primary.w-full.min-w-0.rounded-md.border {
+  border: none !important;
+}
+
 /* Fix button spacing */
 .inline-flex {
   display: inline-flex !important;
