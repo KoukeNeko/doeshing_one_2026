@@ -13,7 +13,7 @@ export const NAV_LINKS = [
 export const SOCIAL_LINKS = [
   {
     platform: "GitHub",
-    href: "https://github.com/doeshing",
+    href: "https://github.com/KoukeNeko",
     icon: "github",
   },
   {
