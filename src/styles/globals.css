@@ -495,9 +495,9 @@
     @apply !border-l-4 !border-newspaper-accent !pl-4 dark:!border-red-400;
   }
 
-  /* Callout blocks */
+  /* Callout blocks - Editorial newspaper style */
   .callout {
-    @apply my-6 flex gap-3 rounded-lg border-l-4 p-4;
+    @apply my-6 flex gap-4 border border-black/10 bg-white px-6 py-5 shadow-sm shadow-black/5 dark:border-white/10 dark:bg-zinc-900;
   }
 
   .callout-icon {
@@ -505,39 +505,51 @@
   }
 
   .callout-content {
-    @apply flex-1 text-sm leading-relaxed;
+    @apply flex-1 text-sm leading-relaxed text-newspaper-ink dark:text-zinc-100;
   }
 
+  .callout-content p:first-child {
+    @apply mt-0;
+  }
+
+  .callout-content p:last-child {
+    @apply mb-0;
+  }
+
+  /* Info callout - subtle blue accent */
   .callout-info {
-    @apply border-blue-500 bg-blue-50 text-blue-900 dark:border-blue-400 dark:bg-blue-950/30 dark:text-blue-100;
+    @apply border-l-4 border-l-blue-600 dark:border-l-blue-400;
   }
 
   .callout-info .callout-icon {
     @apply text-blue-600 dark:text-blue-400;
   }
 
+  /* Warning callout - newspaper yellow/amber */
   .callout-warning {
-    @apply border-yellow-500 bg-yellow-50 text-yellow-900 dark:border-yellow-400 dark:bg-yellow-950/30 dark:text-yellow-100;
+    @apply border-l-4 border-l-yellow-600 dark:border-l-yellow-400;
   }
 
   .callout-warning .callout-icon {
     @apply text-yellow-600 dark:text-yellow-400;
   }
 
+  /* Success callout - editorial green */
   .callout-success {
-    @apply border-green-500 bg-green-50 text-green-900 dark:border-green-400 dark:bg-green-950/30 dark:text-green-100;
+    @apply border-l-4 border-l-green-600 dark:border-l-green-400;
   }
 
   .callout-success .callout-icon {
     @apply text-green-600 dark:text-green-400;
   }
 
+  /* Danger callout - newspaper accent red */
   .callout-danger {
-    @apply border-red-500 bg-red-50 text-red-900 dark:border-red-400 dark:bg-red-950/30 dark:text-red-100;
+    @apply border-l-4 border-l-newspaper-accent dark:border-l-red-400;
   }
 
   .callout-danger .callout-icon {
-    @apply text-red-600 dark:text-red-400;
+    @apply text-newspaper-accent dark:text-red-400;
   }
 }
 
