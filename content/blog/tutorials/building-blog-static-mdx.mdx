@@ -1,0 +1,59 @@
+---
+title: "Building a Blog with Static MDX Files"
+excerpt: "Learn how to migrate from a database-driven blog to a static MDX-based approach for better performance and easier content management."
+coverImage: "/images/blog/static-mdx-blog.svg"
+date: "2025-10-22"
+author:
+  name: "Doeshing"
+  avatar: "/images/avatar.svg"
+  bio: "Creative technologist crafting editorials in the browser. Exploring the sweet spot between storytelling, design, and modern web tooling."
+tags: ["Next.js", "TypeScript", "Tutorial"]
+published: true
+featured: false
+category: "tutorials"
+---
+
+## Why Go Static?
+
+Static site generation with MDX files offers several advantages over database-driven content:
+
+- **Performance**: No database queries needed at runtime
+- **Version Control**: Content lives alongside your code in git
+- **Simplicity**: Easy to backup, migrate, and manage
+- **Developer Experience**: Write in your favorite editor with full IDE support
+
+## The Migration Approach
+
+Converting from Supabase/Prisma to static MDX involves three main steps:
+
+### 1. Create the Content Structure
+
+Organize your blog posts in a `content/blog` directory. You can use subdirectories for categorization:
+
+```
+content/
+  blog/
+    post-1.mdx
+    post-2.mdx
+    tutorials/
+      tutorial-1.mdx
+```
+
+### 2. Update Data Loading Functions
+
+Replace database queries with file system reads and MDX parsing. Use libraries like:
+- `gray-matter` for frontmatter parsing
+- `unified` for markdown rendering
+- Next.js `unstable_cache` for performance
+
+### 3. Maintain the Same Interface
+
+Keep your existing components and page structure. The change is transparent to users.
+
+## Benefits Realized
+
+After migration, you'll enjoy:
+- Faster build times
+- No database dependencies
+- Easier content collaboration via pull requests
+- Better offline development experience
