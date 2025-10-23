@@ -509,12 +509,36 @@ button[type="button"] {
   border-radius: 0 !important;
 }
 
-/* Remove all borders */
+/* Remove all borders except reply placeholder */
 .border,
 .w-full.min-w-0.rounded-md.border,
-.color-bg-primary.w-full.min-w-0.rounded-md.border,
+.color-bg-primary.w-full.min-w-0.rounded-md.border {
+  border: none !important;
+}
+
+/* Reply box styling - keep subtle border for placeholder */
 .gsc-reply-box,
-.color-bg-tertiary.gsc-reply-box,
+.color-bg-tertiary.gsc-reply-box {
+  background-color: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 0 !important;
+  padding: 0.75rem 1rem !important;
+  transition: all 150ms ease !important;
+}
+
+.gsc-reply-box:hover,
+.color-bg-tertiary.gsc-reply-box:hover {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+.gsc-reply-box button,
+.gsc-reply-box span {
+  color: #a1a1aa !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+}
+
 .gsc-reply {
   border: none !important;
 }
