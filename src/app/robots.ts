@@ -1,5 +1,8 @@
 import type { MetadataRoute } from "next";
 
+// 在 build 時靜態生成 robots.txt
+export const dynamic = "force-static";
+
 export default function robots(): MetadataRoute.Robots {
   // 確保使用正確的基礎 URL，優先使用環境變數，否則使用生產域名
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;

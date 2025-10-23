@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 import { getPublishedPosts } from "@/lib/blog";
 import { loadAllProjects } from "@/lib/mdx";
 
-// 讓 sitemap 在每次請求時重新生成，並快取 1 分鐘
-export const revalidate = 60; // 60 秒重新驗證一次
+// 在 build 時靜態生成 sitemap，確保 SEO 檔案即時更新
+export const dynamic = "force-static";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 確保使用正確的基礎 URL，優先使用環境變數，否則使用生產域名
