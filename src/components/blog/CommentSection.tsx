@@ -29,11 +29,10 @@ export default function CommentSection() {
     script.setAttribute("data-emit-metadata", "0");
     script.setAttribute("data-input-position", "top");
 
-    // Use built-in theme for now (custom CSS needs to be hosted externally for Giscus iframe)
-    // TODO: Host custom CSS on CDN or use Giscus theme URL configuration
+    // Use custom theme - now works in production with public URL
     const theme = resolvedTheme === "dark"
-      ? "transparent_dark"
-      : "light";
+      ? "https://doeshing.one/giscus-dark.css"
+      : "https://doeshing.one/giscus-light.css";
     script.setAttribute("data-theme", theme);
 
     script.setAttribute("data-lang", "zh-TW");
@@ -62,8 +61,8 @@ export default function CommentSection() {
     if (!iframe) return;
 
     const theme = resolvedTheme === "dark"
-      ? "transparent_dark"
-      : "light";
+      ? "https://doeshing.one/giscus-dark.css"
+      : "https://doeshing.one/giscus-light.css";
 
     iframe.contentWindow?.postMessage(
       {
