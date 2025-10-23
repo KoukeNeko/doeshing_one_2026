@@ -167,3 +167,7 @@ main .gsc-loading-image {
 .rounded-r {
   border-radius: 0 !important;
 }
+
+.color-box-border-info {
+  border-color: unset  !important;
+}
