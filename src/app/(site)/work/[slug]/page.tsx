@@ -44,7 +44,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const project = await loadProjectContent(slug).catch(() => null);
   if (!project) notFound();
 
-  const { frontmatter, html, toc } = project;
+  const { frontmatter, content, toc } = project;
 
   return (
     <article className="space-y-12">
@@ -94,7 +94,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr),280px]">
         <div className="min-w-0 overflow-x-hidden">
           <RenderedMarkdown
-            html={html ?? ""}
+            content={content ?? <></>}
             className="dropcap prose prose-lg prose-headings:font-serif prose-headings:tracking-tight prose-p:text-newspaper-gray dark:prose-invert"
           />
         </div>

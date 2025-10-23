@@ -61,7 +61,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   await incrementPostViews(post.id);
 
-  const [{ html, toc }, adjacent, related] = await Promise.all([
+  const [{ content, toc }, adjacent, related] = await Promise.all([
     renderMarkdown(post.content),
     post.publishedAt
       ? getAdjacentPosts(post.publishedAt, post.id)
@@ -109,7 +109,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </header>
 
         <RenderedMarkdown
-          html={html}
+          content={content}
           className="break-words dropcap prose prose-lg prose-headings:font-serif prose-headings:tracking-tight prose-p:text-newspaper-gray prose-strong:text-newspaper-ink dark:prose-invert"
         />
 
