@@ -79,10 +79,10 @@ export default function CommentSection() {
   return (
     <section
       aria-labelledby="comment-heading"
-      className="border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900"
+      className="py-10"
       data-testid="comment-section"
     >
-      <header className="space-y-6 border-b border-black/10 pb-6 dark:border-white/10">
+      <header className="space-y-6 pb-6">
         <div className="flex flex-col gap-3">
           <span className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-accent dark:text-red-400">
             讀者交流
