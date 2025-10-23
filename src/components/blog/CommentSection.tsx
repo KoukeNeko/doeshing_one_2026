@@ -1,11 +1,8 @@
 "use client";
 
 import Giscus from "@giscus/react";
-import { useTheme } from "next-themes";
 
 export default function CommentSection() {
-  const { resolvedTheme } = useTheme();
-
   return (
     <section
       aria-labelledby="comment-heading"
@@ -32,6 +29,7 @@ export default function CommentSection() {
 
       <div className="mt-8">
         <Giscus
+          id="comments"
           repo="KoukeNeko/doeshing_one_2026"
           repoId="R_kgDOQA8TqA"
           category="General"
@@ -41,9 +39,8 @@ export default function CommentSection() {
           reactionsEnabled="1"
           emitMetadata="0"
           inputPosition="top"
-          theme={resolvedTheme === "dark" ? "/giscus-dark.css" : "/giscus-light.css"}
+          theme="light"
           lang="zh-TW"
-          loading="lazy"
         />
       </div>
     </section>
