@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BlogGrid } from "@/components/blog/BlogGrid";
+import { CommentSection } from "@/components/blog/CommentSection";
 import { ShareButtons } from "@/components/blog/ShareButtons";
 import { TableOfContents } from "@/components/blog/TableOfContents";
 import { RenderedMarkdown } from "@/components/mdx/RenderedMarkdown";
@@ -117,6 +118,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
 
         <ShareButtons url={shareUrl} title={post.title} />
+
+        <CommentSection />
 
         <section className="space-y-6">
           <SectionHeading
