@@ -172,6 +172,7 @@ main .gsc-loading-image {
 .gsc-comment,
 .gsc-reply-box,
 .gsc-comment-box,
+.color-box-border-info,
 [class*="border-accent"],
 [class*="border-danger"],
 [class*="border-red"] {
