@@ -25,7 +25,7 @@ export interface BlogPostFrontmatter {
     avatar?: string;
     bio?: string;
   };
-  tags: string[];
+  tags?: string[] | string;
   published: boolean;
   featured?: boolean;
   featuredOrder?: number;
@@ -71,6 +71,11 @@ function slugify(input: string): string {
     .replace(/(^-|-$)+/g, "");
 }
 
+// Helper to safely get timestamp from Date or string
+function getTimestamp(date: Date | string): number {
+  return date instanceof Date ? date.getTime() : new Date(date).getTime();
+}
+
 async function getAllBlogFiles(dir: string, baseDir: string = dir): Promise<string[]> {
   try {
     const entries = await fs.readdir(dir, { withFileTypes: true });
@@ -80,7 +85,8 @@ async function getAllBlogFiles(dir: string, baseDir: string = dir): Promise<stri
         if (entry.isDirectory()) {
           return getAllBlogFiles(fullPath, baseDir);
         }
-        if (/\.mdx?$/.test(entry.name)) {
+        // Exclude README files and only include .md or .mdx files
+        if (/\.mdx?$/.test(entry.name) && !/^README\.mdx?$/i.test(entry.name)) {
           return [path.relative(baseDir, fullPath)];
         }
         return [];
@@ -93,64 +99,86 @@ async function getAllBlogFiles(dir: string, baseDir: string = dir): Promise<stri
   }
 }
 
-async function loadBlogPost(filePath: string): Promise<BlogPost> {
-  const fullPath = path.join(BLOG_DIR, filePath);
-  const fileContent = await fs.readFile(fullPath, "utf8");
-  const { data, content } = matter(fileContent);
-  const frontmatter = data as BlogPostFrontmatter;
-  
-  // Extract category from file path if in subdirectory
-  const pathParts = filePath.split(path.sep);
-  const category = pathParts.length > 1 ? pathParts[0] : frontmatter.category;
-  
-  // Generate slug from filename
-  const fileName = path.basename(filePath, path.extname(filePath));
-  const slug = frontmatter.slug || fileName;
-  
-  // Generate ID from slug
-  const id = slug;
-  
-  // Parse date
-  const publishedAt = new Date(frontmatter.date);
-  
-  // Get file stats for created/updated dates
-  const stats = await fs.stat(fullPath);
-  
-  // Parse tags
-  const tags = frontmatter.tags.map((tag) => ({
-    id: slugify(tag),
-    name: tag,
-    slug: slugify(tag),
-  }));
-  
-  // Get view count
-  const views = viewCounts.get(slug) || 0;
-  
-  return {
-    id,
-    slug,
-    title: frontmatter.title,
-    excerpt: frontmatter.excerpt,
-    content,
-    coverImage: frontmatter.coverImage,
-    published: frontmatter.published,
-    publishedAt,
-    createdAt: stats.birthtime,
-    updatedAt: stats.mtime,
-    views,
-    featured: frontmatter.featured || false,
-    featuredOrder: frontmatter.featuredOrder,
-    tags,
-    author: {
-      id: slugify(frontmatter.author.name),
-      name: frontmatter.author.name,
-      avatar: frontmatter.author.avatar,
-      bio: frontmatter.author.bio,
-    },
-    readingTime: getReadingTime(content),
-    category,
-    filePath,
-  };
+async function loadBlogPost(filePath: string): Promise<BlogPost | null> {
+  try {
+    const fullPath = path.join(BLOG_DIR, filePath);
+    const fileContent = await fs.readFile(fullPath, "utf8");
+    const { data, content } = matter(fileContent);
+    const frontmatter = data as BlogPostFrontmatter;
+
+    // Validate required fields
+    if (!frontmatter.title || !frontmatter.excerpt || !frontmatter.date) {
+      console.warn(`Skipping ${filePath}: Missing required fields (title, excerpt, or date)`);
+      return null;
+    }
+
+    if (!frontmatter.author || !frontmatter.author.name) {
+      console.warn(`Skipping ${filePath}: Missing author information`);
+      return null;
+    }
+
+    // Extract category from file path if in subdirectory
+    const pathParts = filePath.split(path.sep);
+    const category = pathParts.length > 1 ? pathParts[0] : frontmatter.category;
+
+    // Generate slug from filename
+    const fileName = path.basename(filePath, path.extname(filePath));
+    const slug = frontmatter.slug || fileName;
+
+    // Generate ID from slug
+    const id = slug;
+
+    // Parse date
+    const publishedAt = new Date(frontmatter.date);
+
+    // Get file stats for created/updated dates
+    const stats = await fs.stat(fullPath);
+
+    const tagValues = Array.isArray(frontmatter.tags)
+      ? frontmatter.tags
+      : typeof frontmatter.tags === "string"
+        ? frontmatter.tags.split(",").map((tag) => tag.trim()).filter(Boolean)
+        : [];
+
+    // Parse tags
+    const tags = tagValues.map((tag) => ({
+      id: slugify(tag),
+      name: tag,
+      slug: slugify(tag),
+    }));
+
+    // Get view count
+    const views = viewCounts.get(slug) || 0;
+
+    return {
+      id,
+      slug,
+      title: frontmatter.title,
+      excerpt: frontmatter.excerpt,
+      content,
+      coverImage: frontmatter.coverImage,
+      published: frontmatter.published ?? false,
+      publishedAt,
+      createdAt: stats.birthtime,
+      updatedAt: stats.mtime,
+      views,
+      featured: frontmatter.featured || false,
+      featuredOrder: frontmatter.featuredOrder,
+      tags,
+      author: {
+        id: slugify(frontmatter.author.name),
+        name: frontmatter.author.name,
+        avatar: frontmatter.author.avatar,
+        bio: frontmatter.author.bio,
+      },
+      readingTime: getReadingTime(content),
+      category,
+      filePath,
+    };
+  } catch (error) {
+    console.error(`Error loading blog post ${filePath}:`, error);
+    return null;
+  }
 }
 
 async function getAllBlogPosts(): Promise<BlogPost[]> {
@@ -164,15 +192,16 @@ async function getAllBlogPosts(): Promise<BlogPost[]> {
           console.warn(`Blog directory ${BLOG_DIR} does not exist, returning empty array`);
           return [];
         }
-        
+
         const files = await getAllBlogFiles(BLOG_DIR);
         if (files.length === 0) {
           console.warn("No blog post files found");
           return [];
         }
-        
+
         const posts = await Promise.all(files.map((file) => loadBlogPost(file)));
-        return posts;
+        // Filter out null values (invalid posts)
+        return posts.filter((post): post is BlogPost => post !== null);
       } catch (error) {
         console.error("Error loading blog posts:", error);
         return [];
@@ -223,7 +252,7 @@ export async function getPublishedPosts({
   if (sort === "views") {
     filtered.sort((a, b) => b.views - a.views);
   } else {
-    filtered.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
+    filtered.sort((a, b) => getTimestamp(b.publishedAt) - getTimestamp(a.publishedAt));
   }
   
   const total = filtered.length;
@@ -273,7 +302,7 @@ export async function getFeaturedPosts(limit = 3): Promise<BlogPostListItem[]> {
       if (featured.length < limit) {
         const latest = published
           .filter((p) => !p.featured)
-          .sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime())
+          .sort((a, b) => getTimestamp(b.publishedAt) - getTimestamp(a.publishedAt))
           .slice(0, limit - featured.length);
         featured.push(...latest);
       }
@@ -326,7 +355,7 @@ export async function getAdjacentPosts(publishedAt: Date, postId: string) {
   const allPosts = await getAllBlogPosts();
   const published = allPosts
     .filter((p) => p.published)
-    .sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
+    .sort((a, b) => getTimestamp(b.publishedAt) - getTimestamp(a.publishedAt));
   
   const currentIndex = published.findIndex((p) => p.id === postId);
   
@@ -385,7 +414,7 @@ export async function getRelatedPosts(
   // Find posts with matching tags
   const related = published
     .filter((post) => post.tags.some((tag) => tagSlugs.includes(tag.slug)))
-    .sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime())
+    .sort((a, b) => getTimestamp(b.publishedAt) - getTimestamp(a.publishedAt))
     .slice(0, limit);
   
   return related.map((post) => ({
@@ -445,8 +474,8 @@ export async function getLatestPost() {
       const allPosts = await getAllBlogPosts();
       const published = allPosts
         .filter((p) => p.published)
-        .sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
-      
+        .sort((a, b) => getTimestamp(b.publishedAt) - getTimestamp(a.publishedAt));
+
       const latest = published[0];
       if (!latest) return null;
       

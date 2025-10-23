@@ -52,10 +52,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Archive 文章頁面（不包含 /blog/:slug，因為會被重定向到 /archive/:slug）
+  // Archive 文章頁面（不包含 /blog/:slug，因為會被重新導向到 /archive/:slug）
   const archivePages: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${baseUrl}/archive/${post.slug}`,
-    lastModified: post.updatedAt || post.publishedAt || new Date(),
+    lastModified: new Date(post.updatedAt || post.publishedAt || new Date()),
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
