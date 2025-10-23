@@ -168,14 +168,20 @@ main .gsc-loading-image {
   border-radius: 0 !important;
 }
 
+/* Force all borders to use neutral color */
+* {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
 /* Override accent/red borders to use neutral border color */
 .gsc-comment,
 .gsc-reply-box,
 .gsc-comment-box,
-.color-box-border-info
+.color-box-border-info,
 [class*="border-accent"],
 [class*="border-danger"],
-[class*="border-red"] {
+[class*="border-red"],
+[class*="color-box-border"] {
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
