@@ -23,7 +23,7 @@ echo "📊 容器狀態："
 docker compose ps
 
 echo ""
-echo "🌐 應用程式應該運行在: http://localhost:3000"
+echo "🌐 應用程式應該執行在: http://localhost:3000"
 echo ""
 echo "📋 查看日誌: ./scripts/prod.sh logs"
 echo "🛑 停止容器: ./scripts/prod.sh down"

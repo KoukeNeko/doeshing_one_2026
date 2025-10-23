@@ -1,0 +1,293 @@
+---
+title: "如何在 Proxmox VE LXC 容器中啟用 Root SSH 登入"
+excerpt: "在 Proxmox VE 的 LXC 容器中啟用 root 使用者透過 SSH 登入的完整設定教學，包含安全性考量與最佳實踐建議。"
+coverImage: "/images/blog/proxmox-ssh.svg"
+date: "2025-10-24"
+author:
+  name: "Doeshing"
+  avatar: "/images/avatar.svg"
+  bio: "Creative technologist crafting editorials in the browser. Exploring the sweet spot between storytelling, design, and modern web tooling."
+tags: ["Proxmox", "LXC", "SSH", "Linux", "DevOps"]
+published: true
+featured: false
+---
+
+> [!danger]
+> **安全警告**
+> 啟用 root SSH 登入會增加系統的安全風險。本教學僅適用於：
+> - 受信任的內部網路環境
+> - 測試或開發環境
+> - 已設定防火牆規則的隔離環境
+>
+> **生產環境建議使用 SSH 金鑰認證，並禁用密碼登入。**
+
+## 使用情境
+
+在管理 Proxmox VE 的 LXC 容器時，有時需要直接透過 SSH 以 root 身份登入容器進行系統管理。預設情況下，大多數 Linux 發行版為了安全考量會禁用 root 使用者的 SSH 登入功能。
+
+## 前置需求
+
+- Proxmox VE 主機的 root 存取權限
+- 已建立並執行的 LXC 容器
+- 容器的 ID（例如：100、101 等）
+
+## 啟用步驟
+
+### Step 1：進入容器環境
+
+Proxmox VE 提供兩種方式進入容器的 shell 環境：
+
+#### 方法 1：使用 `pct` 指令（推薦）
+
+```bash
+pct enter 100
+```
+
+#### 方法 2：使用 `lxc-attach` 指令
+
+```bash
+lxc-attach --name CT100
+```
+
+> [!info]
+> **指令說明**
+> - `pct`：Proxmox Container Toolkit 的縮寫，是 Proxmox 專用的容器管理工具
+> - `100`：容器的 ID，請替換為你的實際容器 ID
+> - `CT100`：容器名稱格式為 `CT` + 容器ID
+
+### Step 2：修改 SSH 設定檔
+
+進入容器後，使用以下指令修改 SSH 伺服器設定：
+
+```bash
+# 啟用 root 登入
+sed -i 's/^[#]*\s*PermitRootLogin .*/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# 啟用密碼驗證
+sed -i 's/^[#]*\s*PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+```
+
+#### 指令解析
+
+- `sed -i`：直接修改檔案內容
+- `s/^[#]*\s*PermitRootLogin .*/PermitRootLogin yes/`：
+  - 匹配以 `#` 開頭（註解）或直接以 `PermitRootLogin` 開頭的行
+  - 替換為 `PermitRootLogin yes`
+- `/etc/ssh/sshd_config`：SSH 伺服器的主要設定檔
+
+### Step 3：重新啟動 SSH 服務
+
+```bash
+systemctl restart sshd
+```
+
+> [!success]
+> **設定完成**
+> SSH 服務已重新啟動，現在可以使用 root 帳號透過 SSH 登入容器。
+
+### Step 4：驗證設定
+
+從 Proxmox 主機或其他機器測試 SSH 連線：
+
+```bash
+ssh root@容器IP位址
+```
+
+輸入 root 密碼後，應該就能成功登入。
+
+## 安全性強化建議
+
+雖然已啟用 root SSH 登入，但仍建議採取以下安全措施：
+
+### 1. 使用 SSH 金鑰認證
+
+生成 SSH 金鑰對：
+
+```bash
+# 在本機執行
+ssh-keygen -t ed25519 -C "your_email@example.com"
+
+# 複製公鑰到容器
+ssh-copy-id root@容器IP位址
+```
+
+### 2. 禁用密碼登入（推薦）
+
+在確認金鑰認證可用後，禁用密碼登入：
+
+```bash
+# 在容器內執行
+sed -i 's/^[#]*\s*PasswordAuthentication .*/PasswordAuthentication no/' /etc/ssh/sshd_config
+systemctl restart sshd
+```
+
+### 3. 變更 SSH 預設 Port
+
+```bash
+# 編輯 SSH 設定檔
+nano /etc/ssh/sshd_config
+
+# 修改 Port 設定（例如改為 2222）
+Port 2222
+
+# 重啟服務
+systemctl restart sshd
+```
+
+> [!warning]
+> 變更 Port 後，連線時需要指定 port：`ssh -p 2222 root@容器IP`
+
+### 4. 設定防火牆規則
+
+限制只允許特定 IP 位址連線：
+
+```bash
+# 使用 ufw（如果已安裝）
+ufw allow from 192.168.1.0/24 to any port 22
+ufw enable
+
+# 或使用 iptables
+iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -j DROP
+```
+
+### 5. 安裝 Fail2ban
+
+防止暴力破解攻擊：
+
+```bash
+# Debian/Ubuntu
+apt update && apt install fail2ban -y
+
+# 啟動服務
+systemctl enable --now fail2ban
+```
+
+## 手動編輯設定檔（替代方法）
+
+如果你偏好手動編輯設定檔，可以使用文字編輯器：
+
+```bash
+nano /etc/ssh/sshd_config
+```
+
+找到以下行並修改：
+
+```conf
+# 修改前（可能是註解狀態）
+#PermitRootLogin prohibit-password
+#PasswordAuthentication no
+
+# 修改後
+PermitRootLogin yes
+PasswordAuthentication yes
+```
+
+儲存後重啟 SSH 服務：
+
+```bash
+systemctl restart sshd
+```
+
+## 驗證當前 SSH 設定
+
+查看目前生效的 SSH 設定：
+
+```bash
+# 檢查 PermitRootLogin 設定
+sshd -T | grep permitrootlogin
+
+# 檢查 PasswordAuthentication 設定
+sshd -T | grep passwordauthentication
+
+# 檢查 SSH 服務狀態
+systemctl status sshd
+```
+
+## 故障排除
+
+### 問題 1：無法連線
+
+檢查 SSH 服務是否正常執行：
+
+```bash
+systemctl status sshd
+```
+
+檢查 SSH Port 是否被監聽：
+
+```bash
+ss -tlnp | grep sshd
+```
+
+### 問題 2：密碼錯誤
+
+確認 root 密碼已設定：
+
+```bash
+# 在容器內重設 root 密碼
+passwd root
+```
+
+### 問題 3：防火牆阻擋
+
+檢查防火牆規則：
+
+```bash
+# ufw
+ufw status
+
+# iptables
+iptables -L -n -v
+```
+
+### 問題 4：SELinux 阻擋（CentOS/RHEL）
+
+```bash
+# 檢查 SELinux 狀態
+sestatus
+
+# 臨時停用（僅測試用）
+setenforce 0
+```
+
+## 在 Proxmox Web UI 中的快速存取
+
+除了 SSH，你也可以透過 Proxmox Web UI 存取容器的 Console：
+
+1. 登入 Proxmox Web 介面
+2. 選擇目標容器
+3. 點選 **Console** 標籤
+4. 輸入 root 帳號密碼登入
+
+這種方式在 SSH 連線有問題時特別有用。
+
+## 最佳實踐總結
+
+在 Proxmox LXC 容器中啟用 root SSH 登入時，建議遵循以下原則：
+
+✅ **建議做法**
+- 僅在受信任的網路環境中啟用
+- 優先使用 SSH 金鑰認證
+- 設定防火牆限制來源 IP
+- 定期更新系統和 SSH 服務
+- 啟用日誌監控和 Fail2ban
+
+❌ **避免做法**
+- 在公開網路環境中啟用密碼登入
+- 使用弱密碼
+- 不設定任何防護措施
+- 忽略安全更新
+- 使用預設 SSH Port 且不限制來源
+
+## 參考資源
+
+- [Proxmox VE Documentation - Linux Container](https://pve.proxmox.com/wiki/Linux_Container)
+- [OpenSSH Configuration](https://www.openssh.com/manual.html)
+- [SSH Hardening Guide](https://www.ssh.com/academy/ssh/sshd_config)
+
+---
+
+> [!warning]
+> **重要提醒**
+> 本教學提供的設定方法會降低系統安全性。請務必評估你的使用場景，並採取適當的安全措施。在生產環境中，強烈建議使用 SSH 金鑰認證並搭配其他安全強化措施。
