@@ -22,27 +22,31 @@ export function BlogGrid({ posts, featuredCount = 1 }: BlogGridProps) {
   const remaining = rest.slice(featuredCount - 1);
 
   return (
-    <div className="flex flex-col gap-12">
-      <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {featured.map(
-          (post, index) =>
-            post && (
-              <BlogCard
-                key={post.id}
-                post={post}
-                featured={index === 0}
-                orientation={index === 0 ? "horizontal" : "vertical"}
-              />
-            ),
-        )}
-      </section>
-      {remaining.length > 0 ? (
-        <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {remaining.map((post) => (
-            <BlogCard key={post.id} post={post} />
-          ))}
-        </section>
-      ) : null}
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {/* Headline post - spans full width */}
+      {featured[0] && (
+        <BlogCard
+          key={featured[0].id}
+          post={featured[0]}
+          featured={true}
+          orientation="horizontal"
+        />
+      )}
+      
+      {/* Other featured posts - normal grid items */}
+      {featured.slice(1).map((post) => (
+        <BlogCard
+          key={post.id}
+          post={post}
+          featured={false}
+          orientation="vertical"
+        />
+      ))}
+      
+      {/* Remaining posts - normal grid items */}
+      {remaining.map((post) => (
+        <BlogCard key={post.id} post={post} />
+      ))}
     </div>
   );
 }
