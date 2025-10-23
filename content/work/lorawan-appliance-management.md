@@ -71,7 +71,35 @@ Our solution enables proactive maintenance through power consumption analysis, d
 
 ### Data Flow Architecture
 
-![image](https://hackmd.io/_uploads/Sy-LxUP0ex.png)
+```
+┌─────────────┐
+│   Device    │ LoRa      ┌──────────┐
+│  (RAK3172)  ├──────────▶│ Gateway  │
+└─────────────┘           │(RAK7289) │
+                          └─────┬────┘
+                                │ WebSocket
+                                ▼
+                    ┌───────────────────┐
+                    │  ChirpStack GW    │
+                    │     Bridge        │
+                    └─────────┬─────────┘
+                              │ MQTT
+                              ▼
+      ┌──────────────┬────────────────┬─────────────┐
+      │              │                │             │
+      ▼              ▼                ▼             ▼
+┌──────────┐  ┌──────────┐    ┌──────────┐  ┌──────────┐
+│ChirpStack│  │   MQTT   │    │ Schedule │  │   API    │
+│          │  │ Receiver │    │ Operator │  │          │
+└────┬─────┘  └────┬─────┘    └────┬─────┘  └────┬─────┘
+     │             │               │             │
+     └─────────────┴───────────────┴─────────────┘
+                         │
+                         ▼
+                  ┌──────────────┐
+                  │   MongoDB    │
+                  └──────────────┘
+```
 
 ## Core Features
 
