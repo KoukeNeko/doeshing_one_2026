@@ -110,10 +110,17 @@ function extractHeadings(
 }
 
 export async function getProjectSlugs() {
-  const files = await fs.readdir(PROJECTS_DIR);
-  return files
-    .filter((file) => /\.mdx?$/.test(file))
-    .map((file) => file.replace(/\.mdx?$/, ""));
+  try {
+    // 檢查目錄是否存在
+    await fs.access(PROJECTS_DIR);
+    const files = await fs.readdir(PROJECTS_DIR);
+    return files
+      .filter((file) => /\.mdx?$/.test(file))
+      .map((file) => file.replace(/\.mdx?$/, ""));
+  } catch (error) {
+    console.error(`Error reading projects directory ${PROJECTS_DIR}:`, error);
+    return [];
+  }
 }
 
 export async function loadProjectContent(
@@ -147,14 +154,26 @@ export async function loadProjectContent(
 }
 
 export async function loadAllProjects() {
-  const slugs = await getProjectSlugs();
-  const projects = await Promise.all(
-    slugs.map((slug) => loadProjectContent(slug)),
-  );
+  try {
+    const slugs = await getProjectSlugs();
+    
+    // 如果沒有找到任何專案，返回空陣列
+    if (slugs.length === 0) {
+      console.warn("No project files found in", PROJECTS_DIR);
+      return [];
+    }
+    
+    const projects = await Promise.all(
+      slugs.map((slug) => loadProjectContent(slug)),
+    );
 
-  return projects.sort((a, b) => {
-    const dateA = new Date(a.frontmatter.date).getTime();
-    const dateB = new Date(b.frontmatter.date).getTime();
-    return dateB - dateA;
-  });
+    return projects.sort((a, b) => {
+      const dateA = new Date(a.frontmatter.date).getTime();
+      const dateB = new Date(b.frontmatter.date).getTime();
+      return dateB - dateA;
+    });
+  } catch (error) {
+    console.error("Error loading all projects:", error);
+    return [];
+  }
 }

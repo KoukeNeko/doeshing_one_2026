@@ -39,6 +39,13 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "2mb",
     },
   },
+  // 確保 content 目錄被包含在 standalone 輸出中
+  outputFileTracingIncludes: {
+    "/": ["./content/**/*"],
+    "/sitemap.xml": ["./content/**/*"],
+    "/archive/[slug]": ["./content/blog/**/*"],
+    "/work/[slug]": ["./content/work/**/*"],
+  },
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   
   // Configure cache headers for CDN optimization
