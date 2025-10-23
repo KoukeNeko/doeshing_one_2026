@@ -1,23 +1,22 @@
 # Doeshing — Editorial Portfolio
 
-Magazine-style personal site built with Next.js 15, Tailwind CSS, and Prisma. The experience blends broadsheet-inspired layouts with modern web tooling to showcase blog posts, case studies, a résumé, and contact information.
+Magazine-style personal site built with Next.js 15, Tailwind CSS, and static MDX content. The experience blends broadsheet-inspired layouts with modern web tooling to showcase blog posts, case studies, a résumé, and contact information.
 
 ## ✨ Highlights
 
 - Multi-column editorial layout with serif/sans typography pairings and accent red detailing
-- Blog engine backed by Supabase (Postgres) via Prisma with search, tag filters, view tracking, and related articles
+- **Static MDX blog system** with search, tag filters, subcategory support, and related articles
 - Markdown-driven project case studies rendered via a unified/rehype pipeline
 - Comprehensive CV page with printable styles and timeline layout
-- API routes for blog listing, CRUD-ready endpoints, and view aggregation hooks
+- API routes for blog listing and view tracking
 - Accessible navigation, skip links, responsive design from 320px to 1440px+
 
 ## 🧱 Tech Stack
 
 - **Framework:** Next.js 15 (App Router, React 19)
 - **Styling:** Tailwind CSS 3 with typography plugin and custom magazine tokens
-- **Database:** Supabase (Postgres) managed through Prisma ORM
-- **Content:** Prisma-backed blog posts + Markdown/MDX project content
-- **Auth Ready:** Prisma schema ships with NextAuth-compatible tables for future admin tooling
+- **Content:** Static MDX files for blog posts and projects (no database required!)
+- **Auth Ready:** Prisma schema available for future admin tooling (optional)
 - **Tooling:** TypeScript, Biome, Zod, unified/remark/rehype, Shiki
 
 ## 📁 Project Structure
@@ -25,17 +24,19 @@ Magazine-style personal site built with Next.js 15, Tailwind CSS, and Prisma. Th
 ```
 src/
   app/                App Router pages + API routes
-    blog/             Blog list + detail + loading state
-    projects/         Project list + detail driven by Markdown content
-    cv/               Résumé page
+    archive/          Blog list + detail + loading state
+    work/             Project list + detail driven by Markdown content
+    about/            CV/résumé page
     contact/          Contact info + clipboard helper
-    api/              REST endpoints for blog posts + view tracking
+    api/              REST endpoints for blog listing + view tracking
   components/         Layout, blog, project, and UI primitives
-  lib/                Prisma client, data helpers, markdown utilities
+  lib/                MDX utilities, markdown rendering, data helpers
   styles/             Tailwind global layers
   types/              Shared type definitions
-content/projects/     Markdown case studies (frontmatter + prose)
-prisma/               Prisma schema + seed script
+content/
+  blog/               MDX blog posts (supports subcategories)
+  work/               Markdown case studies (frontmatter + prose)
+prisma/               Prisma schema (optional, for future admin features)
 public/images/        Editorial placeholder artwork + icons
 ```
 
@@ -47,55 +48,20 @@ public/images/        Editorial placeholder artwork + icons
 npm install
 ```
 
-### 2. Configure environment variables
+### 2. Configure environment variables (Optional)
 
-Copy the template and update values for your setup:
-
-```bash
-cp .env.example .env
-```
-
-- `DATABASE_URL` — Supabase Postgres URL (`postgresql://USER:PASSWORD@HOST:5432/postgres?pgbouncer=true&connection_limit=1`)
-- `NEXTAUTH_SECRET` / `NEXTAUTH_URL` — reserved for future admin routes
-- `NEXT_PUBLIC_SITE_URL` — public base URL used for metadata + sharing
-
-If you're using Supabase:
+For basic usage, the site works without any configuration. For production deployment:
 
 ```bash
-supabase init
-supabase link --project-ref <project-ref>
-supabase db credentials get
+# Create .env file
+echo 'NEXT_PUBLIC_SITE_URL="https://yourdomain.com"' > .env
 ```
 
-Copy the pooled `connectionString` into `DATABASE_URL`.
+- `NEXT_PUBLIC_SITE_URL` — public base URL used for metadata + sharing (default: http://localhost:3000)
+- `NEXTAUTH_SECRET` / `NEXTAUTH_URL` — optional, for future admin features
+- `DATABASE_URL` — optional, only needed if you want to use Prisma for admin features
 
-The project exposes a typed Supabase helper at `src/lib/supabase.ts`:
-
-```ts
-import { getSupabaseClient } from "@/lib/supabase";
-
-const supabase = getSupabaseClient();            // uses anon key by default
-const supabaseAdmin = getSupabaseClient({ serviceRole: true }); // requires SUPABASE_SERVICE_ROLE_KEY
-
-const { data, error } = await supabase.from("posts").select("*");
-
-// To enable end-to-end type safety, replace src/types/supabase.ts by running:
-// supabase gen types typescript --project-id <project-ref> > src/types/supabase.ts
-```
-
-Make sure `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` (and `SUPABASE_SERVICE_ROLE_KEY` when needed) are configured before using the helper.
-
-### 3. Prepare the database
-
-```bash
-npm run prisma:migrate
-npm run prisma:generate
-npm run db:seed
-```
-
-The seed script populates authors, tags, and three demo posts with stylized content.
-
-### 4. Run the development server
+### 3. Run the development server
 
 ```bash
 npm run dev
@@ -110,8 +76,8 @@ npm run format
 
 ## 📝 Content Authoring
 
-- **Blog posts:** Stored in Supabase via Prisma. Use the `/api/blog` endpoints or Prisma Studio to create entries. Markdown in the `content` column is rendered with typographic enhancements, Shiki-powered code blocks, and automatic table of contents generation.
-- **Projects:** Add `.md` or `.mdx` files to `content/projects/`. Frontmatter supports `{ title, description, tags, image, github, demo, date, featured, status }`. Content is processed through unified/remark/rehype for typography, code highlighting, and TOC data.
+- **Blog posts:** Add `.mdx` files to `content/blog/`. Supports subcategories via folders (e.g., `content/blog/tutorials/post.mdx`). Frontmatter supports `{ title, excerpt, coverImage, date, author, tags, published, featured, category }`. Content is rendered with typographic enhancements, Shiki-powered code blocks, and automatic table of contents generation. See `content/blog/README.md` for detailed documentation.
+- **Projects:** Add `.md` or `.mdx` files to `content/work/`. Frontmatter supports `{ title, description, tags, image, github, demo, date, featured, status }`. Content is processed through unified/remark/rehype for typography, code highlighting, and TOC data.
 
 ## 🐳 Docker
 
@@ -138,12 +104,11 @@ The development profile mounts the repository into a Node 20 container, installs
 | Method | Endpoint                  | Description                              |
 | ------ | ------------------------- | ---------------------------------------- |
 | GET    | `/api/blog`               | Paginated, filterable list of posts      |
-| GET    | `/api/blog/:id`           | Details for a specific post (author/tags)|
-| PUT    | `/api/blog/:id`           | Update title/content/tags/published flag |
-| DELETE | `/api/blog/:id`           | Remove a post                            |
 | POST   | `/api/views`              | Increment a post view count              |
 
 Query parameters for the list endpoint mirror the UI: `page`, `tag`, `search`, `sort=latest|views`, `perPage`.
+
+**Note:** POST/PUT/DELETE endpoints for blog management are disabled. Blog posts are now managed as static MDX files in `content/blog/`.
 
 ## 🧩 UI Components
 
@@ -154,15 +119,17 @@ Query parameters for the list endpoint mirror the UI: `page`, `tag`, `search`, `
 
 ## 📄 Deployment Notes
 
-- Tailwind + typography plugin is fully static and deployment ready for Vercel.
-- Grab the Supabase pooled URL via `supabase db credentials get`, then run the migrate/generate scripts whenever the schema changes.
-- `NEXT_PUBLIC_SITE_URL` should point to the deployed host to ensure accurate Open Graph links.
-- NextAuth tables are already modeled in Prisma for future admin routes; enable when needed.
+- **No database required!** Blog content is static and builds directly into the site.
+- Tailwind + typography plugin is fully static and deployment ready for Vercel, Netlify, or any static host.
+- Set `NEXT_PUBLIC_SITE_URL` to your deployed host URL to ensure accurate Open Graph links.
+- Content updates require a rebuild (push to git to trigger automatic deployment on Vercel/Netlify).
+- Optional: Prisma schema is available if you want to add admin features in the future.
 
 ## 🤝 Conventions
 
 - TypeScript strict mode is enabled; prefer explicit types.
 - All markdown rendering passes through sanitizing rehype pipelines before hydration.
 - Boostrapped styles favor accessible semantic HTML, focus states, and skip links.
+- Blog posts are managed as MDX files in `content/blog/` - no CMS needed!
 
 Happy shipping! 📰

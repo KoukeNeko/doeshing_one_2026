@@ -1,22 +1,7 @@
-import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
-import { z } from "zod";
-import { prisma } from "@/lib/db";
 
-const updatePostSchema = z.object({
-  title: z.string().min(3).max(120).optional(),
-  excerpt: z.string().nullable().optional(),
-  content: z.string().min(1).optional(),
-  coverImage: z
-    .string()
-    .nullable()
-    .optional()
-    .transform((val) => (val === "" ? null : val)),
-  published: z.boolean().optional(),
-  featured: z.boolean().optional(),
-  featuredOrder: z.number().int().positive().nullable().optional(),
-  tags: z.array(z.string()).optional(),
-});
+// Note: These endpoints are disabled for static MDX blog.
+// To edit blog posts, modify MDX files in content/blog/
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -24,75 +9,39 @@ interface RouteContext {
 
 export async function GET(_request: Request, { params }: RouteContext) {
   const { id } = await params;
-  const post = await prisma.post.findUnique({
-    where: { id },
-    include: {
-      tags: true,
-      author: true,
+  
+  return NextResponse.json(
+    { 
+      message: "Blog posts are now managed as static MDX files. Use the slug to access posts at /blog/[slug]",
+      id,
+      hint: "Edit content/blog/*.mdx files to update posts."
     },
-  });
-
-  if (!post) {
-    return NextResponse.json({ message: "Post not found" }, { status: 404 });
-  }
-
-  return NextResponse.json(post);
+    { status: 501 }
+  );
 }
 
-export async function PUT(request: Request, { params }: RouteContext) {
+export async function PUT(_request: Request, { params }: RouteContext) {
   const { id } = await params;
-  const payload = await request.json();
-  const parsed = updatePostSchema.safeParse(payload);
-
-  if (!parsed.success) {
-    return NextResponse.json(
-      { message: "Invalid payload", issues: parsed.error.flatten() },
-      { status: 422 },
-    );
-  }
-
-  const { tags, ...data } = parsed.data;
-
-  const post = await prisma.post.findUnique({ where: { id } });
-  if (!post) {
-    return NextResponse.json({ message: "Post not found" }, { status: 404 });
-  }
-
-  const publishedAtUpdate =
-    data.published && !post.published ? new Date() : undefined;
-
-  const updated = await prisma.post.update({
-    where: { id },
-    data: {
-      ...data,
-      publishedAt: publishedAtUpdate ?? post.publishedAt,
-      tags: tags
-        ? {
-            set: tags.map((slug) => ({ slug })),
-          }
-        : undefined,
+  
+  return NextResponse.json(
+    { 
+      message: "Blog posts are now managed as static MDX files. Please edit the MDX file directly.",
+      id,
+      hint: "Edit content/blog/*.mdx files to update posts."
     },
-    include: {
-      tags: true,
-      author: true,
-    },
-  });
-
-  return NextResponse.json(updated);
+    { status: 501 }
+  );
 }
 
 export async function DELETE(_request: Request, { params }: RouteContext) {
   const { id } = await params;
-  try {
-    await prisma.post.delete({ where: { id } });
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === "P2025"
-    ) {
-      return NextResponse.json({ message: "Post not found" }, { status: 404 });
-    }
-    throw error;
-  }
+  
+  return NextResponse.json(
+    { 
+      message: "Blog posts are now managed as static MDX files. Please delete the MDX file directly.",
+      id,
+      hint: "Delete the corresponding .mdx file in content/blog/ to remove a post."
+    },
+    { status: 501 }
+  );
 }
