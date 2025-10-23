@@ -1,6 +1,7 @@
 /**
  * Giscus Dark Theme - Newspaper Editorial Style
  * Matches the Doeshing Portfolio design system (Dark Mode)
+ * Colors: zinc-50 #fafafa, zinc-900 #18181b, red-400 #f87171, zinc-400 #a1a1aa
  */
 
 /* Main container */
@@ -20,6 +21,7 @@ main.gsc-main {
   text-transform: uppercase;
   letter-spacing: 0.3em;
   color: #a1a1aa;
+  font-weight: 600;
 }
 
 /* Comment form */
@@ -28,6 +30,7 @@ main.gsc-main {
   background-color: #18181b;
   padding: 1.5rem;
   margin-top: 1.5rem;
+  border-radius: 0;
 }
 
 .gsc-comment-box-tabs {
@@ -40,8 +43,10 @@ main.gsc-main {
   text-transform: uppercase;
   letter-spacing: 0.3em;
   color: #a1a1aa;
+  font-weight: 600;
   border: none;
   padding: 0.5rem 1rem;
+  border-radius: 0;
 }
 
 .gsc-comment-box-tab[aria-selected="true"] {
@@ -49,13 +54,16 @@ main.gsc-main {
   border-bottom: 2px solid #fafafa;
 }
 
-.gsc-comment-box-textarea {
+.gsc-comment-box-textarea,
+.gsc-comment-box-textarea:focus {
   font-size: 0.875rem;
   line-height: 1.7;
   color: #fafafa;
   background-color: #27272a;
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.75rem 1rem;
+  border-radius: 0;
+  font-family: Inter, Roboto, sans-serif;
 }
 
 .gsc-comment-box-textarea:focus {
@@ -69,15 +77,17 @@ main.gsc-main {
 }
 
 /* Submit button */
-.gsc-comment-box-button {
+.gsc-comment-box-button,
+.gsc-comment-box-button:focus {
   background-color: #fafafa;
   color: #18181b;
   font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.35em;
+  letter-spacing: 0.32em;
   font-weight: 600;
   padding: 0.75rem 1.5rem;
   border: 1px solid #fafafa;
+  border-radius: 2px;
   transition: all 150ms ease;
 }
 
@@ -102,6 +112,7 @@ main.gsc-main {
   text-transform: uppercase;
   letter-spacing: 0.35em;
   color: #a1a1aa;
+  font-weight: 600;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
@@ -119,6 +130,7 @@ main.gsc-main {
   background-color: #18181b;
   padding: 1.5rem;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 0;
 }
 
 .gsc-comment-author {
@@ -130,13 +142,14 @@ main.gsc-main {
 
 .gsc-comment-author-avatar {
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0;
+  border-radius: 0 !important;
 }
 
 .gsc-comment-author-name {
-  font-family: var(--font-lora), serif;
+  font-family: "GenRyuMin JP Auto", "GenRyuMin TW Auto", "Playfair Display", "Merriweather", serif;
   font-size: 1.125rem;
   color: #fafafa;
+  font-weight: 400;
 }
 
 .gsc-comment-timestamp {
@@ -150,10 +163,12 @@ main.gsc-main {
   font-size: 0.875rem;
   line-height: 1.7;
   color: #d4d4d8;
+  font-family: Inter, Roboto, sans-serif;
 }
 
 .gsc-comment-content p {
   margin-bottom: 1rem;
+  color: #d4d4d8;
 }
 
 .gsc-comment-content a {
@@ -161,10 +176,16 @@ main.gsc-main {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
+  font-weight: 500;
 }
 
 .gsc-comment-content a:hover {
+  color: #fca5a5;
+}
+
+.gsc-comment-content strong {
   color: #fafafa;
+  font-weight: 600;
 }
 
 /* Code blocks in comments */
@@ -173,6 +194,10 @@ main.gsc-main {
   padding: 0.125rem 0.375rem;
   font-size: 0.8125rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 500;
+  color: #fafafa;
 }
 
 .gsc-comment-content pre {
@@ -181,6 +206,7 @@ main.gsc-main {
   overflow-x: auto;
   border: 1px solid rgba(255, 255, 255, 0.1);
   margin: 1rem 0;
+  border-radius: 0;
 }
 
 .gsc-comment-content pre code {
@@ -196,15 +222,18 @@ main.gsc-main {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.gsc-comment-reactions-button {
+.gsc-comment-reactions-button,
+.gsc-social-reaction-summary-item {
   font-size: 0.75rem;
   color: #a1a1aa;
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.25rem 0.75rem;
   transition: all 150ms ease;
+  border-radius: 2px;
 }
 
-.gsc-comment-reactions-button:hover {
+.gsc-comment-reactions-button:hover,
+.gsc-social-reaction-summary-item:hover {
   border-color: #fafafa;
   color: #fafafa;
 }
@@ -214,10 +243,12 @@ main.gsc-main {
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.3em;
+  font-weight: 600;
   color: #a1a1aa;
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.5rem 1rem;
   transition: all 150ms ease;
+  border-radius: 2px;
 }
 
 .gsc-reply-button:hover {
@@ -239,6 +270,7 @@ main.gsc-main {
   padding: 1rem;
   border: 1px solid rgba(248, 113, 113, 0.2);
   background-color: rgba(248, 113, 113, 0.05);
+  border-radius: 0;
 }
 
 /* Pagination */
@@ -253,10 +285,12 @@ main.gsc-main {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.3em;
+  font-weight: 600;
   color: #a1a1aa;
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.5rem 1rem;
   transition: all 150ms ease;
+  border-radius: 2px;
 }
 
 .gsc-pagination-button:hover:not(:disabled) {
@@ -273,4 +307,46 @@ main.gsc-main {
   background-color: #fafafa;
   color: #18181b;
   border-color: #fafafa;
+}
+
+/* Sign in button */
+.gsc-comment-box-sign-in-button {
+  background-color: #fafafa;
+  color: #18181b;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid #fafafa;
+  border-radius: 2px;
+  transition: all 150ms ease;
+}
+
+.gsc-comment-box-sign-in-button:hover {
+  background-color: #f87171;
+  border-color: #f87171;
+  color: #18181b;
+}
+
+/* Markdown preview */
+.gsc-comment-box-preview {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #fafafa;
+  padding: 0.75rem 1rem;
+  min-height: 150px;
+}
+
+.gsc-comment-box-preview p {
+  margin-bottom: 1rem;
+  color: #d4d4d8;
+}
+
+.gsc-comment-box-preview code {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 0.125rem 0.375rem;
+  font-size: 0.8125rem;
+  border-radius: 2px;
+  font-family: "JetBrains Mono", monospace;
 }

@@ -1,13 +1,22 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 
 export default function CommentSection() {
   const commentBoxRef = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
+  // Wait for component to mount (client-side only)
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Load Giscus script only after mounting
+  useEffect(() => {
+    if (!mounted) return;
+
     const script = document.createElement("script");
     script.src = "https://giscus.app/client.js";
     script.setAttribute("data-repo", "KoukeNeko/doeshing_one_2026");
@@ -20,10 +29,11 @@ export default function CommentSection() {
     script.setAttribute("data-emit-metadata", "0");
     script.setAttribute("data-input-position", "top");
 
-    // Use custom theme based on site theme
+    // Use built-in theme for now (custom CSS needs to be hosted externally for Giscus iframe)
+    // TODO: Host custom CSS on CDN or use Giscus theme URL configuration
     const theme = resolvedTheme === "dark"
-      ? `${window.location.origin}/giscus-dark.css`
-      : `${window.location.origin}/giscus-light.css`;
+      ? "transparent_dark"
+      : "light";
     script.setAttribute("data-theme", theme);
 
     script.setAttribute("data-lang", "zh-TW");
@@ -40,18 +50,20 @@ export default function CommentSection() {
         commentBoxRef.current.innerHTML = "";
       }
     };
-  }, []);
+  }, [mounted, resolvedTheme]);
 
   // Handle theme changes dynamically
   useEffect(() => {
+    if (!mounted) return;
+
     const iframe = document.querySelector<HTMLIFrameElement>(
       "iframe.giscus-frame"
     );
     if (!iframe) return;
 
     const theme = resolvedTheme === "dark"
-      ? `${window.location.origin}/giscus-dark.css`
-      : `${window.location.origin}/giscus-light.css`;
+      ? "transparent_dark"
+      : "light";
 
     iframe.contentWindow?.postMessage(
       {
@@ -63,7 +75,7 @@ export default function CommentSection() {
       },
       "https://giscus.app"
     );
-  }, [resolvedTheme]);
+  }, [mounted, resolvedTheme]);
 
   return (
     <section
