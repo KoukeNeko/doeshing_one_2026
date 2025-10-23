@@ -1,0 +1,506 @@
+---
+title: "做一個抓 NMEA 的 Android App：使用 Jetpack Compose 和 Kotlin"
+publishedAt: "2025-10-24"
+summary: "學習如何使用 Jetpack Compose 和 Kotlin 開發一個 Android GPS 定位應用，解析 NMEA 協議並在 Google Maps 上顯示多個定位點。"
+tags: ["Android", "Kotlin", "Jetpack Compose", "GPS", "Mobile Development"]
+category: "tutorials"
+featured: false
+author: "DoeShing"
+---
+
+![NMEA GPS App](https://i.imgur.com/ZXQQt03.jpg)
+
+學校車聯網第二章，定位系統分析。這個專案需要實現一個 Android 應用程式，顯示三個不同來源的 GPS 定位點。
+
+## 專案需求
+
+> **功能要點**
+> - 第一點：使用 Google Maps API 獲取的座標
+> - 第二點：從衛星傳輸的原始 NMEA 資料經演算法處理後的座標
+> - 第三點：手動輸入並計算的座標
+
+在開始開發前，我先架設了一個測試網站來驗證演算法的正確性：
+[https://nyust-iov-nmea-maps.web.app](https://nyust-iov-nmea-maps.web.app)
+
+## 認識 Jetpack Compose
+
+Jetpack Compose 是 Android 推薦的新型 UI 工具包，用於建構原生界面。它能夠簡化及加速 Android 平台上的 UI 開發，透過較少的程式碼、強大的工具和直觀的 Kotlin API，讓應用程式開發更加高效。
+
+<Callout type="info">
+官方文檔：[Jetpack Compose](https://developer.android.com/jetpack/compose?hl=zh-tw)
+</Callout>
+
+### 專案初始化
+
+在 Android Studio 建立專案時選擇 Jetpack Compose 模板：
+
+![Android Studio Project Setup](https://i.imgur.com/bMGH8mc.png)
+
+### 優化使用者體驗
+
+由於剛開始學習 Kotlin 和 Jetpack Compose，我使用了 [google/accompanist](https://github.com/google/accompanist) 中的 System UI Controller 來簡化系統欄和導航欄的顏色管理。
+
+#### 安裝依賴
+
+```gradle
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "com.google.accompanist:accompanist-systemuicontroller:<version>"
+}
+```
+
+#### 設定系統 UI
+
+```kotlin
+val systemUiController = rememberSystemUiController()
+val useDarkIcons = !isSystemInDarkTheme()
+
+val color = MaterialTheme.colorScheme.background
+SideEffect {
+    systemUiController.setNavigationBarColor(
+        color = color,
+        darkIcons = useDarkIcons
+    )
+
+    systemUiController.setStatusBarColor(
+        color = color,
+        darkIcons = useDarkIcons
+    )
+}
+```
+
+如果要在導航列或狀態列下方渲染內容，可以在 `setContent` 前使用：
+
+```kotlin
+window.setFlags(
+    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+)
+```
+
+<Callout type="warning">
+**學習筆記**：本作業完成時，我學習 Jetpack Compose 和 Kotlin 不足 1 週，程式碼仍有優化空間。
+</Callout>
+
+## 核心功能實作
+
+### 初始化變數
+
+宣告三種經緯度座標和鏡頭起始位置：
+
+```kotlin
+var isLocationPermissionGranted = mutableStateOf(false)
+
+val current_Latitude = mutableStateOf(-1.0)
+val current_Longitude = mutableStateOf(-1.0)
+
+var nmea_latitude = mutableStateOf(-1.0)
+var nmea_longitude = mutableStateOf(-1.0)
+
+var fist_latitude = mutableStateOf(-1.0)
+var fist_longitude = mutableStateOf(-1.0)
+```
+
+在主 `@Composable` 方法內宣告：
+
+```kotlin
+val current = LatLng(current_Latitude.value, current_Longitude.value)
+var manualLatitude by remember { mutableStateOf(-1.0) }
+var manualLongitude by remember { mutableStateOf(-1.0) }
+```
+
+### NMEA 資料處理
+
+#### 獲取原始定位資料
+
+要抓取原始位置資料需要使用 `LocationManager`：
+
+```kotlin
+private lateinit var locationManager: LocationManager
+```
+
+#### 權限檢查與初始化
+
+```kotlin
+private fun InitGPSGettingLogic() {
+    // 建立 location manager
+    locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    val gspEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    
+    if (gspEnabled) {
+        Log.d("NMEA_APP", javaClass.name + ":" + "GPS ON :)")
+        
+        // 檢查定位權限
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // 請求權限
+            ActivityCompat.requestPermissions(
+                this, arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ), 101
+            )
+        } else {
+            // 已有權限，開始監聽
+            isLocationPermissionGranted.value = true
+            locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                10000,
+                10000f,
+                this
+            )
+            locationManager.addNmeaListener(this)
+        }
+    } else {
+        Log.d("NMEA_APP", javaClass.name + ":" + "GPS NOT ON")
+    }
+
+    // 初始化 fusedLocationClient 
+    fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+}
+```
+
+### NMEA 資料解析
+
+![NMEA Format](https://i.imgur.com/k7r2Q1y.png)
+
+#### 建立資料模型
+
+```kotlin
+// data/Location.kt
+package dev.koukeneko.nmea.data
+
+data class Location(
+    val latitude: Double,
+    val longitude: Double
+)
+```
+
+#### NMEA 格式轉換工具
+
+```kotlin
+// utility/NMEAFormatter.kt
+package dev.koukeneko.nmea.utility
+
+import dev.koukeneko.nmea.data.Location
+
+class NMEAFormatter constructor(
+    val nmea: String
+) {
+    private var latitude: String = ""
+    private var longitude: String = ""
+    private val nmeaArray = nmea.split(",")
+
+    fun getLatLong(): Location? {
+        if (nmeaArray[0] == "\$GNGGA") {
+            latitude = if (nmeaArray[3] == "S") {
+                (nmeaArray[2].toInt() * -1).toString()
+            } else {
+                nmeaArray[2]
+            }
+
+            longitude = if (nmeaArray[5] == "W") {
+                (nmeaArray[4].toInt() * -1).toString()
+            } else {
+                nmeaArray[4]
+            }
+
+            latitude = latitude.substring(0, 2) + '.' + 
+                ((latitude.substring(2).replace(Regex("\\."), "")
+                    .toInt() / 60).toString()).replace(".", "")
+            
+            longitude = longitude.substring(0, 3) + '.' + 
+                ((longitude.substring(3).replace(Regex("\\."), "")
+                    .toInt() / 60).toString()).replace(".", "")
+        }
+        
+        if (latitude == "" || longitude == "") {
+            return null
+        }
+        return Location(latitude.toDouble(), longitude.toDouble())
+    }
+}
+```
+
+#### 接收 NMEA 訊息
+
+```kotlin
+override fun onNmeaMessage(message: String?, timestamp: Long) {
+    Log.d("NMEA_APP", javaClass.name + ":" + "[" + timestamp + "] " + message)
+    Log.d("NMEA_APP_MESSAGE", message.toString())
+
+    val nmea = NMEAFormatter(message.toString()).getLatLong()
+    if (nmea != null) {
+        nmea_latitude.value = nmea.latitude
+        nmea_longitude.value = nmea.longitude
+    }
+
+    Log.d("NMEA_APP", "nmea_latitude : ${nmea_latitude.value}")
+    Log.d("NMEA_APP", "nmea_longitude : ${nmea_longitude.value}")
+
+    // 獲取 Google Maps API 定位
+    if (ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    ) {
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    Log.d("Location", location.toString())
+                    current_Latitude.value = location.latitude
+                    current_Longitude.value = location.longitude
+                } else {
+                    Log.d("Location", "Location is null")
+                }
+            }
+    }
+}
+```
+
+## Google Maps 整合
+
+### 建立鏡頭位置
+
+```kotlin
+// 建立 camera position
+val cameraPosition = rememberCameraPositionState {
+    position = if (current_Latitude.value != 0.0 && current_Longitude.value != 0.0) {
+        CameraPosition.fromLatLngZoom(kaohsiung, 10f)
+    } else {
+        CameraPosition.fromLatLngZoom(
+            LatLng(fist_latitude.value, fist_longitude.value), 10f
+        )
+    }
+    Log.d("CameraLocationUpdate", "${fist_latitude.value},${fist_longitude.value}")
+}
+
+// 當座標第一次變更時，移動鏡頭
+LaunchedEffect(fist_latitude.value, fist_longitude.value) {
+    cameraPosition.move(
+        CameraUpdateFactory.newCameraPosition(
+            CameraPosition.fromLatLngZoom(
+                LatLng(fist_latitude.value, fist_longitude.value),
+                17f
+            )
+        )
+    )
+}
+```
+
+### GoogleMap 元件
+
+```kotlin
+GoogleMap(
+    modifier = Modifier,
+    cameraPositionState = cameraPosition,
+    uiSettings = settings,
+    properties = MapProperties(
+        mapType = MapType.SATELLITE,
+        isMyLocationEnabled = true,
+        isBuildingEnabled = true,
+    )
+) {
+    // NMEA 定位點標記（紅色）
+    Marker(
+        state = MarkerState(
+            position = LatLng(nmea_latitude.value, nmea_longitude.value)
+        ),
+        visible = nmea_latitude.value != -1.0 && nmea_longitude.value != -1.0,
+        title = "NMEA",
+        snippet = "${nmea_latitude.value},${nmea_longitude.value}",
+        icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
+    )
+
+    // 手動輸入定位點標記（綠色）
+    Marker(
+        state = MarkerState(
+            position = LatLng(manualLatitude, manualLongitude)
+        ),
+        visible = manualLatitude != -1.0 && manualLatitude != -1.0,
+        title = "Manual",
+        snippet = "${manualLatitude},${manualLongitude}",
+        icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+    )
+}
+```
+
+## UI 元件設計
+
+### 座標資訊顯示
+
+```kotlin
+Text("GMS API Location", fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.primary)
+Text("${current_Latitude.value},${current_Longitude.value}")
+
+Text("NMEA Location", fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.primary)
+Text("${nmea_latitude.value},${nmea_longitude.value}")
+
+Text("Manual Location", fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.primary)
+Text("${manualLatitude},${manualLongitude}")
+```
+
+### 手動輸入對話框
+
+![Input Dialog](https://i.imgur.com/Cu7PfUE.png)
+
+```kotlin
+var openDialog by remember { mutableStateOf(false) }
+var editMessage by remember { mutableStateOf("") }
+var editMessage1 by remember { mutableStateOf("") }
+
+val focusManager = LocalFocusManager.current
+
+if (openDialog) {
+    AlertDialog(
+        onDismissRequest = { openDialog = false },
+        title = { Text("Change manual location") },
+        text = {
+            Column {
+                OutlinedTextField(
+                    value = editMessage,
+                    onValueChange = { editMessage = it },
+                    label = { Text("Latitude") },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    shape = RoundedCornerShape(16.dp),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                            try {
+                                manualLatitude = editMessage.toDouble()
+                            } catch (e: Exception) {
+                                // 忽略錯誤輸入
+                            }
+                        }
+                    )
+                )
+
+                OutlinedTextField(
+                    value = editMessage1,
+                    onValueChange = { editMessage1 = it },
+                    label = { Text("Longitude") },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
+                    shape = RoundedCornerShape(16.dp),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.clearFocus()
+                            try {
+                                manualLongitude = editMessage1.toDouble()
+                            } catch (e: Exception) {
+                                // 忽略錯誤輸入
+                            }
+                        }
+                    )
+                )
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    try {
+                        manualLatitude = editMessage.toDouble()
+                        manualLongitude = editMessage1.toDouble()
+                    } catch (e: Exception) {
+                        // 忽略錯誤輸入
+                    }
+                    openDialog = false
+                }
+            ) {
+                Text("Confirm")
+            }
+        },
+        dismissButton = {
+            Button(onClick = { openDialog = false }) {
+                Text("Cancel")
+            }
+        }
+    )
+}
+```
+
+## GPS 定位原理
+
+GPS 衛星傳遞的訊號包括衛星自身座標 $(a, b, c)$ 以及發射時間。GPS 接收器利用這些資訊計算位置：
+
+$$
+r = c \times (t_{接收} - t_{發射})
+$$
+
+其中 $r$ 是衛星與接收器間的距離，$c$ 是光速。
+
+### 三維空間定位
+
+假設有四顆衛星的資料：
+
+$$
+\begin{cases}
+(x - a_1)^2 + (y - b_1)^2 + (z - c_1)^2 = r_1^2 \\
+(x - a_2)^2 + (y - b_2)^2 + (z - c_2)^2 = r_2^2 \\
+(x - a_3)^2 + (y - b_3)^2 + (z - c_3)^2 = r_3^2 \\
+(x - a_4)^2 + (y - b_4)^2 + (z - c_4)^2 = r_4^2
+\end{cases}
+$$
+
+### 座標轉換
+
+已知 $(X, Y, Z)$ 座標，參考大地座標系可求出：
+
+- **緯度 B**
+- **經度 L**
+
+![Coordinate Conversion](https://i.imgur.com/reirKfu.gif)
+
+轉換公式：
+
+![Formula](https://i.imgur.com/RWPQeny.gif)
+
+## 專案資源
+
+<Callout type="success">
+**下載應用程式**
+
+你可以從 GitHub Releases 下載編譯好的 APK：
+[https://github.com/KoukeNeko-Pratices/NYUST_IoV_NMEA_maps/releases/](https://github.com/KoukeNeko-Pratices/NYUST_IoV_NMEA_maps/releases/)
+</Callout>
+
+### 原始碼
+
+完整的原始碼託管在 GitHub：
+[https://github.com/KoukeNeko-Pratices/NYUST_IoV_NMEA_maps](https://github.com/KoukeNeko-Pratices/NYUST_IoV_NMEA_maps)
+
+## 總結
+
+這個專案是一次很好的 Jetpack Compose 和 Kotlin 學習經驗。雖然開發時間短暫，但成功實現了：
+
+- ✅ NMEA 協議解析
+- ✅ 多來源 GPS 定位整合
+- ✅ Google Maps 互動式顯示
+- ✅ Material Design 3 UI
+
+未來可以優化的方向包括：
+- 更精確的座標轉換算法
+- 支援更多 NMEA 訊息類型
+- 添加定位歷史記錄功能
+- 優化電池使用效率
+
+## 參考資料
+
+- [GPS 定位原理](http://4rdp.blogspot.com/2008/05/gps.html)
+- [Jetpack Compose 官方文檔](https://developer.android.com/jetpack/compose)
+- [Google Accompanist](https://google.github.io/accompanist/)
+
+---
+
+*本文為學校車聯網課程作業，記錄了從零開始開發 Android GPS 應用的完整過程。*
