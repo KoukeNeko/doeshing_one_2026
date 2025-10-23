@@ -19,7 +19,7 @@ main.gsc-main {
 }
 
 .color-bg-tertiary {
-  background-color: #27272a !important;
+  background-color: #18181b !important;
 }
 
 .color-text-primary {
@@ -41,14 +41,14 @@ main.gsc-main {
 /* Header and reactions */
 .gsc-reactions {
   border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-  padding-top: 1.5rem;
-  margin-top: 1.5rem;
+  padding-top: 1.5rem !important;
+  margin-top: 1.5rem !important;
 }
 
 .gsc-reactions-count {
   font-size: 0.75rem !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.3em !important;
+  letter-spacing: 0.35em !important;
   color: #a1a1aa !important;
   font-weight: 600 !important;
 }
@@ -57,15 +57,20 @@ main.gsc-main {
 .gsc-comment-box {
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   background-color: #18181b !important;
-  padding: 1.5rem !important;
+  padding: 0 !important;
   margin-top: 1.5rem !important;
   border-radius: 0 !important;
 }
 
 .gsc-comment-box-tabs {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-  margin-bottom: 1rem !important;
-  background-color: #27272a !important;
+  margin-bottom: 0 !important;
+  background-color: #18181b !important;
+  padding: 1rem 1.5rem 0 1.5rem !important;
+}
+
+.gsc-comment-box-tabs > div {
+  margin: 0 !important;
 }
 
 .gsc-comment-box-tabs button {
@@ -75,15 +80,29 @@ main.gsc-main {
   color: #a1a1aa !important;
   font-weight: 600 !important;
   border: none !important;
-  padding: 0.5rem 1rem !important;
+  border-bottom: 2px solid transparent !important;
+  padding: 0.75rem 1.5rem !important;
   border-radius: 0 !important;
+  background-color: transparent !important;
+  margin: 0 !important;
+}
+
+.gsc-comment-box-tabs button[class*="color-text-primary"],
+.gsc-comment-box-tabs button[class*="color-bg-canvas"] {
+  color: #fafafa !important;
+  border-bottom-color: #fafafa !important;
   background-color: transparent !important;
 }
 
-.gsc-comment-box-tabs button[class*="color-text-primary"] {
-  color: #fafafa !important;
-  border-bottom: 2px solid #fafafa !important;
-  background-color: #18181b !important;
+/* Comment box main area */
+.gsc-comment-box-main {
+  padding: 1.5rem !important;
+}
+
+.gsc-comment-box-write {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
 }
 
 .gsc-comment-box-textarea,
@@ -94,9 +113,10 @@ main.gsc-main {
   color: #fafafa !important;
   background-color: #27272a !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  padding: 0.75rem 1rem !important;
+  padding: 1rem !important;
   border-radius: 0 !important;
   font-family: Inter, Roboto, sans-serif !important;
+  min-height: 150px !important;
 }
 
 .gsc-comment-box-textarea:focus,
@@ -109,6 +129,28 @@ main.gsc-main {
 
 .gsc-comment-box-textarea::placeholder {
   color: #71717a !important;
+}
+
+.gsc-comment-box-textarea-extras {
+  background-color: #27272a !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-top: none !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+
+/* Comment box bottom */
+.gsc-comment-box-bottom {
+  padding: 0 1.5rem 1.5rem 1.5rem !important;
+}
+
+.gsc-comment-box-buttons {
+  display: flex !important;
+  justify-content: flex-end !important;
+  margin-top: 1rem !important;
 }
 
 /* Submit button and sign in button */
@@ -125,6 +167,7 @@ main.gsc-main {
   border: 1px solid #fafafa !important;
   border-radius: 2px !important;
   transition: all 150ms ease !important;
+  margin: 0 !important;
 }
 
 .gsc-comment-box-button:hover:not(:disabled),
@@ -146,14 +189,16 @@ main.gsc-main {
 }
 
 .gsc-header {
-  font-size: 0.75rem !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.35em !important;
-  color: #a1a1aa !important;
-  font-weight: 600 !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
   padding-bottom: 1rem !important;
   margin-bottom: 1.5rem !important;
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 1rem !important;
+}
+
+.gsc-left-header {
+  flex: 1 !important;
 }
 
 .gsc-comments-count {
@@ -162,6 +207,7 @@ main.gsc-main {
   letter-spacing: 0.35em !important;
   color: #a1a1aa !important;
   font-weight: 600 !important;
+  margin: 0 !important;
 }
 
 .gsc-timeline {
@@ -362,8 +408,11 @@ main.gsc-main {
   font-size: 0.875rem !important;
   line-height: 1.7 !important;
   color: #fafafa !important;
-  padding: 0.75rem 1rem !important;
+  padding: 1rem !important;
   min-height: 150px !important;
+  background-color: #27272a !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 0 !important;
 }
 
 .gsc-comment-box-preview p {
@@ -384,6 +433,7 @@ main.gsc-main {
 .link-secondary {
   color: #a1a1aa !important;
   text-decoration: none !important;
+  font-size: 0.75rem !important;
 }
 
 .gsc-comment-box-markdown-hint:hover,
@@ -391,11 +441,38 @@ main.gsc-main {
   color: #f87171 !important;
 }
 
+/* Markdown toolbar */
+.gsc-comment-box-md-toolbar {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.gsc-toolbar-item {
+  color: #a1a1aa !important;
+  padding: 0.5rem !important;
+  border: 1px solid transparent !important;
+  border-radius: 2px !important;
+  transition: all 150ms ease !important;
+}
+
+.gsc-toolbar-item:hover {
+  color: #fafafa !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
 /* Reaction popover */
 .gsc-reactions-popover {
   background-color: #18181b !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 2px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.gsc-reactions-popover p {
+  color: #a1a1aa !important;
+  font-size: 0.875rem !important;
 }
 
 /* Emoji buttons */
@@ -403,6 +480,7 @@ main.gsc-main {
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 2px !important;
   transition: all 150ms ease !important;
+  padding: 0.5rem !important;
 }
 
 .gsc-emoji-button:hover:not(:disabled) {
@@ -413,4 +491,20 @@ main.gsc-main {
 .gsc-emoji-button:disabled {
   opacity: 0.4 !important;
   cursor: not-allowed !important;
+}
+
+/* Remove unnecessary rounded corners */
+.rounded-t,
+.rounded-md,
+.rounded {
+  border-radius: 0 !important;
+}
+
+/* Fix button spacing */
+.inline-flex {
+  display: inline-flex !important;
+}
+
+.ml-1 {
+  margin-left: 0 !important;
 }
