@@ -158,20 +158,24 @@ main.gsc-main {
 /* Submit button and sign in button */
 .gsc-comment-box-button,
 .btn-primary,
-.gsc-comment-box-sign-in-button {
+.gsc-comment-box-sign-in-button,
+button.form-control,
+button.color-text-secondary,
+button[type="button"] {
   background-color: #1a1a1a !important;
   color: #fafafa !important;
-  font-size: 0.75rem !important;
+  font-size: 0.65rem !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.32em !important;
+  letter-spacing: 0.3em !important;
   font-weight: 600 !important;
-  padding: 0.5rem 1.25rem !important;
+  padding: 0.375rem 1rem !important;
   border: none !important;
   border-radius: 0 !important;
   transition: all 150ms ease !important;
   margin: 0 !important;
-  line-height: 1 !important;
+  line-height: 1.2 !important;
   height: auto !important;
+  min-height: auto !important;
 }
 
 .gsc-comment-box-button:hover:not(:disabled),
