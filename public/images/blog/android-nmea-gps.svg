@@ -1,0 +1,12 @@
+<svg width="960" height="540" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="540" fill="#fafafa" />
+  <rect x="40" y="40" width="880" height="460" fill="none" stroke="#1a1a1a" stroke-width="4" />
+  <text x="60" y="120" font-family="'Playfair Display', serif" font-size="64" fill="#1a1a1a">Android NMEA</text>
+  <rect x="60" y="160" width="320" height="6" fill="#dc2626" />
+  <text x="60" y="236" font-family="'Inter', sans-serif" font-size="28" fill="#1a1a1a">GPS app with Jetpack Compose.</text>
+  <text x="60" y="310" font-family="'JetBrains Mono', monospace" font-size="20" fill="#1a1a1a">$GNGGA,123456.00,2501.234,N</text>
+  <text x="60" y="345" font-family="'JetBrains Mono', monospace" font-size="20" fill="#1a1a1a">LatLng(25.0205, 121.5400)</text>
+  <rect x="60" y="390" width="180" height="80" fill="#1a1a1a" opacity="0.08" />
+  <rect x="260" y="390" width="180" height="80" fill="#1a1a1a" opacity="0.05" />
+  <rect x="460" y="390" width="180" height="80" fill="#1a1a1a" opacity="0.05" />
+</svg>
