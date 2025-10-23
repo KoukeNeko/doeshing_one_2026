@@ -9,6 +9,7 @@ import { getReadingTime } from "./utils";
 export interface BlogFilters {
   search?: string;
   tag?: string;
+  category?: string;
   sort?: "latest" | "views";
   page?: number;
   perPage?: number;
@@ -117,9 +118,12 @@ async function loadBlogPost(filePath: string): Promise<BlogPost | null> {
       return null;
     }
 
-    // Extract category from file path if in subdirectory
+    // Extract category from file path (automatic, based on folder structure)
+    // Example: "tutorials/advanced/post.mdx" -> category: "tutorials/advanced"
     const pathParts = filePath.split(path.sep);
-    const category = pathParts.length > 1 ? pathParts[0] : frontmatter.category;
+    const category = pathParts.length > 1
+      ? pathParts.slice(0, -1).join('/') // Get all parts except filename
+      : undefined; // Root level posts have no category
 
     // Generate slug from filename
     const fileName = path.basename(filePath, path.extname(filePath));
@@ -218,6 +222,7 @@ async function getAllBlogPosts(): Promise<BlogPost[]> {
 export async function getPublishedPosts({
   search,
   tag,
+  category,
   sort = "latest",
   page = 1,
   perPage = 9,
@@ -227,16 +232,25 @@ export async function getPublishedPosts({
   total: number;
 }> {
   const allPosts = await getAllBlogPosts();
-  
+
   // Filter posts
   let filtered = allPosts.filter((post) => {
     if (published && !post.published) return false;
-    
+
     if (tag) {
       const hasTag = post.tags.some((t) => t.slug === tag || t.name.toLowerCase() === tag.toLowerCase());
       if (!hasTag) return false;
     }
-    
+
+    if (category) {
+      // Support both exact match and parent category match
+      // e.g., category="tutorials" matches "tutorials" and "tutorials/advanced"
+      if (!post.category) return false;
+      const matchesExact = post.category === category;
+      const matchesParent = post.category.startsWith(`${category}/`);
+      if (!matchesExact && !matchesParent) return false;
+    }
+
     if (search) {
       const searchLower = search.toLowerCase();
       const matchesTitle = post.title.toLowerCase().includes(searchLower);
@@ -244,7 +258,7 @@ export async function getPublishedPosts({
       const matchesExcerpt = post.excerpt.toLowerCase().includes(searchLower);
       if (!matchesTitle && !matchesContent && !matchesExcerpt) return false;
     }
-    
+
     return true;
   });
   
@@ -478,7 +492,7 @@ export async function getLatestPost() {
 
       const latest = published[0];
       if (!latest) return null;
-      
+
       return {
         slug: latest.slug,
         title: latest.title,
@@ -489,6 +503,65 @@ export async function getLatestPost() {
     {
       revalidate: 60,
       tags: ["posts", "latest"],
+    }
+  )();
+}
+
+export interface Category {
+  slug: string;
+  name: string;
+  path: string;
+  count: number;
+  parent?: string;
+  level: number;
+}
+
+export async function getCategoriesWithCount(): Promise<Category[]> {
+  return unstable_cache(
+    async () => {
+      const allPosts = await getAllBlogPosts();
+      const published = allPosts.filter((p) => p.published);
+
+      const categoryMap = new Map<string, Category>();
+
+      for (const post of published) {
+        if (!post.category) continue;
+
+        const parts = post.category.split('/');
+        let currentPath = '';
+
+        // Build categories for each level (e.g., "tutorials" and "tutorials/advanced")
+        for (let i = 0; i < parts.length; i++) {
+          const part = parts[i];
+          currentPath = i === 0 ? part : `${currentPath}/${part}`;
+
+          const existing = categoryMap.get(currentPath);
+          if (existing) {
+            existing.count++;
+          } else {
+            categoryMap.set(currentPath, {
+              slug: slugify(currentPath),
+              name: part.charAt(0).toUpperCase() + part.slice(1), // Capitalize first letter
+              path: currentPath,
+              count: 1,
+              parent: i > 0 ? parts.slice(0, i).join('/') : undefined,
+              level: i,
+            });
+          }
+        }
+      }
+
+      return Array.from(categoryMap.values()).sort((a, b) => {
+        // Sort by level first (parent categories before children)
+        if (a.level !== b.level) return a.level - b.level;
+        // Then alphabetically
+        return a.path.localeCompare(b.path);
+      });
+    },
+    ["categories-with-count"],
+    {
+      revalidate: 120,
+      tags: ["categories"],
     }
   )();
 }

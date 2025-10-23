@@ -34,7 +34,6 @@ tags: ["Tag1", "Tag2", "Tag3"]
 published: true
 featured: false
 featuredOrder: 1
-category: "optional-category"
 ---
 
 ## Your Content Here
@@ -57,24 +56,37 @@ Write your blog post content using Markdown...
 | `published` | boolean | Yes | Whether the post is published |
 | `featured` | boolean | No | Whether to feature on homepage |
 | `featuredOrder` | number | No | Order for featured posts (lower = higher priority) |
-| `category` | string | No | Category name (auto-detected from folder structure) |
 | `slug` | string | No | Custom slug (defaults to filename) |
+
+**Note:** The `category` field is automatically determined from the folder structure and should NOT be included in frontmatter.
 
 ## Categories/Subcategories
 
-You can organize posts into subcategories by creating folders:
+Categories are **automatically determined by the folder structure**. You don't need to specify them in frontmatter.
+
+### Examples:
 
 ```
 content/blog/
-├── general-post.mdx
-├── tutorials/
-│   ├── tutorial-1.mdx
-│   └── tutorial-2.mdx
-└── guides/
-    └── guide-1.mdx
+├── general-post.mdx           # No category (root level)
+├── another-post.mdx           # No category (root level)
+├── tutorials/                 # Category: "tutorials"
+│   ├── getting-started.mdx    # Category: "tutorials"
+│   ├── intermediate.mdx       # Category: "tutorials"
+│   └── advanced/              # Category: "tutorials/advanced"
+│       └── deep-dive.mdx      # Category: "tutorials/advanced"
+└── guides/                    # Category: "guides"
+    ├── setup.mdx              # Category: "guides"
+    └── deployment/            # Category: "guides/deployment"
+        └── vercel.mdx         # Category: "guides/deployment"
 ```
 
-Posts in subfolders will automatically have their category set to the folder name.
+### Category Features:
+
+- **Automatic Detection**: Categories are extracted from the file path
+- **Nested Support**: You can create subcategories using nested folders (e.g., `tutorials/advanced/`)
+- **URL Structure**: Categories appear in URLs as `/category/tutorials` or `/category/tutorials/advanced`
+- **Filtering**: Parent categories show all posts in child categories (e.g., filtering by "tutorials" shows posts in "tutorials/advanced" too)
 
 ## Tags
 
