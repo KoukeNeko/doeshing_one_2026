@@ -55,7 +55,7 @@ main.gsc-main {
 
 /* Comment form */
 .gsc-comment-box {
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border: none !important;
   background-color: #ffffff !important;
   padding: 0 !important;
   margin-top: 1.5rem !important;
@@ -221,10 +221,10 @@ main.gsc-main {
 
 /* Individual comment */
 .gsc-comment {
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border: none !important;
   background-color: #ffffff !important;
   padding: 1.5rem !important;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+  box-shadow: none !important;
   border-radius: 0 !important;
 }
 
@@ -236,7 +236,7 @@ main.gsc-main {
 }
 
 .gsc-comment-author-avatar {
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border: none !important;
   border-radius: 0 !important;
 }
 
