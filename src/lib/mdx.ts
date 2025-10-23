@@ -14,6 +14,8 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
+import { rehypeCallout } from "./rehype-callout";
+import { remarkCallout } from "./remark-callout";
 import { getReadingTime } from "./utils";
 
 export interface ProjectFrontmatter {
@@ -57,8 +59,9 @@ export async function renderMarkdown(markdown: string) {
       const processor = unified()
         .use(remarkParse)
         .use(remarkGfm)
+        .use(remarkCallout) // Add callout support
         .use(extractHeadings, { slugger, headings })
-        .use(remarkRehype)
+        .use(remarkRehype, { allowDangerousHtml: true }) // Allow raw HTML for icons
         .use(rehypeSlug)
         .use(rehypeAutolinkHeadings, {
           behavior: "wrap",
@@ -66,11 +69,12 @@ export async function renderMarkdown(markdown: string) {
             className: ["heading-link"],
           },
         })
+        .use(rehypeCallout) // Add callout icons
         .use(rehypePrettyCode, {
           theme: "github-dark",
           keepBackground: false,
         })
-        .use(rehypeStringify);
+        .use(rehypeStringify, { allowDangerousHtml: true }); // Allow raw HTML in output
 
       const file = await processor.process(markdown);
 
