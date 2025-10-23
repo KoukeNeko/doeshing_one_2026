@@ -1,565 +1,151 @@
-/**
+/*!
  * Giscus Light Theme - Newspaper Editorial Style
  * Matches the Doeshing Portfolio design system
- * Colors: ink #1a1a1a, paper #fafafa, accent #dc2626, gray #6b7280
  */
+main {
+  /* Text colors */
+  --color-fg-default: #1a1a1a;
+  --color-fg-muted: #6b7280;
+  --color-fg-subtle: #9ca3af;
 
-/* Main container */
-main.gsc-main {
-  background-color: transparent !important;
+  /* Background colors */
+  --color-canvas-default: #ffffff;
+  --color-canvas-overlay: #ffffff;
+  --color-canvas-inset: #fafafa;
+  --color-canvas-subtle: #fafafa;
+
+  /* Border colors */
+  --color-border-default: rgba(0, 0, 0, 0.1);
+  --color-border-muted: rgba(0, 0, 0, 0.05);
+
+  /* Accent colors */
+  --color-accent-fg: #dc2626;
+  --color-accent-emphasis: #b91c1c;
+  --color-accent-muted: rgba(220, 38, 38, 0.4);
+  --color-accent-subtle: rgba(220, 38, 38, 0.1);
+
+  /* Button colors */
+  --color-btn-text: #1a1a1a;
+  --color-btn-bg: #fafafa;
+  --color-btn-border: rgba(0, 0, 0, 0.1);
+  --color-btn-shadow: 0 0 transparent;
+  --color-btn-inset-shadow: 0 0 transparent;
+  --color-btn-hover-bg: #f5f5f5;
+  --color-btn-hover-border: rgba(0, 0, 0, 0.2);
+  --color-btn-active-bg: #fafafa;
+  --color-btn-active-border: rgba(0, 0, 0, 0.1);
+  --color-btn-selected-bg: #fafafa;
+
+  /* Primary button colors */
+  --color-btn-primary-text: #ffffff;
+  --color-btn-primary-bg: #1a1a1a;
+  --color-btn-primary-border: transparent;
+  --color-btn-primary-shadow: 0 0 transparent;
+  --color-btn-primary-inset-shadow: 0 0 transparent;
+  --color-btn-primary-hover-bg: #dc2626;
+  --color-btn-primary-hover-border: transparent;
+  --color-btn-primary-selected-bg: #1a1a1a;
+  --color-btn-primary-selected-shadow: 0 0 transparent;
+  --color-btn-primary-disabled-text: rgba(255, 255, 255, 0.5);
+  --color-btn-primary-disabled-bg: rgba(26, 26, 26, 0.6);
+  --color-btn-primary-disabled-border: transparent;
+
+  /* Neutral colors */
+  --color-neutral-muted: rgba(107, 114, 128, 0.4);
+
+  /* Success/attention/danger colors */
+  --color-success-fg: #16a34a;
+  --color-attention-fg: #ca8a04;
+  --color-attention-muted: rgba(202, 138, 4, 0.4);
+  --color-attention-subtle: rgba(202, 138, 4, 0.15);
+  --color-danger-fg: #dc2626;
+  --color-danger-muted: rgba(220, 38, 38, 0.4);
+  --color-danger-subtle: rgba(220, 38, 38, 0.1);
+
+  /* Other colors */
+  --color-primer-shadow-inset: 0 0 transparent;
+  --color-scale-gray-7: #f5f5f5;
+  --color-scale-blue-8: #b91c1c;
+
+  /* Social reaction colors */
+  --color-social-reaction-bg-hover: var(--color-scale-gray-7);
+  --color-social-reaction-bg-reacted-hover: var(--color-scale-blue-8);
+
+  /* Action list */
+  --color-action-list-item-default-hover-bg: rgba(0, 0, 0, 0.05);
+
+  /* Segmented control */
+  --color-segmented-control-bg: rgba(0, 0, 0, 0.05);
+  --color-segmented-control-button-bg: #fafafa;
+  --color-segmented-control-button-selected-border: #1a1a1a;
+
+  /* Syntax highlighting */
+  --color-prettylights-syntax-comment: #6b7280;
+  --color-prettylights-syntax-constant: #2563eb;
+  --color-prettylights-syntax-entity: #9333ea;
+  --color-prettylights-syntax-storage-modifier-import: #1a1a1a;
+  --color-prettylights-syntax-entity-tag: #16a34a;
+  --color-prettylights-syntax-keyword: #dc2626;
+  --color-prettylights-syntax-string: #0284c7;
+  --color-prettylights-syntax-variable: #ea580c;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #dc2626;
+  --color-prettylights-syntax-invalid-illegal-text: #ffffff;
+  --color-prettylights-syntax-invalid-illegal-bg: #b91c1c;
+  --color-prettylights-syntax-carriage-return-text: #ffffff;
+  --color-prettylights-syntax-carriage-return-bg: #b91c1c;
+  --color-prettylights-syntax-string-regexp: #16a34a;
+  --color-prettylights-syntax-markup-list: #ca8a04;
+  --color-prettylights-syntax-markup-heading: #2563eb;
+  --color-prettylights-syntax-markup-italic: #1a1a1a;
+  --color-prettylights-syntax-markup-bold: #1a1a1a;
+  --color-prettylights-syntax-markup-deleted-text: #991b1b;
+  --color-prettylights-syntax-markup-deleted-bg: #fecaca;
+  --color-prettylights-syntax-markup-inserted-text: #14532d;
+  --color-prettylights-syntax-markup-inserted-bg: #bbf7d0;
+  --color-prettylights-syntax-markup-changed-text: #78350f;
+  --color-prettylights-syntax-markup-changed-bg: #fed7aa;
+  --color-prettylights-syntax-markup-ignored-text: #6b7280;
+  --color-prettylights-syntax-markup-ignored-bg: #dbeafe;
+  --color-prettylights-syntax-meta-diff-range: #9333ea;
+  --color-prettylights-syntax-brackethighlighter-angle: #6b7280;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #d4d4d8;
+  --color-prettylights-syntax-constant-other-reference-link: #0284c7;
 }
 
-/* Override Giscus color utilities */
-.color-bg-primary {
-  background-color: #ffffff !important;
+main .pagination-loader-container {
+  background-image: url(https://github.com/images/modules/pulls/progressive-disclosure-line.svg);
 }
 
-.color-bg-canvas {
-  background-color: #ffffff !important;
-}
-
-.color-bg-tertiary {
-  background-color: #fafafa !important;
-}
-
-.color-text-primary {
-  color: #1a1a1a !important;
-}
-
-.color-text-secondary {
-  color: #6b7280 !important;
-}
-
-.color-text-link {
-  color: #dc2626 !important;
-}
-
-.color-border-primary {
-  border-color: rgba(0, 0, 0, 0.1) !important;
-}
-
-/* Header and reactions */
-.gsc-reactions {
-  border-top: none !important;
-  padding-top: 1.5rem !important;
-  margin-top: 1.5rem !important;
-}
-
+/*! Custom CSS */
 .gsc-reactions-count {
-  font-size: 0.75rem !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.35em !important;
-  color: #6b7280 !important;
-  font-weight: 600 !important;
-}
-
-/* Comment form */
-.gsc-comment-box {
-  border: none !important;
-  background-color: #ffffff !important;
-  padding: 0 !important;
-  margin-top: 1.5rem !important;
-  border-radius: 0 !important;
-}
-
-.gsc-comment-box-tabs {
-  border-bottom: none !important;
-  margin-bottom: 0 !important;
-  background-color: #ffffff !important;
-  padding: 1rem 1.5rem 0 1.5rem !important;
-}
-
-.gsc-comment-box-tabs > div {
-  margin: 0 !important;
-}
-
-.gsc-comment-box-tabs button {
-  font-size: 0.65rem !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.3em !important;
-  color: #6b7280 !important;
-  font-weight: 600 !important;
-  border: none !important;
-  border-bottom: 2px solid transparent !important;
-  padding: 0.5rem 1rem !important;
-  border-radius: 0 !important;
-  background-color: transparent !important;
-  margin: 0 !important;
-  transition: all 150ms ease !important;
-}
-
-.gsc-comment-box-tabs button:hover {
-  color: #1a1a1a !important;
-  background-color: rgba(0, 0, 0, 0.05) !important;
-}
-
-.gsc-comment-box-tabs button[class*="color-text-primary"],
-.gsc-comment-box-tabs button[class*="color-bg-canvas"],
-.gsc-comment-box-tabs button[aria-selected="true"] {
-  color: #1a1a1a !important;
-  border-bottom-color: #1a1a1a !important;
-  background-color: transparent !important;
-}
-
-/* Comment box main area */
-.gsc-comment-box-main {
-  padding: 1.5rem !important;
-}
-
-.gsc-comment-box-write {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 0 !important;
-}
-
-.gsc-comment-box-textarea,
-.form-control,
-.input-contrast {
-  font-size: 0.875rem !important;
-  line-height: 1.7 !important;
-  color: #1a1a1a !important;
-  background-color: #ffffff !important;
-  border: none !important;
-  padding: 1rem !important;
-  border-radius: 0 !important;
-  font-family: Inter, Roboto, sans-serif !important;
-  min-height: 120px !important;
-}
-
-.gsc-comment-box-textarea:focus,
-.form-control:focus,
-.input-contrast:focus {
-  outline: none !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.gsc-comment-box-textarea::placeholder {
-  color: rgba(107, 114, 128, 0.5) !important;
-}
-
-.gsc-comment-box-textarea-extras {
-  background-color: #ffffff !important;
-  border: none !important;
-  padding: 0.25rem 1rem !important;
-  border-radius: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-end !important;
-  min-height: auto !important;
-  height: auto !important;
-  line-height: 1 !important;
-}
-
-/* Comment box bottom */
-.gsc-comment-box-bottom {
-  padding: 0 1.5rem 1.5rem 1.5rem !important;
-}
-
-.gsc-comment-box-buttons {
-  display: flex !important;
-  justify-content: flex-end !important;
-  margin-top: 1rem !important;
-}
-
-/* Submit button and sign in button */
-.gsc-comment-box-button,
-.btn-primary,
-.gsc-comment-box-sign-in-button,
-button.form-control,
-button.color-text-secondary,
-button[type="button"] {
-  background-color: #1a1a1a !important;
-  color: #fafafa !important;
-  font-size: 0.65rem !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.3em !important;
-  font-weight: 600 !important;
-  padding: 0.375rem 1rem !important;
-  border: none !important;
-  border-radius: 0 !important;
-  transition: all 150ms ease !important;
-  margin: 0 !important;
-  line-height: 1.2 !important;
-  height: auto !important;
-  min-height: auto !important;
-}
-
-.gsc-comment-box-button:hover:not(:disabled),
-.btn-primary:hover,
-.gsc-comment-box-sign-in-button:hover {
-  background-color: #dc2626 !important;
-  border-color: #dc2626 !important;
-  color: #fafafa !important;
-}
-
-.gsc-comment-box-button:disabled {
-  opacity: 0.4 !important;
-  cursor: not-allowed !important;
-}
-
-/* Comments list */
-.gsc-comments {
-  margin-top: 2.5rem !important;
-}
-
-.gsc-header {
-  border-bottom: none !important;
-  padding-bottom: 1rem !important;
-  margin-bottom: 1.5rem !important;
-  display: flex !important;
-  align-items: baseline !important;
-  gap: 1rem !important;
-}
-
-.gsc-left-header {
-  flex: 1 !important;
-}
-
-.gsc-comments-count {
-  font-size: 0.75rem !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.35em !important;
-  color: #6b7280 !important;
-  font-weight: 600 !important;
-  margin: 0 !important;
+  display: none;
 }
 
 .gsc-timeline {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 1.5rem !important;
+  flex-direction: column-reverse;
 }
 
-/* Individual comment */
-.gsc-comment {
-  border: none !important;
-  background-color: #ffffff !important;
-  padding: 1.5rem !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
+.gsc-header {
+  padding-bottom: 1rem;
 }
 
-.gsc-comment-author {
-  display: flex !important;
-  align-items: center !important;
-  gap: 1rem !important;
-  margin-bottom: 0.75rem !important;
+.gsc-comments > .gsc-header {
+  order: 1;
 }
 
-.gsc-comment-author-avatar {
-  border: none !important;
-  border-radius: 0 !important;
+.gsc-comments > .gsc-comment-box {
+  margin-bottom: 1rem;
+  order: 2;
 }
 
-.gsc-comment-author-name {
-  font-family: "GenRyuMin JP Auto", "GenRyuMin TW Auto", "Playfair Display", "Merriweather", serif !important;
-  font-size: 1.125rem !important;
-  color: #1a1a1a !important;
-  font-weight: 400 !important;
+.gsc-comments > .gsc-timeline {
+  order: 3;
 }
 
-.gsc-comment-timestamp {
-  font-size: 0.75rem !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.3em !important;
-  color: #6b7280 !important;
+.gsc-homepage-bg {
+  background-color: #ffffff;
 }
 
-.gsc-comment-content {
-  font-size: 0.875rem !important;
-  line-height: 1.7 !important;
-  color: #6b7280 !important;
-  font-family: Inter, Roboto, sans-serif !important;
-}
-
-.gsc-comment-content p {
-  margin-bottom: 1rem !important;
-  color: #6b7280 !important;
-}
-
-.gsc-comment-content a {
-  color: #dc2626 !important;
-  text-decoration: underline !important;
-  text-decoration-thickness: 1px !important;
-  text-underline-offset: 2px !important;
-  font-weight: 500 !important;
-}
-
-.gsc-comment-content a:hover {
-  color: #1a1a1a !important;
-}
-
-.gsc-comment-content strong {
-  color: #1a1a1a !important;
-  font-weight: 600 !important;
-}
-
-/* Code blocks in comments */
-.gsc-comment-content code {
-  background-color: rgba(0, 0, 0, 0.05) !important;
-  padding: 0.125rem 0.375rem !important;
-  font-size: 0.8125rem !important;
-  border: none !important;
-  border-radius: 2px !important;
-  font-family: "JetBrains Mono", monospace !important;
-  font-weight: 500 !important;
-  color: #1a1a1a !important;
-}
-
-.gsc-comment-content pre {
-  background-color: rgba(0, 0, 0, 0.05) !important;
-  padding: 1rem !important;
-  overflow-x: auto !important;
-  border: none !important;
-  margin: 1rem 0 !important;
-  border-radius: 0 !important;
-}
-
-.gsc-comment-content pre code {
-  background-color: transparent !important;
-  padding: 0 !important;
-  border: none !important;
-}
-
-/* Comment reactions */
-.gsc-comment-reactions {
-  margin-top: 1rem !important;
-  padding-top: 1rem !important;
-  border-top: none !important;
-}
-
-.gsc-comment-reactions-button,
-.gsc-social-reaction-summary-item,
-.gsc-reactions-button {
-  font-size: 0.75rem !important;
-  color: #6b7280 !important;
-  border: none !important;
-  padding: 0.25rem 0.75rem !important;
-  transition: all 150ms ease !important;
-  border-radius: 2px !important;
-}
-
-.gsc-comment-reactions-button:hover,
-.gsc-social-reaction-summary-item:hover,
-.gsc-reactions-button:hover {
-  border-color: #1a1a1a !important;
-  color: #1a1a1a !important;
-}
-
-/* Reply button */
-.gsc-reply-button {
-  font-size: 0.65rem !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.3em !important;
-  font-weight: 600 !important;
-  color: #1a1a1a !important;
-  background-color: transparent !important;
-  border: none !important;
-  padding: 0.5rem 1rem !important;
-  transition: all 150ms ease !important;
-  border-radius: 0 !important;
-}
-
-.gsc-reply-button:hover {
-  color: #dc2626 !important;
-  background-color: rgba(0, 0, 0, 0.05) !important;
-}
-
-/* Loading and error states */
-.gsc-loading {
-  color: #6b7280 !important;
-  font-size: 0.875rem !important;
-  text-align: center !important;
-  padding: 2rem !important;
-}
-
-.gsc-error {
-  color: #dc2626 !important;
-  font-size: 0.875rem !important;
-  padding: 1rem !important;
-  border: none !important;
-  background-color: rgba(220, 38, 38, 0.05) !important;
-  border-radius: 0 !important;
-}
-
-/* Pagination */
-.gsc-pagination {
-  display: flex !important;
-  gap: 0.5rem !important;
-  justify-content: center !important;
-  margin-top: 2rem !important;
-}
-
-.gsc-pagination-button {
-  font-size: 0.75rem !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.3em !important;
-  font-weight: 600 !important;
-  color: #6b7280 !important;
-  border: none !important;
-  padding: 0.5rem 1rem !important;
-  transition: all 150ms ease !important;
-  border-radius: 2px !important;
-}
-
-.gsc-pagination-button:hover:not(:disabled) {
-  border-color: #1a1a1a !important;
-  color: #1a1a1a !important;
-}
-
-.gsc-pagination-button[disabled] {
-  opacity: 0.4 !important;
-  cursor: not-allowed !important;
-}
-
-.gsc-pagination-button[aria-current="true"] {
-  background-color: #1a1a1a !important;
-  color: #fafafa !important;
-  border-color: #1a1a1a !important;
-}
-
-/* Markdown preview */
-.gsc-comment-box-preview {
-  font-size: 0.875rem !important;
-  line-height: 1.7 !important;
-  color: #1a1a1a !important;
-  padding: 1rem !important;
-  min-height: 120px !important;
-  background-color: #ffffff !important;
-  border: none !important;
-  border-radius: 0 !important;
-}
-
-.gsc-comment-box-preview p {
-  margin-bottom: 1rem !important;
-  color: #6b7280 !important;
-}
-
-.gsc-comment-box-preview code {
-  background-color: rgba(0, 0, 0, 0.05) !important;
-  padding: 0.125rem 0.375rem !important;
-  font-size: 0.8125rem !important;
-  border-radius: 2px !important;
-  font-family: "JetBrains Mono", monospace !important;
-}
-
-/* Markdown hint link */
-.gsc-comment-box-markdown-hint,
-.link-secondary {
-  color: #6b7280 !important;
-  text-decoration: none !important;
-  font-size: 0.75rem !important;
-}
-
-.gsc-comment-box-markdown-hint:hover,
-.link-secondary:hover {
-  color: #dc2626 !important;
-}
-
-/* Markdown toolbar */
-.gsc-comment-box-md-toolbar {
-  display: flex !important;
-  align-items: center !important;
-  gap: 0.5rem !important;
-}
-
-.gsc-toolbar-item {
-  color: #6b7280 !important;
-  padding: 0.5rem !important;
-  border: none !important;
-  border-radius: 2px !important;
-  transition: all 150ms ease !important;
-}
-
-.gsc-toolbar-item:hover {
-  color: #1a1a1a !important;
-  background-color: rgba(0, 0, 0, 0.05) !important;
-  border-color: rgba(0, 0, 0, 0.1) !important;
-}
-
-/* Reaction popover */
-.gsc-reactions-popover {
-  background-color: #ffffff !important;
-  border: none !important;
-  border-radius: 2px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
-}
-
-.gsc-reactions-popover p {
-  color: #6b7280 !important;
-  font-size: 0.875rem !important;
-}
-
-/* Emoji buttons */
-.gsc-emoji-button {
-  border: none !important;
-  border-radius: 2px !important;
-  transition: all 150ms ease !important;
-  padding: 0.5rem !important;
-}
-
-.gsc-emoji-button:hover:not(:disabled) {
-  border-color: #1a1a1a !important;
-  background-color: rgba(0, 0, 0, 0.05) !important;
-}
-
-.gsc-emoji-button:disabled {
-  opacity: 0.4 !important;
-  cursor: not-allowed !important;
-}
-
-/* Remove unnecessary rounded corners */
-.rounded-t,
-.rounded-md,
-.rounded {
-  border-radius: 0 !important;
-}
-
-/* Remove all borders except reply placeholder */
-.border,
-.w-full.min-w-0.rounded-md.border,
-.color-bg-primary.w-full.min-w-0.rounded-md.border {
-  border: none !important;
-}
-
-/* Reply box styling - match main comment textarea */
-.gsc-reply-box,
-.color-bg-tertiary.gsc-reply-box {
-  background-color: #ffffff !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 1rem !important;
-  transition: all 150ms ease !important;
-  min-height: 100px !important;
-  cursor: text !important;
-}
-
-.gsc-reply-box:hover,
-.color-bg-tertiary.gsc-reply-box:hover {
-  background-color: #ffffff !important;
-}
-
-.gsc-reply-box button,
-.gsc-reply-box span {
-  color: rgba(107, 114, 128, 0.5) !important;
-  font-size: 0.875rem !important;
-  font-weight: 400 !important;
-  line-height: 1.7 !important;
-  font-family: Inter, Roboto, sans-serif !important;
-}
-
-.gsc-reply {
-  border: none !important;
-  background-color: #ffffff !important;
-  border-radius: 0 !important;
-}
-
-/* Fix button spacing */
-.inline-flex {
-  display: inline-flex !important;
-}
-
-.ml-1 {
-  margin-left: 0 !important;
+main .gsc-loading-image {
+  background-image: url(https://github.githubassets.com/images/mona-loading-default.gif);
 }
