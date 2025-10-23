@@ -31,6 +31,8 @@ sudo ss -tlnp | grep 11434
 > [!warning]
 > 如果看到 `127.0.0.1:11434`，表示 Ollama 只偵聽本機連線，需要修改設定
 
+![image](https://hackmd.io/_uploads/HJWkx6zhle.png)
+
 ## 解決方案
 
 ### Step 1：建立 systemd 服務覆蓋目錄
@@ -67,6 +69,7 @@ sudo ss -tlnp | grep 11434
 
 > [!success]
 > **成功標誌**：應該看到 `0.0.0.0:11434` 而不是 `127.0.0.1:11434`
+![image](https://hackmd.io/_uploads/HyFTJ6zhex.png)
 
 ### Step 5：測試連接
 
@@ -74,6 +77,7 @@ sudo ss -tlnp | grep 11434
 # 測試本機連線
 curl http://localhost:11434/api/tags
 ```
+![image](https://hackmd.io/_uploads/HJpmbpG3le.png)
 
 驗證成功後，你應該會看到類似以下的 JSON 回應，列出所有已安裝的模型。
 
