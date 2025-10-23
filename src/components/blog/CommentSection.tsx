@@ -106,24 +106,25 @@ export function CommentSection() {
       className="border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900"
       data-testid="comment-section"
     >
-      <header className="border-b border-black/10 pb-6 dark:border-white/10">
-        <span className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-accent dark:text-red-400">
-          讀者交流
-        </span>
-        <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      <header className="space-y-6 border-b border-black/10 pb-6 dark:border-white/10">
+        <div className="flex flex-col gap-3">
+          <span className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-accent dark:text-red-400">
+            讀者交流
+          </span>
           <h2
             id="comment-heading"
             className="font-serif text-3xl tracking-tight text-newspaper-ink dark:text-zinc-50 sm:text-4xl"
           >
             加入討論
           </h2>
-          <span className="text-xs uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
-            {sortedComments.length} 則留言
-          </span>
+          <p className="max-w-2xl text-sm text-newspaper-gray dark:text-zinc-400">
+            分享你的問題、經驗或回饋。這個前端示範僅在瀏覽器中暫存留言。
+          </p>
+          <div className="mt-4 h-px w-20 border-b border-newspaper-ink dark:border-zinc-100" />
         </div>
-        <p className="mt-2 max-w-xl text-sm text-newspaper-gray dark:text-zinc-400">
-          分享你的問題、經驗或回饋。這個前端示範僅在瀏覽器中暫存留言。
-        </p>
+        <span className="text-xs uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
+          {sortedComments.length} 則留言
+        </span>
       </header>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">

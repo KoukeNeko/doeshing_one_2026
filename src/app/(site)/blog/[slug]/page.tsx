@@ -118,9 +118,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
 
         <ShareButtons url={shareUrl} title={post.title} />
-
-        <CommentSection />
-
         <section className="space-y-6">
           <SectionHeading
             kicker="Related Reading"
@@ -129,6 +126,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           />
           <BlogGrid posts={related} featuredCount={3} />
         </section>
+        <CommentSection />
 
         <nav className="flex flex-col gap-6 border border-black/10 bg-white px-6 py-6 dark:border-white/10 dark:bg-zinc-900 md:flex-row md:justify-between">
           {adjacent.previous ? (

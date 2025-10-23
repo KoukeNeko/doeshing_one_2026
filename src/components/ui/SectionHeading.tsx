@@ -5,6 +5,7 @@ interface SectionHeadingProps {
   title: string;
   description?: string;
   align?: "left" | "center";
+  headingId?: string;
 }
 
 export function SectionHeading({
@@ -12,6 +13,7 @@ export function SectionHeading({
   title,
   description,
   align = "left",
+  headingId,
 }: SectionHeadingProps) {
   return (
     <div
@@ -25,7 +27,10 @@ export function SectionHeading({
           {kicker}
         </span>
       ) : null}
-      <h2 className="font-serif text-3xl tracking-tight text-newspaper-ink dark:text-zinc-50 sm:text-4xl">
+      <h2
+        id={headingId}
+        className="font-serif text-3xl tracking-tight text-newspaper-ink dark:text-zinc-50 sm:text-4xl"
+      >
         {title}
       </h2>
       {description ? (
