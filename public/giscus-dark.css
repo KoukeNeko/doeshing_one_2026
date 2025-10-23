@@ -167,3 +167,21 @@ main .gsc-loading-image {
 .rounded-r {
   border-radius: 0 !important;
 }
+
+/* Override accent/red borders to use neutral border color */
+.gsc-comment,
+.gsc-reply-box,
+.gsc-comment-box,
+[class*="border-accent"],
+[class*="border-danger"],
+[class*="border-red"] {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Override selected/active state borders */
+button[aria-selected="true"],
+button[aria-current="true"],
+.selected,
+[aria-selected="true"] {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
