@@ -23,6 +23,10 @@ export function rehypeCallout() {
         ? props.className
         : [props.className];
 
+      // Check if this blockquote has the 'callout' class
+      if (!classNames.includes("callout")) return;
+
+      // Find the callout type
       const calloutClass = classNames.find((c) =>
         String(c).startsWith("callout-"),
       );
@@ -35,7 +39,7 @@ export function rehypeCallout() {
       const icon = CALLOUT_ICONS[calloutType];
       if (!icon) return;
 
-      // Create icon element
+      // Create icon element with raw HTML
       const iconElement: Element = {
         type: "element",
         tagName: "span",
@@ -58,7 +62,7 @@ export function rehypeCallout() {
         properties: {
           className: ["callout-content"],
         },
-        children: node.children,
+        children: [...node.children],
       };
 
       // Replace node children with icon + content wrapper

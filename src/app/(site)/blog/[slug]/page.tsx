@@ -109,10 +109,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
         </header>
 
-        <RenderedMarkdown
-          html={html}
-          className="dropcap prose prose-lg prose-headings:font-serif prose-headings:tracking-tight prose-p:text-newspaper-gray prose-strong:text-newspaper-ink dark:prose-invert"
-        />
+        <div className="border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900">
+          <RenderedMarkdown
+            html={html}
+            className="dropcap prose prose-lg prose-headings:font-serif prose-headings:tracking-tight prose-p:text-newspaper-gray prose-strong:text-newspaper-ink dark:prose-invert"
+          />
+        </div>
 
         <ShareButtons url={shareUrl} title={post.title} />
 

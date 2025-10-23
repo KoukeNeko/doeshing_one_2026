@@ -256,7 +256,7 @@
   }
 
   .prose {
-    @apply max-w-prose;
+    @apply max-w-none;
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
@@ -501,17 +501,16 @@
   }
 
   /* Callout blocks - Editorial newspaper style */
-  .callout {
-    @apply my-8 flex gap-4 border border-black/10 bg-white px-0 py-5 shadow-sm shadow-black/5 dark:border-white/10 dark:bg-zinc-900;
+  .prose .callout {
+    @apply my-8 flex gap-4 border border-black/10 bg-white py-5 shadow-sm shadow-black/5 dark:border-white/10 dark:bg-zinc-900;
     border-left-width: 4px !important;
     padding-left: 1.5rem !important;
     padding-right: 1.5rem !important;
-  }
-
-  /* Ensure callouts in prose don't overflow */
-  .prose .callout {
-    margin-left: 0;
-    margin-right: 0;
+    /* No horizontal margins - align with prose text */
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .callout-icon {
