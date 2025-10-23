@@ -498,6 +498,7 @@
   /* Callout blocks - Editorial newspaper style */
   .callout {
     @apply my-6 flex gap-4 border border-black/10 bg-white px-6 py-5 shadow-sm shadow-black/5 dark:border-white/10 dark:bg-zinc-900;
+    border-left-width: 4px !important;
   }
 
   .callout-icon {
@@ -516,40 +517,72 @@
     @apply mb-0;
   }
 
-  /* Info callout - subtle blue accent */
+  /* Info callout - blue accent */
   .callout-info {
-    @apply border-l-4 border-l-blue-600 dark:border-l-blue-400;
+    border-left-color: #2563eb !important;
+  }
+
+  .dark .callout-info {
+    border-left-color: #60a5fa !important;
   }
 
   .callout-info .callout-icon {
-    @apply text-blue-600 dark:text-blue-400;
+    color: #2563eb !important;
   }
 
-  /* Warning callout - newspaper yellow/amber */
+  .dark .callout-info .callout-icon {
+    color: #60a5fa !important;
+  }
+
+  /* Warning callout - yellow accent */
   .callout-warning {
-    @apply border-l-4 border-l-yellow-600 dark:border-l-yellow-400;
+    border-left-color: #ca8a04 !important;
+  }
+
+  .dark .callout-warning {
+    border-left-color: #facc15 !important;
   }
 
   .callout-warning .callout-icon {
-    @apply text-yellow-600 dark:text-yellow-400;
+    color: #ca8a04 !important;
   }
 
-  /* Success callout - editorial green */
+  .dark .callout-warning .callout-icon {
+    color: #facc15 !important;
+  }
+
+  /* Success callout - green accent */
   .callout-success {
-    @apply border-l-4 border-l-green-600 dark:border-l-green-400;
+    border-left-color: #16a34a !important;
+  }
+
+  .dark .callout-success {
+    border-left-color: #4ade80 !important;
   }
 
   .callout-success .callout-icon {
-    @apply text-green-600 dark:text-green-400;
+    color: #16a34a !important;
   }
 
-  /* Danger callout - newspaper accent red */
+  .dark .callout-success .callout-icon {
+    color: #4ade80 !important;
+  }
+
+  /* Danger callout - red accent (newspaper accent color) */
   .callout-danger {
-    @apply border-l-4 border-l-newspaper-accent dark:border-l-red-400;
+    border-left-color: #dc2626 !important;
+  }
+
+  .dark .callout-danger {
+    border-left-color: #f87171 !important;
   }
 
   .callout-danger .callout-icon {
-    @apply text-newspaper-accent dark:text-red-400;
+    color: #dc2626 !important;
+  }
+
+  .dark .callout-danger .callout-icon {
+    color: #f87171 !important;
   }
 }
 

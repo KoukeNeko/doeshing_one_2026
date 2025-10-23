@@ -81,6 +81,24 @@ const config: Config = {
               fontStyle: "normal",
               paddingLeft: theme("spacing.6"),
             },
+            // Callout blocks should not inherit blockquote styles
+            ".callout": {
+              borderLeftColor: "inherit",
+              paddingLeft: theme("spacing.6"),
+              fontStyle: "normal",
+            },
+            ".callout-info": {
+              borderLeftColor: "#2563eb !important",
+            },
+            ".callout-warning": {
+              borderLeftColor: "#ca8a04 !important",
+            },
+            ".callout-success": {
+              borderLeftColor: "#16a34a !important",
+            },
+            ".callout-danger": {
+              borderLeftColor: "#dc2626 !important",
+            },
             "ol > li::marker": {
               color: theme("colors.newspaper.accent"),
             },
@@ -128,6 +146,19 @@ const config: Config = {
             blockquote: {
               borderLeftColor: theme("colors.red.400"),
               color: theme("colors.zinc.300"),
+            },
+            // Callout blocks in dark mode
+            ".callout-info": {
+              borderLeftColor: "#60a5fa !important",
+            },
+            ".callout-warning": {
+              borderLeftColor: "#facc15 !important",
+            },
+            ".callout-success": {
+              borderLeftColor: "#4ade80 !important",
+            },
+            ".callout-danger": {
+              borderLeftColor: "#f87171 !important",
             },
             "ol > li::marker": {
               color: theme("colors.red.400"),
