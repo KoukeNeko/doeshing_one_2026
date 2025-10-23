@@ -122,7 +122,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             title="You might also enjoy"
             description="More dispatches on craft and process."
           />
-          <BlogGrid posts={related} featuredCount={3} />
+          <BlogGrid posts={related} featuredCount={4} />
         </section>
         <CommentSection />
 
