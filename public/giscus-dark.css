@@ -507,7 +507,10 @@ main.gsc-main {
 /* Remove all borders */
 .border,
 .w-full.min-w-0.rounded-md.border,
-.color-bg-primary.w-full.min-w-0.rounded-md.border {
+.color-bg-primary.w-full.min-w-0.rounded-md.border,
+.gsc-reply-box,
+.color-bg-tertiary.gsc-reply-box,
+.gsc-reply {
   border: none !important;
 }
 
