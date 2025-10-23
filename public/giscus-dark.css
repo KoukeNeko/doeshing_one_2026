@@ -123,8 +123,8 @@ main.gsc-main {
 .form-control:focus,
 .input-contrast:focus {
   outline: none !important;
-  border-color: #fafafa !important;
-  box-shadow: 0 0 0 1px #fafafa !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .gsc-comment-box-textarea::placeholder {
