@@ -523,31 +523,36 @@ button[type="button"] {
   border: none !important;
 }
 
-/* Reply box styling - keep subtle border for placeholder */
+/* Reply box styling - match main comment textarea */
 .gsc-reply-box,
 .color-bg-tertiary.gsc-reply-box {
-  background-color: transparent !important;
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  background-color: #ffffff !important;
+  border: none !important;
   border-radius: 0 !important;
-  padding: 0.75rem 1rem !important;
+  padding: 1rem !important;
   transition: all 150ms ease !important;
+  min-height: 100px !important;
+  cursor: text !important;
 }
 
 .gsc-reply-box:hover,
 .color-bg-tertiary.gsc-reply-box:hover {
-  border-color: rgba(0, 0, 0, 0.2) !important;
-  background-color: rgba(0, 0, 0, 0.02) !important;
+  background-color: #ffffff !important;
 }
 
 .gsc-reply-box button,
 .gsc-reply-box span {
-  color: #6b7280 !important;
+  color: rgba(107, 114, 128, 0.5) !important;
   font-size: 0.875rem !important;
   font-weight: 400 !important;
+  line-height: 1.7 !important;
+  font-family: Inter, Roboto, sans-serif !important;
 }
 
 .gsc-reply {
   border: none !important;
+  background-color: #ffffff !important;
+  border-radius: 0 !important;
 }
 
 /* Fix button spacing */
