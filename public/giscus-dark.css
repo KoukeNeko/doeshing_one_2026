@@ -130,5 +130,5 @@ main .gsc-loading-image {
 
 
 .rounded .rounded-md .gsc-social-reaction-summary-item .rounded-xl .BtnGroup-item .gsc-comment-box-textarea .gsc-comment-box {
-  border-radius: unset !important;
+  border-radius: 0 !important;
 }
