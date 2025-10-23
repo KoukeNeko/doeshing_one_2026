@@ -1,0 +1,111 @@
+---
+title: "如何讓 Ollama 在 Linux 上對外開放連線"
+excerpt: "在 Linux 系統（包含 Proxmox LXC 容器）上設定 Ollama 服務，使其能夠接受外部機器的連接請求。"
+coverImage: "/images/blog/ollama-linux.svg"
+date: "2025-10-23"
+author:
+  name: "Doeshing"
+  avatar: "/images/avatar.svg"
+  bio: "Creative technologist crafting editorials in the browser. Exploring the sweet spot between storytelling, design, and modern web tooling."
+tags: ["ollama", "linux", "networking", "systemd"]
+published: true
+featured: false
+---
+
+## 適用環境
+
+**適用環境**：Linux 系統（包含 Proxmox LXC 容器）  
+**目標**：讓 Ollama 服務可以接受外部機器的連接請求
+
+## 問題診斷
+
+### 檢查 Ollama 執行狀態
+
+```bash
+# 檢查 Ollama 是否正在執行
+ps aux | grep ollama
+
+# 檢查 Ollama 偵聽的 ip 和 port
+sudo ss -tlnp | grep 11434
+```
+
+<Callout type="warning">
+如果看到 `127.0.0.1:11434`，表示 Ollama 只偵聽本機連線，需要修改設定
+</Callout>
+
+## 解決方案
+
+### Step 1：建立 systemd 服務覆蓋目錄
+
+```bash
+sudo mkdir -p /etc/systemd/system/ollama.service.d/
+```
+
+### Step 2：建立環境變數設定文件
+
+```bash
+sudo tee /etc/systemd/system/ollama.service.d/override.conf << EOF
+[Service]
+Environment="OLLAMA_HOST=0.0.0.0:11434"
+EOF
+```
+
+### Step 3：重新載入並重啟服務
+
+```bash
+# 重新載入 systemd 設定
+sudo systemctl daemon-reload
+
+# 重啟 Ollama 服務
+sudo systemctl restart ollama
+```
+
+### Step 4：驗證設定成功
+
+```bash
+# 檢查是否監聽所有介面
+sudo ss -tlnp | grep 11434
+```
+
+<Callout type="success">
+**成功標誌**：應該看到 `0.0.0.0:11434` 而不是 `127.0.0.1:11434`
+</Callout>
+
+### Step 5：測試連接
+
+#### 本地測試
+
+```bash
+# 測試本機連線
+curl http://localhost:11434/api/tags
+```
+
+## 故障排除
+
+### 如果 systemd 方法無效
+
+```bash
+# 停止 systemd 服務
+sudo systemctl stop ollama
+
+# 手動啟動並設定環境變數
+sudo OLLAMA_HOST=0.0.0.0:11434 /usr/local/bin/ollama serve
+```
+
+### 防火牆檢查
+
+```bash
+# 檢查防火牆狀態
+sudo ufw status
+
+# 如需要，開放 11434 port
+sudo ufw allow 11434
+```
+
+<Callout type="danger">
+**安全提醒**：對外開放 Ollama 服務時，請確保網路環境安全，避免未授權存取
+</Callout>
+
+## 總結
+
+透過修改 systemd 服務設定，我們可以輕鬆讓 Ollama 服務從只接受本地連線改為接受所有網路介面的連線。記得在開放服務前做好適當的安全措施，包括防火牆設定和網路隔離。
