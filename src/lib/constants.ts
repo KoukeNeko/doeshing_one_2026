@@ -46,6 +46,24 @@ export const FRIEND_LINKS = [
   },
 ] as const;
 
-export const FEATURED_POST_LIMIT = 3;
+// ============================================
+// Content Display Limits
+// ============================================
+
+// Homepage: Number of featured posts to highlight with large cards
+export const HOMEPAGE_FEATURED_COUNT = 2;
+
+// Homepage: Total number of posts to fetch for the homepage blog grid
+export const HOMEPAGE_POSTS_FETCH_LIMIT = 6;
+
+// Post detail pages: Number of related posts to show in "You might also enjoy" section
+export const RELATED_POSTS_FEATURED_COUNT = 3;
+
+// Homepage: Number of featured projects to display in the projects section
 export const FEATURED_PROJECT_LIMIT = 3;
+
+// Work page: Number of projects to highlight with large cards (usually 1-2)
+export const WORK_PAGE_FEATURED_COUNT = 1;
+
+// Archive/Category/Search pages: Number of posts to display per page for pagination
 export const POSTS_PER_PAGE = 9;

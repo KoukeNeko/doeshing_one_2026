@@ -14,6 +14,7 @@ import {
   getRelatedPosts,
   incrementPostViews,
 } from "@/lib/blog";
+import { RELATED_POSTS_FEATURED_COUNT } from "@/lib/constants";
 import { renderMarkdown } from "@/lib/mdx";
 import { formatDate } from "@/lib/utils";
 
@@ -122,7 +123,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             title="You might also enjoy"
             description="More dispatches on craft and process."
           />
-          <BlogGrid posts={related} featuredCount={4} />
+          <BlogGrid posts={related} featuredCount={RELATED_POSTS_FEATURED_COUNT} />
         </section>
         <CommentSection />
 

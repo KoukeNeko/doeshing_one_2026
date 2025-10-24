@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ProjectGrid } from "@/components/projects/ProjectGrid";
 import { Badge } from "@/components/ui/Badge";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { WORK_PAGE_FEATURED_COUNT } from "@/lib/constants";
 import { loadAllProjects } from "@/lib/mdx";
 
 interface ProjectsPageProps {
@@ -91,7 +92,7 @@ export default async function ProjectsPage({
         </div>
       </div>
 
-      <ProjectGrid projects={filtered} featuredCount={1} />
+      <ProjectGrid projects={filtered} featuredCount={WORK_PAGE_FEATURED_COUNT} />
     </div>
   );
 }

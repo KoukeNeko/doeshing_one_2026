@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Pagination } from "@/components/ui/Pagination";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getPublishedPosts, getTagsWithCount, getCategoriesWithCount } from "@/lib/blog";
-import { FEATURED_POST_LIMIT, POSTS_PER_PAGE } from "@/lib/constants";
+import { RELATED_POSTS_FEATURED_COUNT, POSTS_PER_PAGE } from "@/lib/constants";
 
 // Revalidate this page every 60 seconds
 export const revalidate = 60;
@@ -103,7 +103,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
       <TagFilter tags={tags} />
 
-      <BlogGrid posts={posts} featuredCount={FEATURED_POST_LIMIT} />
+      <BlogGrid posts={posts} featuredCount={RELATED_POSTS_FEATURED_COUNT} />
 
       <div className="flex flex-wrap items-center justify-between gap-3 border border-black/10 bg-white px-6 py-4 dark:border-white/10 dark:bg-zinc-900">
         <div className="flex items-center gap-3">

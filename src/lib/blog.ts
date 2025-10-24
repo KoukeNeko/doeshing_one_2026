@@ -3,6 +3,7 @@ import path from "node:path";
 import matter from "gray-matter";
 import { unstable_cache } from "next/cache";
 import type { BlogPostListItem } from "@/types/content";
+import { RELATED_POSTS_FEATURED_COUNT } from "./constants";
 import { renderMarkdown } from "./mdx";
 import { getReadingTime } from "./utils";
 
@@ -296,7 +297,7 @@ export async function getPublishedPosts({
   return { posts, total };
 }
 
-export async function getFeaturedPosts(limit = 3): Promise<BlogPostListItem[]> {
+export async function getFeaturedPosts(limit = RELATED_POSTS_FEATURED_COUNT): Promise<BlogPostListItem[]> {
   return unstable_cache(
     async () => {
       const allPosts = await getAllBlogPosts();
@@ -418,7 +419,7 @@ export async function incrementPostViews(postId: string) {
 export async function getRelatedPosts(
   postId: string,
   tagSlugs: string[],
-  limit = 3,
+  limit = RELATED_POSTS_FEATURED_COUNT,
 ): Promise<BlogPostListItem[]> {
   if (!tagSlugs.length) return [];
   

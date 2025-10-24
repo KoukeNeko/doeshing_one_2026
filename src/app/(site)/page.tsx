@@ -7,6 +7,11 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getFeaturedPosts } from "@/lib/blog";
 import { loadAllProjects } from "@/lib/mdx";
 import { getNewspaperDateline } from "@/lib/utils";
+import {
+  HOMEPAGE_FEATURED_COUNT,
+  HOMEPAGE_POSTS_FETCH_LIMIT,
+  FEATURED_PROJECT_LIMIT,
+} from "@/lib/constants";
 
 // Revalidate this page every 60 seconds
 export const revalidate = 60;
@@ -38,11 +43,11 @@ const quickLinks: Array<{
 
 export default async function HomePage() {
   const [featuredPosts, projects] = await Promise.all([
-    getFeaturedPosts(7), // Fetch 7 posts to have enough for featured display on homepage
+    getFeaturedPosts(HOMEPAGE_POSTS_FETCH_LIMIT),
     loadAllProjects(),
   ]);
 
-  const featuredProjects = projects.slice(0, 3);
+  const featuredProjects = projects.slice(0, FEATURED_PROJECT_LIMIT);
 
   return (
 
@@ -142,7 +147,7 @@ export default async function HomePage() {
           title="Latest essays and field notes"
           description="The editorial feed surfaces well-crafted pieces on design, development, and the craft of storytelling."
         />
-        <BlogGrid posts={featuredPosts} featuredCount={2} />
+        <BlogGrid posts={featuredPosts} featuredCount={HOMEPAGE_FEATURED_COUNT} />
         <div className="flex justify-end">
           <Button asChild variant="ghost">
             <Link href="/archive" className="gap-2">
