@@ -75,6 +75,8 @@ const config: Config = {
             code: {
               fontFamily: theme("fontFamily.mono").join(", "),
               fontWeight: 500,
+              fontVariantLigatures: "normal",
+              fontFeatureSettings: '"liga" 1, "calt" 1',
             },
             blockquote: {
               borderLeftColor: theme("colors.newspaper.accent"),
