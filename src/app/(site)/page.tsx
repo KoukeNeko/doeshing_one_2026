@@ -1,3 +1,29 @@
+/**
+ * 首頁元件 (Homepage)
+ *
+ * 這是網站的主要入口頁面，採用報紙風格的雜誌式佈局。
+ *
+ * 頁面結構：
+ * 1. Hero Section - 標題、簡介、CTA 按鈕、最新文章摘要
+ * 2. Quick Navigation - 三個快速導航卡片（Archive、Work、About）
+ * 3. Featured Stories - 特色部落格文章網格
+ * 4. Studio Work - 特色專案展示
+ *
+ * 資料載入策略：
+ * - 使用 Promise.all 並行載入文章和專案，提升效能
+ * - getFeaturedPosts: 從快取取得特色文章（60 秒快取）
+ * - loadAllProjects: 載入所有專案並依日期排序
+ *
+ * ISR (Incremental Static Regeneration)：
+ * - revalidate: 60 秒 - 每分鐘重新生成一次頁面
+ * - 確保內容保持相對新鮮，同時保有靜態頁面的效能優勢
+ *
+ * 使用的常數（來自 lib/constants.ts）：
+ * - HOMEPAGE_FEATURED_COUNT: 首頁特色文章數（預設 2）
+ * - HOMEPAGE_POSTS_FETCH_LIMIT: 首頁總共載入的文章數（預設 6）
+ * - FEATURED_PROJECT_LIMIT: 首頁顯示的專案數（預設 3）
+ */
+
 import { ArrowRight, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { BlogGrid } from "@/components/blog/BlogGrid";
@@ -13,9 +39,17 @@ import {
   FEATURED_PROJECT_LIMIT,
 } from "@/lib/constants";
 
-// Revalidate this page every 60 seconds
+/**
+ * ISR 設定：每 60 秒重新驗證頁面
+ * 這使得首頁可以在不完全重建網站的情況下保持內容更新
+ */
 export const revalidate = 60;
 
+/**
+ * 快速導航連結資料
+ * 顯示在首頁的 "Quick Navigation" 區段
+ * 每個連結都是一個可點擊的卡片，提供網站主要區域的快速訪問
+ */
 const quickLinks: Array<{
   title: string;
   description: string;
@@ -41,12 +75,23 @@ const quickLinks: Array<{
   },
 ];
 
+/**
+ * 首頁元件 (非同步 Server Component)
+ *
+ * 在伺服器端載入資料並渲染頁面
+ * Next.js 會自動處理資料載入和快取
+ *
+ * @returns 首頁 JSX
+ */
 export default async function HomePage() {
+  // 並行載入特色文章和專案資料
+  // 使用 Promise.all 可以同時發起兩個請求，減少總載入時間
   const [featuredPosts, projects] = await Promise.all([
-    getFeaturedPosts(HOMEPAGE_POSTS_FETCH_LIMIT),
-    loadAllProjects(),
+    getFeaturedPosts(HOMEPAGE_POSTS_FETCH_LIMIT),  // 取得特色文章（快取 60 秒）
+    loadAllProjects(),                              // 載入所有專案（快取 1 小時）
   ]);
 
+  // 只取前 N 個專案顯示在首頁
   const featuredProjects = projects.slice(0, FEATURED_PROJECT_LIMIT);
 
   return (
