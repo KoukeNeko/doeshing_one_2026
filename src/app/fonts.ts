@@ -32,12 +32,12 @@ export const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
 });
 
-// JetBrains Mono - 使用本地 Variable Font
-export const jetbrains = localFont({
-  src: "../../public/fonts/JetBrainsMono-2.304/fonts/variable/JetBrainsMono[wght].ttf",
-  variable: "--font-jetbrains",
+// Fira Code - 使用本地 Variable Font (支援 ligatures)
+export const firaCode = localFont({
+  src: "../../public/fonts/Fira_Code_v6.2/woff2/FiraCode-VF.woff2",
+  variable: "--font-fira-code",
   display: "swap",
-  weight: "100 800", // Variable font 支援 100-800 字重範圍
+  weight: "300 700", // Variable font 支援 300-700 字重範圍
 });
 
 // Traditional Chinese version (主要使用)
@@ -131,7 +131,7 @@ export const fontVariables = [
   merriweather.variable,
   inter.variable,
   roboto.variable,
-  jetbrains.variable,
+  firaCode.variable,
   genRyuMin.variable,
   genRyuMinJP.variable,
 ].join(" ");

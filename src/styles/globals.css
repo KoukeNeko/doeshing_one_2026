@@ -6,7 +6,7 @@
   :root {
     --font-serif: var(--font-genryumin), "Playfair Display", "Merriweather", "GenRyuMin JP Auto", "GenRyuMin TW Auto", serif;
     --font-sans: "Inter", "Roboto", sans-serif;
-    --font-mono: var(--font-jetbrains), monospace;
+    --font-mono: var(--font-fira-code), monospace;
     --color-ink: #1a1a1a;
     --color-paper: #fafafa;
     --color-accent: #dc2626;
