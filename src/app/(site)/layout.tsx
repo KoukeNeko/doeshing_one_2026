@@ -1,6 +1,7 @@
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { FloatingActions } from "@/components/ui/FloatingActions";
+import { WipRibbon } from "@/components/ui/WipRibbon";
 
 export default function SiteLayout({
   children,
@@ -12,6 +13,7 @@ export default function SiteLayout({
       <a href="#main-content" className="sr-only sr-only-focusable">
         Skip to content
       </a>
+      <WipRibbon />
       <Header />
       <main
         id="main-content"
