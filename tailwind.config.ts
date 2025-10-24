@@ -31,7 +31,7 @@ const config: Config = {
           "serif",
         ],
         sans: ["Inter", "Roboto", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        mono: ["var(--font-jetbrains)", "monospace"],
       },
       maxWidth: {
         prose: "65ch",
