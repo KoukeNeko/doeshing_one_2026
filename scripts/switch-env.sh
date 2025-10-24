@@ -78,7 +78,6 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         echo -e "${GREEN}✅ 已切換到開發環境！${NC}"
         echo ""
         echo "🌐 訪問: http://localhost:3000"
-        echo "🔐 登入: http://localhost:3000/admin/login"
     else
         echo "  ✓ 啟動生產環境..."
         docker compose --profile prod up -d
@@ -88,7 +87,6 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         echo -e "${GREEN}✅ 已切換到生產環境！${NC}"
         echo ""
         echo "🌐 訪問: https://doeshing.one"
-        echo "🔐 登入: https://doeshing.one/admin/login"
         echo ""
         echo -e "${YELLOW}⚠️  記得確認：${NC}"
         echo "  1. DNS 指向正確"

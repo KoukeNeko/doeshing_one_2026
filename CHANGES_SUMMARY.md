@@ -86,7 +86,7 @@ content/blog/
 2. **Static Export**: All content is included in the build
 3. **Rebuild on Content Changes**: New posts require a rebuild/redeploy
 4. **Automatic Deployments**: Works perfectly with Vercel/Netlify automatic deployments
-5. **Optional Database**: Prisma schema still available for future admin features
+5. **Optional Database**: Prisma schema retained for potential future dynamic features
 
 ## File Changes Summary
 

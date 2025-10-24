@@ -76,17 +76,6 @@ if [ -f "$HOME_PAGE" ]; then
     fi
 fi
 
-# 管理後台首頁
-ADMIN_PAGE="src/app/admin/(dashboard)/page.tsx"
-if [ -f "$ADMIN_PAGE" ]; then
-    if ! grep -q "export const dynamic" "$ADMIN_PAGE"; then
-        echo "  ✓ 設定管理後台為動態渲染..."
-        sed -i '/^import/a\\n// Force dynamic rendering\nexport const dynamic = '\''force-dynamic'\'';' "$ADMIN_PAGE"
-    else
-        echo "  ✓ 管理後台已經設定為動態渲染"
-    fi
-fi
-
 # Archive 頁面
 ARCHIVE_PAGE="src/app/(site)/archive/page.tsx"
 if [ -f "$ARCHIVE_PAGE" ]; then
@@ -195,7 +184,6 @@ if [[ $FINAL_NEXTAUTH_URL == *"https://doeshing.one"* ]]; then
     echo -e "${GREEN}✅ 生產環境設定完成${NC}"
     echo ""
     echo "🌐 請訪問: https://doeshing.one"
-    echo "🔐 登入頁面: https://doeshing.one/admin/login"
     echo ""
     echo "⚠️  重要提醒:"
     echo "1. 確認 DNS 已指向正確的伺服器"

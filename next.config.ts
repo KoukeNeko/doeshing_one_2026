@@ -96,24 +96,6 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // Prevent crawlers from indexing private admin routes
-      {
-        source: "/admin/:path*",
-        headers: [
-          {
-            key: "X-Robots-Tag",
-            value: "noindex, nofollow",
-          },
-          {
-            key: "Cache-Control",
-            value: "no-store",
-          },
-          {
-            key: "Pragma",
-            value: "no-cache",
-          },
-        ],
-      },
     ];
   },
   

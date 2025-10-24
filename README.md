@@ -21,7 +21,7 @@ Magazine-style personal site built with Next.js 15, Tailwind CSS, and static MDX
 - **Content Processing:** gray-matter, unified, remark, rehype
 - **Code Highlighting:** Shiki with rehype-pretty-code
 - **Tooling:** TypeScript, Biome, Zod, reading-time, date-fns
-- **Optional:** Prisma schema available for future database features
+
 
 ## 📁 Project Structure
 
@@ -33,7 +33,6 @@ src/
       work/           Project list + detail pages
       about/          CV/résumé page
       contact/        Contact info + clipboard helper
-    admin/            Admin panel (optional, requires database setup)
     api/              REST endpoints (optional)
     sitemap.ts        Auto-generated sitemap (static)
     robots.ts         Auto-generated robots.txt (static)
@@ -74,15 +73,7 @@ NEXT_PUBLIC_SITE_URL="https://yourdomain.com"
 
 - `NEXT_PUBLIC_SITE_URL` — Public site URL for metadata, SEO, and social sharing (default: <http://localhost:3000>)
 
-**Optional - For Database Features:**
 
-If you want to enable the admin panel or database features in the future:
-
-```bash
-DATABASE_URL="postgresql://..."
-NEXTAUTH_SECRET="your-secret-key"
-NEXTAUTH_URL="http://localhost:3000"
-```
 
 ### 3. Run the development server
 
