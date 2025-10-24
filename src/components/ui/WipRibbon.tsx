@@ -4,7 +4,7 @@ export function WipRibbon() {
   return (
     <div className="pointer-events-none fixed inset-0 z-[100] h-screen w-screen overflow-hidden">
       <div
-        className="absolute right-[-100px] top-[0px] w-[320px] rotate-[45deg] transform bg-[#dc2626] text-center shadow-md dark:bg-red-700"
+        className="absolute right-[-100px] top-[0px] w-[320px] rotate-[45deg] transform bg-[#b03c3c] text-center shadow-md dark:bg-red-700"
         style={{
           boxShadow: "0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 1px 3px -1px rgba(0, 0, 0, 0.15)",
         }}
