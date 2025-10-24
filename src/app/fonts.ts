@@ -1,6 +1,5 @@
 import {
   Inter,
-  JetBrains_Mono,
   Merriweather,
   Playfair_Display,
   Roboto,
@@ -33,11 +32,12 @@ export const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
 });
 
-export const jetbrains = JetBrains_Mono({
+// JetBrains Mono - 使用本地 Variable Font
+export const jetbrains = localFont({
+  src: "../../public/fonts/JetBrainsMono-2.304/fonts/variable/JetBrainsMono[wght].ttf",
   variable: "--font-jetbrains",
-  subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "700"],
+  weight: "100 800", // Variable font 支援 100-800 字重範圍
 });
 
 // Traditional Chinese version (主要使用)
