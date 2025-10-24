@@ -331,7 +331,7 @@ mcp-server call search_items '{"keyword":"TikTok"}'
 ```
 User: 幫我檢查這段文字有沒有支語
 
-這個軟件的數據庫性能很好，但是用戶體驗還需要優化。
+這個軟件的數據庫效能很好，但是用戶體驗還需要優化。
 
 Claude: [自動呼叫 invade-tw MCP server]
 
@@ -342,7 +342,7 @@ Claude: [自動呼叫 invade-tw MCP server]
 3. "用戶" → 建議使用 "使用者"
 
 修改後的文字：
-這個軟體的資料庫性能很好，但是使用者體驗還需要優化。
+這個軟體的資料庫效能很好，但是使用者體驗還需要優化。
 ```
 
 ### Docker Deployment
