@@ -1,7 +1,7 @@
 import { Github, Linkedin, PenLine, Twitter } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { NAV_LINKS, SITE_NAME, SOCIAL_LINKS } from "@/lib/constants";
+import { FRIEND_LINKS, NAV_LINKS, SITE_NAME, SOCIAL_LINKS } from "@/lib/constants";
 
 const iconMap: Record<string, ReactNode> = {
   github: <Github size={18} strokeWidth={1.5} />,
@@ -13,7 +13,7 @@ const iconMap: Record<string, ReactNode> = {
 export function Footer() {
   return (
     <footer className="mt-16 border-t border-black/10 bg-white pb-[env(safe-area-inset-bottom)] dark:border-white/10 dark:bg-zinc-900">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 py-12 md:grid-cols-4 md:px-6">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 py-12 md:grid-cols-2 md:px-6 lg:grid-cols-5">
         <div className="md:col-span-2">
           <p className="text-xs font-semibold uppercase tracking-[0.5em] text-newspaper-gray dark:text-zinc-400">
             {SITE_NAME}
@@ -58,6 +58,26 @@ export function Footer() {
                     {iconMap[link.icon]}
                   </span>
                   {link.platform}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
+            友站連結
+          </p>
+          <ul className="mt-4 space-y-2">
+            {FRIEND_LINKS.map((link) => (
+              <li key={link.name}>
+                <Link
+                  href={link.href}
+                  className="block text-sm uppercase tracking-[0.25em] text-newspaper-gray transition hover:text-newspaper-ink dark:text-zinc-400 dark:hover:text-zinc-100"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={link.description}
+                >
+                  {link.name}
                 </Link>
               </li>
             ))}
