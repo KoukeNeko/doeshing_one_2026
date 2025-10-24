@@ -291,6 +291,14 @@
     word-wrap: break-word;
     overflow-wrap: break-word;
     word-break: break-all;
+    font-variant-ligatures: normal; /* 啟用 Fira Code ligatures */
+    font-feature-settings: "liga" 1, "calt" 1; /* 確保連字正常顯示 */
+  }
+
+  /* 程式碼區塊內的 code 也啟用 ligatures */
+  .prose pre code {
+    font-variant-ligatures: normal;
+    font-feature-settings: "liga" 1, "calt" 1;
   }
 
   .prose table {
