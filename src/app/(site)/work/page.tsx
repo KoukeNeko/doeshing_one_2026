@@ -91,7 +91,7 @@ export default async function ProjectsPage({
         </div>
       </div>
 
-      <ProjectGrid projects={filtered} />
+      <ProjectGrid projects={filtered} featuredCount={1} />
     </div>
   );
 }
