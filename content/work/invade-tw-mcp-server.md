@@ -75,7 +75,7 @@ This MCP server bridges the gap between crowdsourced linguistic databases and AI
 │  Claude Desktop  │
 │                  │
 │  User writes:    │
-│  "數據庫管理"     │
+│  "數據庫管理"      │
 └────────┬─────────┘
          │ MCP Request
          ▼
@@ -96,7 +96,7 @@ This MCP server bridges the gap between crowdsourced linguistic databases and AI
 │  Claude Desktop  │
 │                  │
 │  Suggests:       │
-│  "資料庫管理" ✓   │
+│  "資料庫管理" ✓    │
 └──────────────────┘
 ```
 
