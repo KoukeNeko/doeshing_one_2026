@@ -4,8 +4,9 @@ import { useEffect } from 'react'
 
 interface AdSenseProps {
   adSlot: string
+  adLayout?: 'in-article' | 'display'
   adFormat?: 'auto' | 'fluid' | 'rectangle' | 'vertical' | 'horizontal'
-  fullWidthResponsive?: boolean
+  style?: React.CSSProperties
   className?: string
 }
 
@@ -17,8 +18,9 @@ declare global {
 
 export function AdSense({
   adSlot,
-  adFormat = 'auto',
-  fullWidthResponsive = true,
+  adLayout = 'in-article',
+  adFormat = 'fluid',
+  style = { display: 'block', textAlign: 'center' },
   className = '',
 }: AdSenseProps) {
   useEffect(() => {
@@ -32,15 +34,13 @@ export function AdSense({
   }, [])
 
   return (
-    <div className={`adsense-container ${className}`}>
-      <ins
-        className="adsbygoogle"
-        style={{ display: 'block' }}
-        data-ad-client="ca-pub-3252699819735273"
-        data-ad-slot={adSlot}
-        data-ad-format={adFormat}
-        data-full-width-responsive={fullWidthResponsive.toString()}
-      />
-    </div>
+    <ins
+      className={`adsbygoogle ${className}`}
+      style={style}
+      data-ad-client="ca-pub-3252699819735273"
+      data-ad-slot={adSlot}
+      data-ad-layout={adLayout}
+      data-ad-format={adFormat}
+    />
   )
 }

@@ -14,9 +14,9 @@ export function SidebarAd({ adSlot }: SidebarAdProps) {
       </p>
       <AdSense
         adSlot={adSlot}
-        adFormat="auto"
-        fullWidthResponsive={true}
-        className="min-h-[250px]"
+        adLayout="in-article"
+        adFormat="fluid"
+        style={{ display: 'block', textAlign: 'center', minHeight: '250px' }}
       />
     </div>
   )
