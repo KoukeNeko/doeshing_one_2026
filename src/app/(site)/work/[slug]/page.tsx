@@ -48,8 +48,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const { frontmatter, html, toc } = project;
 
   return (
-    <article className="space-y-6">
-      <header className="space-y-5 border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900">
+    <article className="space-y-10">
+      <header className="space-y-6 border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900">
         <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
           <span>{formatDate(frontmatter.date, "MMM yyyy")}</span>
           {frontmatter.status ? (

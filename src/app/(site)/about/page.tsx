@@ -36,7 +36,7 @@ export default function AboutPage() {
             height={120}
             className="h-24 w-24 rounded-full border border-black/10 object-cover dark:border-white/10"
           />
-          <div className="space-y-2">
+          <div className="space-y-3">
             <h1 className="font-serif text-3xl tracking-tight text-newspaper-ink dark:text-zinc-50">
               {cvData.personal.name} (De-Sheng Chen)
             </h1>
@@ -142,7 +142,7 @@ export default function AboutPage() {
 
 
       <section className="grid gap-8 md:grid-cols-2">
-        <div className="space-y-4">
+        <div className="space-y-3">
           <SectionHeading kicker="Education" title="Academic background" />
           <ul className="space-y-3">
             {cvData.education.map((item) => (
@@ -168,7 +168,7 @@ export default function AboutPage() {
             ))}
           </ul>
         </div>
-        <div className="space-y-4">
+        <div className="space-y-3">
           <SectionHeading kicker="Certifications" title="Professional credentials" />
           <CertificationsList certifications={cvData.certifications} />
         </div>
@@ -225,7 +225,7 @@ export default function AboutPage() {
           {cvData.volunteering.map((volunteer, index) => (
             <li key={volunteer.role + index} className="mb-8 last:mb-0">
               <div className="absolute -left-2 mt-1 h-4 w-4 rounded-full border border-newspaper-accent bg-white dark:border-red-400 dark:bg-zinc-900" />
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <div className="flex flex-col gap-1">
                   <span className="font-serif text-lg text-newspaper-ink dark:text-zinc-50">
                     {volunteer.role}
