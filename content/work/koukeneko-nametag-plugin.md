@@ -16,6 +16,12 @@ I created KoukeNeko Nametag to solve a simple problem: managing player tags on M
 
 **Published on Modrinth** with 74+ downloads and counting, running on servers across the Minecraft 1.21+ ecosystem.
 
+## Screenshots
+
+![Tag Selection GUI - Players can click to choose their tags](https://github.com/user-attachments/assets/c5586f29-8247-4b17-85c1-e307e4ebb2fe)
+
+![In-game Display - Tags appear before player names in chat and tab list](https://github.com/user-attachments/assets/28ad0478-b32f-4e7e-9e31-309d237e00e2)
+
 ## Why I Built This
 
 Running a Minecraft server, I kept running into the same frustrations:
