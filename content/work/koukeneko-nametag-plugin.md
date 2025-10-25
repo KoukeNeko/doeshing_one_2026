@@ -2,7 +2,7 @@
 title: "KoukeNeko Nametag Plugin - Minecraft Tag Management Made Easy"
 description: "A Minecraft plugin I built to let players choose their own tags through a simple GUI menu. No more typing complex commands - just click and go. Integrates with LuckPerms and TAB, supports multiple languages, and runs on 1.21+ Paper servers."
 tags: ["Java", "Minecraft", "Paper", "Plugin", "GUI", "LuckPerms", "Open Source", "YAML"]
-image: "https://github-production-user-asset-6210df.s3.amazonaws.com/111033412/438048249-c5586f29-8247-4b17-85c1-e307e4ebb2fe.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20251025%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251025T143131Z&X-Amz-Expires=300&X-Amz-Signature=b6fdbf52c46387e210086b7aa8cb83e8721ea26a84adbb891cd2323e6df72f0a&X-Amz-SignedHeaders=host"
+image: "/images/projects/koukeneko-nametag.svg"
 github: "https://github.com/KoukeNeko/KoukeNeko-Nametag"
 demo: "https://modrinth.com/plugin/koukeneko-nametag-plugin"
 date: "2025-04"
