@@ -5,7 +5,7 @@ tags: ["Go", "MCP", "Open Source", "NLP", "Claude Desktop", "API", "YAML", "Data
 image: "/images/projects/invade-mcp.svg"
 github: "https://github.com/caris-events/invade"
 demo: "https://github.com/caris-events/invade/pull/15"
-date: "2024-10"
+date: "2025-10"
 featured: true
 status: "completed"
 ---
