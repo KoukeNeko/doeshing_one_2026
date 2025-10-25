@@ -175,8 +175,8 @@ async function getAllBlogFiles(dir: string, baseDir: string = dir): Promise<stri
         if (entry.isDirectory()) {
           return getAllBlogFiles(fullPath, baseDir);
         }
-        // Exclude README files and only include .md or .mdx files
-        if (/\.mdx?$/.test(entry.name) && !/^README\.mdx?$/i.test(entry.name)) {
+        // Exclude README files, files starting with underscore, and only include .md or .mdx files
+        if (/\.mdx?$/.test(entry.name) && !/^README\.mdx?$/i.test(entry.name) && !entry.name.startsWith('_')) {
           return [path.relative(baseDir, fullPath)];
         }
         return [];

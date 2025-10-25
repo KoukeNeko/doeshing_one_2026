@@ -205,6 +205,7 @@ export async function getProjectSlugs() {
     const files = await fs.readdir(PROJECTS_DIR);
     return files
       .filter((file) => /\.mdx?$/.test(file))
+      .filter((file) => !file.startsWith('_')) // 排除以底線開頭的檔案
       .map((file) => file.replace(/\.mdx?$/, ""));
   } catch (error) {
     console.error(`Error reading projects directory ${PROJECTS_DIR}:`, error);
