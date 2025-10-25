@@ -15,7 +15,7 @@ import {
   getRelatedPosts,
   incrementPostViews,
 } from "@/lib/blog";
-import { RELATED_POSTS_FEATURED_COUNT } from "@/lib/constants";
+import { ADSENSE_SIDEBAR_SLOT_ID, RELATED_POSTS_FEATURED_COUNT } from "@/lib/constants";
 import { renderMarkdown } from "@/lib/mdx";
 import { formatDate } from "@/lib/utils";
 
@@ -171,7 +171,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <aside className="hidden md:block">
         <div className="space-y-6">
           <TableOfContents items={toc ?? []} />
-          <SidebarAd adSlot="YOUR_AD_SLOT_ID" />
+          <SidebarAd adSlot={ADSENSE_SIDEBAR_SLOT_ID} />
           <div className="border border-black/10 bg-white px-6 py-6 dark:border-white/10 dark:bg-zinc-900">
             <span className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
               Author

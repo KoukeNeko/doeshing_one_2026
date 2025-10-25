@@ -149,3 +149,23 @@ export const WORK_PAGE_FEATURED_COUNT = 1;
  * total page count (totalPages = Math.ceil(total / POSTS_PER_PAGE))
  */
 export const POSTS_PER_PAGE = 9;
+
+// ============================================
+// AdSense Configuration
+// ============================================
+
+/**
+ * Google AdSense Publisher ID
+ * Used in: Root layout (app/layout.tsx) for AdSense script
+ */
+export const ADSENSE_PUBLISHER_ID = "pub-3252699819735273";
+
+/**
+ * AdSense ad slot ID for sidebar ads
+ * Used in:
+ * - Blog post pages (app/(site)/blog/[slug]/page.tsx)
+ * - Project pages (app/(site)/projects/[slug]/page.tsx)
+ *
+ * This is the ad unit ID created in Google AdSense dashboard
+ */
+export const ADSENSE_SIDEBAR_SLOT_ID = "2944317010";
