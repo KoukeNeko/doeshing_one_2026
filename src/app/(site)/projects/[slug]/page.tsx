@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { SidebarAd } from "@/components/ads/SidebarAd";
 import { RenderedMarkdown } from "@/components/mdx/RenderedMarkdown";
 import { Badge } from "@/components/ui/Badge";
 import { loadProjectContent } from "@/lib/mdx";
@@ -120,6 +121,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </ul>
             </div>
           ) : null}
+          <SidebarAd adSlot="YOUR_AD_SLOT_ID" />
           <div className="border border-black/10 bg-white px-6 py-6 text-sm text-newspaper-gray dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400">
             <p>
               <strong className="font-semibold text-newspaper-ink dark:text-zinc-50">

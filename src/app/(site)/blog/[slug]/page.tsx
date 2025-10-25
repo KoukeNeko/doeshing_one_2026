@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { SidebarAd } from "@/components/ads/SidebarAd";
 import { BlogGrid } from "@/components/blog/BlogGrid";
 import CommentSection from "@/components/blog/CommentSection";
 import { ShareButtons } from "@/components/blog/ShareButtons";
@@ -170,6 +171,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <aside className="hidden md:block">
         <div className="space-y-6">
           <TableOfContents items={toc ?? []} />
+          <SidebarAd adSlot="YOUR_AD_SLOT_ID" />
           <div className="border border-black/10 bg-white px-6 py-6 dark:border-white/10 dark:bg-zinc-900">
             <span className="text-xs font-semibold uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
               Author

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { fontVariables } from "./fonts";
 import "@/styles/globals.css";
@@ -60,6 +61,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh" className={fontVariables} suppressHydrationWarning>
+      <head>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3252699819735273"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      </head>
       <body className="min-h-screen overflow-x-hidden bg-newspaper-paper text-newspaper-ink antialiased dark:bg-zinc-900 dark:text-zinc-100" suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
