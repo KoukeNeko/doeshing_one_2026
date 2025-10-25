@@ -49,18 +49,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <article className="space-y-12">
-      {frontmatter.image ? (
-        <div className="relative aspect-[21/9] w-full overflow-hidden border border-black/10 bg-white shadow-editorial dark:border-white/10 dark:bg-zinc-900">
-          <Image
-            src={frontmatter.image}
-            alt={frontmatter.title}
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-      ) : null}
-
       <header className="space-y-5 border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900">
         <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
           <span>{formatDate(frontmatter.date, "MMM yyyy")}</span>
@@ -103,6 +91,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           ) : null}
         </div>
       </header>
+
+      {frontmatter.image ? (
+        <div className="relative aspect-[21/9] w-full overflow-hidden border border-black/10 bg-white shadow-editorial dark:border-white/10 dark:bg-zinc-900">
+          <Image
+            src={frontmatter.image}
+            alt={frontmatter.title}
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+      ) : null}
 
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr),280px]">
         <div className="min-w-0 overflow-x-hidden">
