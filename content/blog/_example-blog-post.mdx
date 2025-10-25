@@ -1,0 +1,413 @@
+---
+# ============================================
+# 部落格文章 Frontmatter 欄位說明
+# ============================================
+# 此檔案展示所有可用的部落格文章 frontmatter 欄位
+# 檔名開頭使用 _ 表示這是範例檔案，不會在網站上顯示
+
+# --------------------------------------------
+# 必填欄位 (Required Fields)
+# --------------------------------------------
+
+title: "Example Blog Post - Complete Field Guide for Writing Articles"
+# 文章標題
+# - 會顯示在文章卡片、文章頁面頂部、瀏覽器標籤
+# - 建議長度：30-60 字元
+# - 用於 SEO title tag
+# - 應該吸引人且描述性強
+
+excerpt: "A comprehensive guide showing all available frontmatter fields for blog posts. This example demonstrates required and optional fields, their formats, and best practices for writing engaging technical articles."
+# 文章摘要/簡介
+# - 會顯示在文章列表卡片
+# - 建議長度：120-160 字元
+# - 用於 SEO meta description
+# - 應該總結文章的核心內容，吸引讀者點擊
+
+date: "2025-01-15"
+# 文章發布日期
+# - 格式：YYYY-MM-DD (必須是完整日期)
+# - 用於文章排序（預設按最新排序）
+# - 顯示在文章卡片和文章頁面
+# - 影響 RSS feed 的發布時間
+
+author:
+  name: "Your Name"
+  # 作者名稱
+  # - 顯示在文章頁面、文章卡片
+  # - 建議使用真實姓名或常用筆名
+
+  avatar: "/images/authors/your-avatar.jpg"
+  # 作者頭像 (選填)
+  # - 路徑相對於 public/ 目錄
+  # - 建議尺寸：200x200px (正方形)
+  # - 支援格式：.png, .jpg, .webp
+  # - 顯示在文章頁面頂部
+
+  bio: "Full-stack developer passionate about web technologies, open source, and building tools that make developers' lives easier."
+  # 作者簡介 (選填)
+  # - 顯示在文章頁面底部或側邊欄
+  # - 建議長度：50-150 字元
+  # - 可以包含專長、興趣、聯絡方式
+
+published: true
+# 發布狀態
+# - 值：true 或 false
+# - 必填！如果省略會被視為 false (草稿)
+# - false: 草稿狀態，僅在開發環境顯示
+# - true: 已發布，會出現在網站上
+# - 用於控制文章的可見性
+
+# --------------------------------------------
+# 選填欄位 (Optional Fields)
+# --------------------------------------------
+
+coverImage: "/images/blog/example-cover.jpg"
+# 封面圖片
+# - 路徑相對於 public/ 目錄
+# - 建議尺寸：1200x630px (OpenGraph 標準)
+# - 支援格式：.png, .jpg, .webp
+# - 顯示位置：
+#   - 文章頁面頂部 (hero image)
+#   - 社群分享縮圖 (OpenGraph, Twitter Card)
+#   - 文章列表卡片 (如果啟用)
+# - 如果省略，會使用預設佔位圖或無圖片
+
+tags: ["Tutorial", "TypeScript", "React", "Next.js", "Web Development"]
+# 文章標籤
+# - 格式：陣列 (使用方括號)
+# - 建議數量：3-6 個
+# - 用途：
+#   - 文章分類和過濾
+#   - 顯示為標籤徽章
+#   - 生成標籤頁面
+#   - 相關文章推薦
+# - 標籤會自動生成 slug (轉小寫、空格變連字號)
+# - 範例："Web Development" → slug: "web-development"
+
+featured: true
+# 是否為精選文章
+# - 值：true 或 false (預設為 false)
+# - 功能：
+#   - 首頁：顯示在 "Featured Stories" 區塊
+#   - Archive 頁面：第一篇 featured 文章以大型卡片顯示
+#   - 優先權高於一般文章
+# - 搭配 featuredOrder 使用效果更好
+
+featuredOrder: 1
+# 精選文章排序
+# - 類型：數字 (整數)
+# - 僅對 featured: true 的文章有效
+# - 數字越小越優先 (1 > 2 > 3 > ...)
+# - 如果沒設定，會被視為最低優先級 (Number.MAX_SAFE_INTEGER)
+# - 範例：
+#   - featuredOrder: 1 (最優先)
+#   - featuredOrder: 2 (次優先)
+#   - 未設定 (最低優先)
+# - 用於控制首頁 Featured Stories 的顯示順序
+
+category: "tutorials/advanced"
+# 文章分類
+# - 格式：字串，可使用 / 表示子分類
+# - 範例：
+#   - "tutorials"           (單層分類)
+#   - "tutorials/beginner"  (兩層分類)
+#   - "tutorials/advanced"  (兩層分類)
+# - 注意：目前系統會自動從檔案路徑推測分類
+#   - content/blog/tutorials/file.mdx → category: "tutorials"
+#   - 手動設定會覆蓋自動推測
+# - 用途：
+#   - 文章列表過濾
+#   - 麵包屑導航
+#   - 分類頁面
+
+slug: "example-blog-post-custom-slug"
+# 自訂 URL slug
+# - 格式：字串 (小寫、連字號分隔、無空格)
+# - 如果省略，會自動從檔案名稱生成
+#   - 檔案：my-awesome-post.mdx → slug: "my-awesome-post"
+# - 手動設定用於：
+#   - 自訂更短或更有意義的 URL
+#   - 避免檔名變更影響 URL
+#   - SEO 優化
+# - 警告：變更 slug 會導致舊連結失效
+
+# --------------------------------------------
+# 系統自動生成欄位 (Auto-generated Fields)
+# --------------------------------------------
+# 以下欄位由系統自動生成，不需要也不應該手動設定：
+
+# id: "content/blog/example-blog-post.mdx"
+# 文章唯一識別碼 (檔案路徑)
+# - 自動生成，無法覆寫
+
+# createdAt: Date
+# 檔案建立時間
+# - 從檔案系統讀取
+
+# updatedAt: Date
+# 檔案最後修改時間
+# - 從檔案系統讀取
+
+# views: number
+# 文章瀏覽次數
+# - 系統追蹤，存於記憶體
+# - 伺服器重啟後歸零
+
+# readingTime: string
+# 預估閱讀時間
+# - 自動計算 (根據字數)
+# - 格式："5 min read"
+
+# --------------------------------------------
+# 未來可能新增的欄位 (Future Fields)
+# --------------------------------------------
+
+# series: "React Deep Dive"
+# seriesOrder: 1
+# 系列文章
+# - 將多篇文章組織成系列
+# - 目前尚未實作
+
+# relatedPosts: ["post-1", "post-2"]
+# 手動指定相關文章
+# - 目前系統自動推薦相關文章（基於標籤）
+
+# comments: true
+# 是否允許留言
+# - 需要整合留言系統 (Giscus, Disqus, etc.)
+
+# language: "zh-TW"
+# 文章語言
+# - 用於多語言網站
+
+# lastmod: "2025-01-20"
+# 最後修改日期 (手動設定)
+# - 用於 sitemap.xml
+# - 目前使用檔案修改時間
+
+# draft: false
+# 草稿標記
+# - 目前使用 published 欄位替代
+
+---
+
+## 文章內容範例
+
+這裡是文章的主要內容區域，使用 MDX 格式撰寫。
+
+### MDX 是什麼？
+
+MDX 是 Markdown + JSX 的結合，讓你可以在 Markdown 中使用 React 元件。
+
+#### 基本 Markdown 語法
+
+所有標準 Markdown 語法都支援：
+
+- **粗體** - 使用 `**text**` 或 `__text__`
+- *斜體* - 使用 `*text*` 或 `_text_`
+- ~~刪除線~~ - 使用 `~~text~~`
+- `行內程式碼` - 使用反引號
+- [連結](https://example.com) - `[text](url)`
+
+#### 程式碼區塊 (Syntax Highlighting)
+
+使用三個反引號加語言名稱：
+
+```typescript
+// TypeScript 範例
+interface BlogPost {
+  title: string;
+  excerpt: string;
+  published: boolean;
+  featured?: boolean;
+  featuredOrder?: number;
+  tags?: string[];
+}
+
+const post: BlogPost = {
+  title: "My First Post",
+  excerpt: "An introduction to blogging",
+  published: true,
+  featured: true,
+  featuredOrder: 1,
+  tags: ["Tutorial", "Getting Started"],
+};
+
+console.log(`Post title: ${post.title}`);
+```
+
+```javascript
+// JavaScript 範例
+function calculateReadingTime(text) {
+  const wordsPerMinute = 200;
+  const words = text.split(/\s+/).length;
+  const minutes = Math.ceil(words / wordsPerMinute);
+  return `${minutes} min read`;
+}
+```
+
+```bash
+# Shell 指令範例
+npm install
+npm run dev
+npm run build
+```
+
+#### Callout 區塊
+
+使用特殊的 blockquote 語法：
+
+> [!NOTE]
+> 這是提示區塊，用於顯示重要資訊。
+> 支援多行內容。
+
+> [!TIP]
+> 這是技巧區塊，分享有用的建議。
+
+> [!WARNING]
+> 這是警告區塊，提醒讀者注意事項。
+
+> [!IMPORTANT]
+> 這是重要資訊區塊，強調關鍵內容。
+
+> [!CAUTION]
+> 這是注意區塊，提醒潛在風險。
+
+#### GitHub Flavored Markdown (GFM)
+
+支援表格、工作清單等：
+
+| 欄位 | 類型 | 必填 | 預設值 | 說明 |
+|------|------|:----:|--------|------|
+| title | string | ✅ | - | 文章標題 |
+| excerpt | string | ✅ | - | 文章摘要 |
+| published | boolean | ✅ | false | 發布狀態 |
+| featured | boolean | ❌ | false | 是否精選 |
+| tags | string[] | ❌ | [] | 文章標籤 |
+
+工作清單：
+
+- [x] 撰寫文章大綱
+- [x] 完成第一版草稿
+- [ ] 添加程式碼範例
+- [ ] 校對和修正
+- [ ] 發布文章
+
+#### 圖片
+
+```markdown
+![替代文字](/images/blog/example-screenshot.png)
+```
+
+圖片標題：
+
+```markdown
+![網站截圖](/images/blog/screenshot.png "網站首頁截圖")
+```
+
+#### 清單
+
+有序清單：
+
+1. 第一步：規劃文章結構
+2. 第二步：撰寫內容
+3. 第三步：添加範例
+   1. 程式碼範例
+   2. 圖片範例
+   3. 表格範例
+
+無序清單：
+
+- 研究主題
+- 收集資料
+- 撰寫草稿
+  - 撰寫簡介
+  - 撰寫主體
+  - 撰寫結論
+
+#### 引用
+
+> 優秀的程式碼應該讓人讀起來像散文。
+>
+> — 某位智者
+
+### 建議的文章結構
+
+一篇優秀的技術部落格文章通常包含：
+
+1. **引言** (Introduction)
+   - 吸引讀者注意
+   - 說明文章主題
+   - 列出讀者會學到什麼
+
+2. **背景知識** (Background / Prerequisites)
+   - 讀者需要的先備知識
+   - 相關概念介紹
+
+3. **主要內容** (Main Content)
+   - 分成多個小節
+   - 使用標題組織內容
+   - 配合程式碼範例
+
+4. **實作範例** (Practical Examples)
+   - Step-by-step 教學
+   - 完整可運行的程式碼
+
+5. **注意事項** (Gotchas / Common Mistakes)
+   - 常見錯誤
+   - 最佳實踐
+
+6. **總結** (Conclusion)
+   - 回顧重點
+   - 延伸閱讀
+   - 下一步建議
+
+### 撰寫風格建議
+
+**語氣和風格：**
+- 使用第一人稱（"I built this" 而不是 "This was built"）
+- 保持對話式語氣，像是在跟朋友解釋
+- 避免過度正式或學術化的用語
+- 誠實分享經驗，包括失敗和學習
+
+**內容品質：**
+- 解釋「為什麼」，不只是「怎麼做」
+- 提供實際可用的程式碼範例
+- 包含截圖或示意圖幫助理解
+- 連結到相關資源和文檔
+
+**SEO 優化：**
+- 標題包含關鍵字
+- 使用描述性的 heading (h2, h3)
+- 內文自然使用關鍵字
+- 添加相關的內外部連結
+
+**可讀性：**
+- 段落保持簡短（2-4 句）
+- 使用列表分解資訊
+- 善用 Callout 區塊強調重點
+- 程式碼加上註解說明
+
+### 發布檢查清單
+
+發布前確認：
+
+- [ ] `published: true` 已設定
+- [ ] 標題吸引人且描述性強
+- [ ] excerpt 準確總結文章內容
+- [ ] 所有連結都有效
+- [ ] 程式碼範例都能運行
+- [ ] 圖片都能正常顯示
+- [ ] 拼字和文法都正確
+- [ ] tags 相關且足夠
+- [ ] 設定 featured 和 featuredOrder（如果適用）
+
+---
+
+**注意**：此檔案僅供參考，檔名開頭的 `_` 表示不會在網站上顯示。
+
+發布後記得：
+- 分享到社群媒體
+- 回覆讀者留言
+- 根據反饋更新內容
+- 追蹤文章表現（瀏覽數、分享數等）
