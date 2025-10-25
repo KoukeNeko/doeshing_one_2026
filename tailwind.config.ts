@@ -77,6 +77,28 @@ const config: Config = {
               fontWeight: 500,
               fontVariantLigatures: "normal",
               fontFeatureSettings: '"liga" 1, "calt" 1',
+              backgroundColor: theme("colors.zinc.100"),
+              padding: "0.125rem 0.375rem",
+              borderRadius: "0.25rem",
+              fontSize: "0.875em",
+            },
+            "code::before": {
+              content: '""',
+            },
+            "code::after": {
+              content: '""',
+            },
+            "pre code": {
+              backgroundColor: "transparent",
+              padding: "0",
+              borderRadius: "0",
+              fontSize: "inherit",
+            },
+            "pre code::before": {
+              content: '""',
+            },
+            "pre code::after": {
+              content: '""',
             },
             blockquote: {
               borderLeftColor: theme("colors.newspaper.accent"),
@@ -144,6 +166,28 @@ const config: Config = {
             },
             code: {
               color: theme("colors.zinc.50"),
+              backgroundColor: theme("colors.zinc.800"),
+              padding: "0.125rem 0.375rem",
+              borderRadius: "0.25rem",
+              fontSize: "0.875em",
+            },
+            "code::before": {
+              content: '""',
+            },
+            "code::after": {
+              content: '""',
+            },
+            "pre code": {
+              backgroundColor: "transparent",
+              padding: "0",
+              borderRadius: "0",
+              fontSize: "inherit",
+            },
+            "pre code::before": {
+              content: '""',
+            },
+            "pre code::after": {
+              content: '""',
             },
             blockquote: {
               borderLeftColor: theme("colors.red.400"),
