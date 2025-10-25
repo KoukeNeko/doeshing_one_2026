@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BlogGrid } from "@/components/blog/BlogGrid";
@@ -82,6 +83,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <article className="grid gap-10 lg:grid-cols-[minmax(0,1fr),280px] overflow-hidden">
       <div className="space-y-10 min-w-0">
+        {post.coverImage ? (
+          <div className="relative aspect-[21/9] w-full overflow-hidden border border-black/10 bg-white shadow-editorial dark:border-white/10 dark:bg-zinc-900">
+            <Image
+              src={post.coverImage}
+              alt={post.title}
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        ) : null}
+
         <header className="space-y-6 border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900">
           <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
             <span>

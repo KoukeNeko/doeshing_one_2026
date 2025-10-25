@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TableOfContents } from "@/components/blog/TableOfContents";
@@ -48,6 +49,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <article className="space-y-12">
+      {frontmatter.image ? (
+        <div className="relative aspect-[21/9] w-full overflow-hidden border border-black/10 bg-white shadow-editorial dark:border-white/10 dark:bg-zinc-900">
+          <Image
+            src={frontmatter.image}
+            alt={frontmatter.title}
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+      ) : null}
+
       <header className="space-y-5 border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900">
         <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
           <span>{formatDate(frontmatter.date, "MMM yyyy")}</span>
