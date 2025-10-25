@@ -82,7 +82,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <article className="grid gap-10 lg:grid-cols-[minmax(0,1fr),280px] overflow-hidden">
-      <div className="space-y-10 min-w-0">
+      <div className="space-y-6 min-w-0">
         <header className="space-y-6 border border-black/10 bg-white px-6 py-10 shadow-editorial dark:border-white/10 dark:bg-zinc-900">
           <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.35em] text-newspaper-gray dark:text-zinc-400">
             <span>
