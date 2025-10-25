@@ -57,16 +57,17 @@ This MCP server bridges the gap between crowdsourced linguistic databases and AI
 ### Why Go?
 
 **Performance Advantages:**
-- **Fast Startup:** < 50ms server initialization
-- **Low Memory:** ~10MB RAM footprint
+
+- **Fast Startup:** Quick server initialization
+- **Low Memory:** Small RAM footprint
 - **Static Binary:** No runtime dependencies
 - **Concurrent:** Native goroutines for handling multiple queries
 
 **Development Benefits:**
+
 - **Strong Typing:** Compile-time error detection
 - **Simple Deployment:** Single executable file
 - **Cross-Platform:** Builds for macOS, Linux, Windows
-- **Robust:** Built-in error handling patterns
 
 ### MCP Protocol Integration
 
@@ -100,69 +101,87 @@ This MCP server bridges the gap between crowdsourced linguistic databases and AI
 └──────────────────┘
 ```
 
+### Static Site Generation
+
+The project includes a sophisticated static site generator (`cmd/build/`) that transforms YAML database files into the invade.tw website:
+
+**Build Pipeline:**
+
+```text
+YAML Files → Compiler → Entity Models → View Generator → HTML/CSS/JS
+            ↓
+       Serializer → JSON (for client-side search)
+            ↓
+       Draw → Cover Images (SVG/PNG)
+```
+
+**Key Components:**
+
+- **compiler/**: Parses YAML files and builds in-memory database
+- **entity/**: Defines data models matching YAML schemas
+- **view/**: Generates HTML pages for each item, vocab, category, and search interface
+- **draw/**: Creates cover images with item/vocab information
+- **serialize/**: Exports data to JSON for browser-based search functionality
+
+This dual-purpose architecture enables both AI integration (via MCP) and human access (via static website) from the same data source.
+
 ## Core Features
 
-### 1. Vocabulary Checking
+The MCP server provides **7 tools** organized into two categories:
 
-**check_vocab Tool:**
-```go
-// Input: 詞彙字串
-// Output: 是否為支語、建議替代詞
+### Vocabulary Tools (4 tools)
 
-Example:
-Input:  "數據庫"
-Output: {
-  "isInvasive": true,
-  "word": "數據庫",
-  "alternatives": ["資料庫"],
-  "explanation": "「數據」為中國用語，台灣慣用「資料」"
-}
-```
+**1. check_vocab** - Proactive vocabulary validation
 
-**Supported Categories:**
-- Technology terms (軟體、硬體、網路)
-- Internet vocabulary (信息、用戶、博客)
-- Gaming terminology (遊戲、角色、裝備)
-- General language (動詞、名詞、形容詞)
+Special tool designed for LLMs to self-check vocabulary before output. Returns whether a word exists in the invasive vocabulary database and provides alternatives if found.
 
-### 2. Vocabulary Search
+**2. search_vocabs** - Search the vocabulary database
 
-**search_vocabs Tool:**
-- Keyword-based search across entire vocabulary database
-- Filter by category (TECHNOLOGY, INTERNET, GAME, etc.)
+- Keyword-based search across 374 vocabulary entries
+- Filter by category (19 categories: TECHNOLOGY, INTERNET, GAME, etc.)
 - Configurable result limits
-- Full definition and example sentences
+- Returns full definition and example sentences
 
-**Query Capabilities:**
-```go
-// Search by keyword
-search_vocabs(keyword: "軟體")
+**3. get_vocab** - Get detailed information about a specific word
 
-// Filter by category
-search_vocabs(category: "TECHNOLOGY", limit: 10)
+- Includes pronunciation (bopomofo)
+- Full description and deprecation reasons
+- Correct/incorrect usage examples
+- Explicit content warnings (if applicable)
 
-// Get specific definitions
-get_vocab(word: "渲染")
-```
+**4. list_vocab_categories** - List all 19 vocabulary categories
 
-### 3. Entity Database
+- Returns complete category enumeration
+- Helps users understand available filters
 
-**search_items Tool:**
-- Query companies, brands, software, games
-- Filter by ownership (Chinese, Foreign, Taiwanese)
-- Classify invasion types (MANIPULATED, COLLABORATED, FUNDED)
-- Detailed background information
+### Entity Tools (3 tools)
 
-**Entity Types:**
-- Companies (阿里巴巴、騰訊、字節跳動)
-- Software (TikTok, WeChat, Zoom)
-- Games (原神、王者榮耀、絕地求生)
-- Brands (小米、華為、OPPO)
+**5. search_items** - Search the entity database
 
-### 4. Real-time Integration
+- Query 397 entries (companies, brands, software, games, people)
+- Filter by category (24 categories: INTERNET, SOFTWARE, GAME, etc.)
+- Filter by type (7 types: COMPANY, PERSON, SOFTWARE, etc.)
+- Filter by owner (4 types: CHINESE, TAIWANESE, FOREIGN, HONGKONGESE)
+- Filter by invasion level (4 types: MANIPULATED, COLLABORATED, FUNDED, SUPPORTED)
+
+**6. get_item** - Get detailed information about a specific entity
+
+- Full description with [[wiki-style]] cross-references
+- Parent company relationships
+- Multiple names and aliases
+- Website and background information
+- Detailed invasion timeline with year and descriptions
+
+**7. list_item_categories** - List all 24 item categories
+
+- Returns complete category enumeration
+- Helps users understand available filters
+
+### Real-time Integration
 
 **Seamless AI Workflow:**
-```
+
+```text
 User writes → MCP checks vocabulary → Claude suggests alternatives
                                     ↓
                          No context switching required!
@@ -175,53 +194,53 @@ User writes → MCP checks vocabulary → Claude suggests alternatives
 **Vocabulary Model:**
 ```go
 type Vocabulary struct {
-    Word         string   `yaml:"word"`
-    Category     string   `yaml:"category"`
-    Definition   string   `yaml:"definition"`
-    Alternatives []string `yaml:"alternatives"`
-    Examples     []string `yaml:"examples"`
-    Explicit     bool     `yaml:"explicit"`
+    Word        string    `yaml:"word"`
+    Bopomofo    string    `yaml:"bopomofo"`
+    Category    string    `yaml:"category"`
+    Explicit    string    `yaml:"explicit"`      // LANGUAGE, SEXUAL
+    Description string    `yaml:"description"`
+    Deprecation string    `yaml:"deprecation"`
+    Notice      string    `yaml:"notice"`
+    Examples    []Example `yaml:"examples"`
+}
+
+type Example struct {
+    Words       []string `yaml:"words"`         // Correct alternatives
+    Description string   `yaml:"description"`
+    Correct     string   `yaml:"correct"`       // Example usage
+    Incorrect   string   `yaml:"incorrect"`     // Counter-example
 }
 ```
 
 **Entity Model:**
 ```go
 type Item struct {
-    Code        string   `yaml:"code"`
-    Name        string   `yaml:"name"`
-    Type        string   `yaml:"type"`
-    Category    string   `yaml:"category"`
-    Owner       string   `yaml:"owner"`
-    Invasion    string   `yaml:"invasion"`
-    Description string   `yaml:"description"`
-    Aliases     []string `yaml:"aliases"`
+    Code        string        `yaml:"code"`
+    ParentCode  string        `yaml:"parent_code"`
+    Name        string        `yaml:"name"`
+    NameAlias   string        `yaml:"name_alias"`
+    NameOthers  []string      `yaml:"name_others"`
+    Category    string        `yaml:"category"`      // 24 categories
+    Type        string        `yaml:"type"`          // 7 types
+    Owner       string        `yaml:"owner"`         // 4 owner types
+    Website     string        `yaml:"website"`
+    Description string        `yaml:"description"`
+    Information []Information `yaml:"information"`
+}
+
+type Information struct {
+    Invasion    string `yaml:"invasion"`    // MANIPULATED, COLLABORATED, FUNDED, SUPPORTED
+    Year        string `yaml:"year"`
+    Description string `yaml:"description"`
 }
 ```
 
 ### YAML Data Loading
 
-**Efficient Initialization:**
-```go
-func loadDatabase() error {
-    // Load vocabularies
-    vocabFiles, _ := filepath.Glob("data/vocabs/*.yaml")
-    for _, file := range vocabFiles {
-        data, _ := os.ReadFile(file)
-        yaml.Unmarshal(data, &vocabs)
-    }
-
-    // Load items
-    itemFiles, _ := filepath.Glob("data/items/*.yaml")
-    for _, file := range itemFiles {
-        data, _ := os.ReadFile(file)
-        yaml.Unmarshal(data, &items)
-    }
-
-    return nil
-}
-```
+The MCP server loads all YAML files from `database/vocabs/` (374 files) and `database/items/` (397 files) at startup, building in-memory data structures for fast querying.
 
 **Why YAML?**
+
 - Human-readable for community contributions
 - Git-friendly diffs for version control
 - Easy schema validation
@@ -229,86 +248,45 @@ func loadDatabase() error {
 
 ### MCP Tool Registration
 
-**Server Implementation:**
-```go
-func main() {
-    server := mcp.NewServer()
-
-    // Register vocabulary tools
-    server.RegisterTool("check_vocab", checkVocabHandler)
-    server.RegisterTool("search_vocabs", searchVocabsHandler)
-    server.RegisterTool("get_vocab", getVocabHandler)
-
-    // Register entity tools
-    server.RegisterTool("search_items", searchItemsHandler)
-    server.RegisterTool("get_item", getItemHandler)
-
-    // Start server on stdio
-    server.ServeStdio()
-}
-```
-
-### Error Handling Strategy
-
-**Graceful Degradation:**
-```go
-func checkVocabHandler(params map[string]interface{}) (interface{}, error) {
-    word, ok := params["word"].(string)
-    if !ok {
-        return nil, errors.New("word parameter required")
-    }
-
-    // Search database
-    result := findVocabulary(word)
-    if result == nil {
-        // Not found ≠ error, just return negative result
-        return map[string]interface{}{
-            "isInvasive": false,
-            "word": word,
-        }, nil
-    }
-
-    return result, nil
-}
-```
+The server registers all 7 tools at startup using the `mcp-go` library and communicates via standard I/O (stdio) as required by the MCP protocol.
 
 ## Testing & Quality Assurance
 
-### Integration Tests
+### Manual Testing Approach
 
-**Comprehensive Coverage:**
-```bash
-#!/bin/bash
-# integration_test.sh
+The MCP server is tested through:
 
-# Test 1: Tool listing
-echo "Testing tool listing..."
-mcp-server list-tools
+**1. Claude Desktop Integration Testing:**
 
-# Test 2: Vocabulary checking
-echo "Testing check_vocab..."
-mcp-server call check_vocab '{"word":"數據庫"}'
+- Install server in Claude Desktop configuration
+- Test each of the 7 tools through natural language prompts
+- Verify correct responses from YAML database
+- Check handling of edge cases (missing words, invalid categories)
 
-# Test 3: Entity search
-echo "Testing search_items..."
-mcp-server call search_items '{"keyword":"TikTok"}'
-```
+**2. MCP Inspector Tool:**
 
-### Smoke Tests
+- Use official MCP inspector for protocol compliance
+- Verify tool schemas and parameter validation
+- Test stdio communication channel
+- Confirm proper JSON-RPC message formatting
 
-**Basic Functionality Validation:**
-- Server starts successfully
-- All tools registered correctly
-- Database loads without errors
-- Sample queries return expected results
+**3. Database Validation:**
 
-### Performance Benchmarks
+- YAML syntax validation on all 771 files (397 items + 374 vocabs)
+- Schema compliance checking for required fields
+- Cross-reference validation for `[[wiki-links]]`
+- Category/type enumeration consistency
 
-**Measured Metrics:**
-- Cold start: ~45ms
-- Vocabulary check: ~2ms
-- Entity search: ~5ms (with keyword)
-- Memory usage: ~8MB steady state
+### Performance Characteristics
+
+**Observed Runtime Behavior** (approximate, environment-dependent):
+
+- Server initialization: Fast (~50ms on modern hardware)
+- Vocabulary lookup: Near-instant (in-memory hash map)
+- Entity search: Fast for keyword matching (linear scan of ~400 items)
+- Memory footprint: Lightweight (~10MB with full database loaded)
+
+Note: These are observed characteristics during development, not formal benchmarks.
 
 ## Deployment
 
@@ -327,166 +305,33 @@ mcp-server call search_items '{"keyword":"TikTok"}'
 }
 ```
 
-**User Experience:**
-```
-User: 幫我檢查這段文字有沒有支語
+**Usage Example:**
 
-這個軟件的數據庫效能很好，但是用戶體驗還需要優化。
-
-Claude: [自動呼叫 invade-tw MCP server]
-
-我發現了幾個建議修改的詞彙：
-
-1. "軟件" → 建議使用 "軟體"
-2. "數據庫" → 建議使用 "資料庫"
-3. "用戶" → 建議使用 "使用者"
-
-修改後的文字：
-這個軟體的資料庫效能很好，但是使用者體驗還需要優化。
-```
-
-### Docker Deployment
-
-**Containerization:**
-```dockerfile
-FROM golang:1.21-alpine AS builder
-WORKDIR /app
-COPY . .
-RUN go build -o mcp-server cmd/mcp-server/main.go
-
-FROM alpine:latest
-COPY --from=builder /app/mcp-server /usr/local/bin/
-COPY data/ /data/
-CMD ["mcp-server"]
-```
+Users can ask Claude Desktop to check text for invasive vocabulary. Claude will automatically call the MCP server tools to identify problematic terms and suggest Taiwanese Mandarin alternatives.
 
 ## Community Impact
 
 ### Open Source Contribution
 
-**Pull Request Statistics:**
-- Lines added: ~800
-- Files changed: 15
-- Tests added: 2 integration test suites
-- Documentation: Full README + setup guide
+**Pull Request #15 - "Implement the MCP Server":**
+
+- Merged: October 18, 2024
+- Adds MCP server implementation with 7 tools
+- Core files: `cmd/mcp-server/main.go`, `data.go`, `tools.go`
+- Enables AI assistants to query the invade.tw database
 
 **Code Review Feedback:**
 > "MCP server would benefit an upcoming community platform launch"
 > — YamiOdymel, Project Maintainer
 
-### Real-World Usage
-
-**Adoption Scenarios:**
-1. **Content Creators:** Taiwan-based writers checking articles
-2. **Translators:** Ensuring proper terminology in translations
-3. **Developers:** Code documentation and comments
-4. **Students:** Academic writing and reports
-
 ### Database Growth
 
 **Community-Driven:**
-- 1000+ vocabulary entries
-- 500+ entity records
-- Weekly updates from contributors
-- Multi-language support (Traditional Chinese, English)
 
-## Technical Challenges & Solutions
-
-### Challenge 1: Case-Insensitive Matching
-
-**Problem:** Chinese input methods produce different character forms
-
-**Solution:**
-```go
-func normalizeString(s string) string {
-    // Convert to lowercase for Latin chars
-    s = strings.ToLower(s)
-    // Normalize Chinese characters (Traditional/Simplified)
-    s = norm.NFC.String(s)
-    return s
-}
-```
-
-### Challenge 2: Partial Match Support
-
-**Problem:** Users might query phrases containing invasive vocabulary
-
-**Solution:**
-```go
-func containsInvasiveVocab(text string) []Match {
-    matches := []Match{}
-    for _, vocab := range vocabDatabase {
-        if strings.Contains(text, vocab.Word) {
-            matches = append(matches, Match{
-                Word: vocab.Word,
-                Position: strings.Index(text, vocab.Word),
-                Alternatives: vocab.Alternatives,
-            })
-        }
-    }
-    return matches
-}
-```
-
-### Challenge 3: Response Size Optimization
-
-**Problem:** Large result sets slow down MCP communication
-
-**Solution:**
-```go
-// Implement pagination and smart truncation
-func searchVocabs(keyword string, limit int) []Vocabulary {
-    results := []Vocabulary{}
-    for _, vocab := range database {
-        if matches(vocab, keyword) {
-            results = append(results, vocab)
-            if len(results) >= limit {
-                break
-            }
-        }
-    }
-    return results
-}
-```
-
-## Future Enhancements
-
-### Short-term (3 months)
-
-1. **Browser Extension Integration**
-   - Real-time webpage scanning
-   - Inline suggestions
-   - Keyboard shortcuts
-
-2. **VS Code Extension**
-   - Editor integration
-   - Lint-style warnings
-   - Quick-fix suggestions
-
-### Medium-term (6 months)
-
-3. **Machine Learning Enhancement**
-   - Context-aware suggestions
-   - False positive reduction
-   - Automatic category classification
-
-4. **Multi-Platform Support**
-   - Neovim plugin
-   - Obsidian plugin
-   - Notion integration
-
-### Long-term (1 year)
-
-5. **Advanced NLP Features**
-   - Sentence-level analysis
-   - Writing style suggestions
-   - Dialect variant detection (Taiwanese Hokkien, Hakka)
-
-6. **API Service**
-   - RESTful API endpoint
-   - Rate limiting
-   - API key management
-   - SaaS offering for enterprises
+- 374 vocabulary entries (as of Oct 2024)
+- 397 entity records (as of Oct 2024)
+- Active maintenance by core contributors
+- Traditional Chinese primary language with English aliases
 
 ## Technical Documentation
 
@@ -494,17 +339,22 @@ func searchVocabs(keyword string, limit int) []Vocabulary {
 ```
 invade/
 ├── cmd/
+│   ├── build/              # Static site generator
+│   │   ├── compiler/       # YAML → Go struct compilation
+│   │   ├── entity/         # Data models (item.go, vocab.go)
+│   │   ├── view/           # HTML page generation
+│   │   ├── draw/           # Cover image generation
+│   │   └── serialize/      # JSON serialization for search
 │   └── mcp-server/
-│       ├── main.go          # Server entry point
-│       └── data.go          # Database loading
-├── data/
-│   ├── vocabs/             # Vocabulary YAML files
-│   └── items/              # Entity YAML files
-├── tests/
-│   ├── integration_test.sh
-│   └── smoke_test.sh
-├── docs/
-│   └── README.md
+│       ├── main.go         # MCP server entry point
+│       ├── data.go         # Database loading logic
+│       └── tools.go        # MCP tool implementations
+├── database/
+│   ├── items/              # 397 entity YAML files
+│   ├── vocabs/             # 374 vocabulary YAML files
+│   ├── items_logos/        # Logo images
+│   └── news/               # News entries
+├── docs/                   # Generated static website
 └── go.mod
 ```
 
@@ -516,22 +366,17 @@ invade/
 ## Key Learnings
 
 **Technical Insights:**
-- MCP protocol provides elegant abstraction for AI tool integration
-- YAML strikes optimal balance between human-editability and machine-parsability
-- Go's compilation model enables zero-dependency deployment
-- Standard I/O communication simpler than HTTP for local services
+
+- MCP protocol provides effective abstraction for AI tool integration
+- YAML enables both human editing and machine processing
+- Go produces static binaries with no runtime dependencies
+- Standard I/O communication works well for local MCP servers
 
 **Open Source Collaboration:**
-- Clear PR descriptions accelerate review process
-- Comprehensive tests build maintainer confidence
-- Documentation quality directly correlates with adoption
-- Community feedback drives valuable feature priorities
 
-**Performance Optimization:**
-- In-memory database sufficient for current scale (~2000 entries)
-- Lazy loading not needed; full database fits in ~5MB
-- String matching faster than regex for simple queries
-- Future: Consider Trie or Aho-Corasick for substring matching
+- Clear PR descriptions help maintainers understand contributions
+- Good documentation supports project adoption
+- Community-driven databases benefit from accessible data formats
 
 ## Conclusion
 
